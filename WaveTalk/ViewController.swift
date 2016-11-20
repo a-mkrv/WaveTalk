@@ -110,6 +110,7 @@ class ViewController: UIViewController, UIPageViewControllerDataSource, UIPageVi
     }
 
     @IBAction func getStarted(_ sender: Any) {
+        performSegue(withIdentifier: "ShowLogin", sender: self)
     }
 
     
