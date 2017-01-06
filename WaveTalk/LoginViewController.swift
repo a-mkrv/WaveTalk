@@ -57,6 +57,7 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginPress(_ sender: Any) {
+        performSegue(withIdentifier: "mainTabBar", sender: self)
     }
     
     @IBAction func signupPress(_ sender: Any) {

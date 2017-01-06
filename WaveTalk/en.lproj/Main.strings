@@ -1,0 +1,48 @@
+
+/* Class = "UITabBarItem"; title = "Chats"; ObjectID = "7BE-5O-OqB"; */
+"7BE-5O-OqB.title" = "Chats";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "8jW-d3-Jur"; */
+"8jW-d3-Jur.placeholder" = "Password";
+
+/* Class = "UITextField"; placeholder = "User Name"; ObjectID = "G3C-gd-HZB"; */
+"G3C-gd-HZB.placeholder" = "User Name";
+
+/* Class = "UIButton"; normalTitle = "Log In"; ObjectID = "NZQ-lE-TyL"; */
+"NZQ-lE-TyL.normalTitle" = "Log In";
+
+/* Class = "UITextField"; placeholder = "Login:"; ObjectID = "UTQ-zU-acy"; */
+"UTQ-zU-acy.placeholder" = "Login:";
+
+/* Class = "UILabel"; text = "WaveTalk Inc. 2017"; ObjectID = "VO2-lk-hsh"; */
+"VO2-lk-hsh.text" = "WaveTalk Inc. 2017";
+
+/* Class = "UILabel"; text = "Registration"; ObjectID = "XOv-w4-FRx"; */
+"XOv-w4-FRx.text" = "Registration";
+
+/* Class = "UIButton"; normalTitle = "Forgot password?"; ObjectID = "XrF-wA-BGR"; */
+"XrF-wA-BGR.normalTitle" = "Forgot password?";
+
+/* Class = "UITextField"; placeholder = "Email / Phone"; ObjectID = "d0V-TY-JuP"; */
+"d0V-TY-JuP.placeholder" = "Email / Phone";
+
+/* Class = "UILabel"; text = "Description"; ObjectID = "g9y-3v-pbe"; */
+"g9y-3v-pbe.text" = "Description";
+
+/* Class = "UITabBarItem"; title = "Contacts"; ObjectID = "gox-39-bOe"; */
+"gox-39-bOe.title" = "Contacts";
+
+/* Class = "UIButton"; normalTitle = "Sign Up"; ObjectID = "igZ-lK-34X"; */
+"igZ-lK-34X.normalTitle" = "Sign Up";
+
+/* Class = "UILabel"; text = "Header"; ObjectID = "iqJ-fL-ahR"; */
+"iqJ-fL-ahR.text" = "Header";
+
+/* Class = "UIButton"; normalTitle = "Get Started!"; ObjectID = "lPW-p1-iEG"; */
+"lPW-p1-iEG.normalTitle" = "Get Started!";
+
+/* Class = "UIButton"; normalTitle = "Sign Up"; ObjectID = "uGh-LH-E3c"; */
+"uGh-LH-E3c.normalTitle" = "Sign Up";
+
+/* Class = "UITextField"; placeholder = "Password:"; ObjectID = "uUn-Ib-NNq"; */
+"uUn-Ib-NNq.placeholder" = "Password:";

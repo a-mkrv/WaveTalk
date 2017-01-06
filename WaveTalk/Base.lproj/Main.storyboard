@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="UMr-mJ-3hj">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -55,6 +56,7 @@
         <!--Login View Controller-->
         <scene sceneID="ZDt-p8-we4">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3qG-2c-NDy" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="qb5-oz-0dR" customClass="LoginViewController" customModule="WaveTalk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jU2-OY-Xcb"/>
@@ -141,9 +143,76 @@
                         <segue destination="qj8-99-0LE" kind="show" identifier="ForgotPassword" id="jas-Ed-Zuo"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3qG-2c-NDy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="137" y="1218"/>
+        </scene>
+        <!--Contact List View Controller-->
+        <scene sceneID="W8h-JI-e8l">
+            <objects>
+                <tableViewController id="UMr-mJ-3hj" customClass="ContactListViewController" customModule="WaveTalk" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" id="XZe-Fd-6Wz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CellContact" rowHeight="80" id="8cn-K0-IRn" customClass="ContactViewCell" customModule="WaveTalk" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="80"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8cn-K0-IRn" id="NFk-Vm-YHJ">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bqp-nr-QN7">
+                                            <rect key="frame" x="14" y="10" width="60" height="60"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="60" id="3gp-kh-pRD"/>
+                                                <constraint firstAttribute="width" constant="60" id="h3p-Cn-hX0"/>
+                                            </constraints>
+                                        </imageView>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="XOs-CU-lur">
+                                            <rect key="frame" x="82" y="10" width="95" height="56"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UserName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i6a-Gy-VEr">
+                                                    <rect key="frame" x="0.0" y="0.0" width="95" height="24"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Presence" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sdt-6T-jgC">
+                                                    <rect key="frame" x="0.0" y="39" width="91.5" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="56" id="MqP-HZ-NKI"/>
+                                            </constraints>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="bqp-nr-QN7" firstAttribute="leading" secondItem="NFk-Vm-YHJ" secondAttribute="leadingMargin" constant="6" id="IBb-tM-mlr"/>
+                                        <constraint firstItem="XOs-CU-lur" firstAttribute="leading" secondItem="bqp-nr-QN7" secondAttribute="trailing" constant="8" id="clD-aW-KX5"/>
+                                        <constraint firstItem="XOs-CU-lur" firstAttribute="top" secondItem="NFk-Vm-YHJ" secondAttribute="topMargin" constant="2" id="rG7-Zk-Ei5"/>
+                                        <constraint firstItem="bqp-nr-QN7" firstAttribute="top" secondItem="NFk-Vm-YHJ" secondAttribute="topMargin" constant="2" id="ub9-gE-JuL"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="avatarImage" destination="bqp-nr-QN7" id="ujt-tb-T0a"/>
+                                    <outlet property="presenceLabel" destination="Sdt-6T-jgC" id="Y1T-bx-nHF"/>
+                                    <outlet property="usernameLabel" destination="i6a-Gy-VEr" id="PFF-wp-qSL"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="UMr-mJ-3hj" id="a8W-yz-xNb"/>
+                            <outlet property="delegate" destination="UMr-mJ-3hj" id="trz-GM-CnB"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pXh-jA-nKh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="116" y="1977.6611694152925"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="oJW-kz-U7w">
@@ -208,6 +277,7 @@
         <!--Forgot Pswd View Controller-->
         <scene sceneID="DgU-RE-B4i">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XJM-8s-gBM" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="qj8-99-0LE" customClass="ForgotPswdViewController" customModule="WaveTalk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fgl-3e-AFt"/>
@@ -225,9 +295,8 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="XJM-8s-gBM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="929" y="1614"/>
+            <point key="canvasLocation" x="1758" y="1218"/>
         </scene>
         <!--Page View Controller-->
         <scene sceneID="LCm-Sp-thp">
@@ -285,4 +354,5 @@
         <image name="Logo" width="2559" height="2287"/>
         <image name="Waves" width="3333" height="3333"/>
     </resources>
+    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>
