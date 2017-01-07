@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="UMr-mJ-3hj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cQz-6D-I4z">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -56,7 +56,6 @@
         <!--Login View Controller-->
         <scene sceneID="ZDt-p8-we4">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3qG-2c-NDy" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="qb5-oz-0dR" customClass="LoginViewController" customModule="WaveTalk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jU2-OY-Xcb"/>
@@ -143,10 +142,11 @@
                         <segue destination="qj8-99-0LE" kind="show" identifier="ForgotPassword" id="jas-Ed-Zuo"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3qG-2c-NDy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="137" y="1218"/>
         </scene>
-        <!--Contact List View Controller-->
+        <!--Contacts-->
         <scene sceneID="W8h-JI-e8l">
             <objects>
                 <tableViewController id="UMr-mJ-3hj" customClass="ContactListViewController" customModule="WaveTalk" customModuleProvider="target" sceneMemberID="viewController">
@@ -159,7 +159,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8cn-K0-IRn" id="NFk-Vm-YHJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bqp-nr-QN7">
@@ -201,6 +201,7 @@
                                     <outlet property="avatarImage" destination="bqp-nr-QN7" id="ujt-tb-T0a"/>
                                     <outlet property="presenceLabel" destination="Sdt-6T-jgC" id="Y1T-bx-nHF"/>
                                     <outlet property="usernameLabel" destination="i6a-Gy-VEr" id="PFF-wp-qSL"/>
+                                    <segue destination="GPq-NX-K7f" kind="show" identifier="showDetails" id="mUU-f6-VQh"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -209,10 +210,87 @@
                             <outlet property="delegate" destination="UMr-mJ-3hj" id="trz-GM-CnB"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Contacts" id="WIx-fw-LWz"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pXh-jA-nKh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="116" y="1977.6611694152925"/>
+            <point key="canvasLocation" x="1055.2" y="1977.6611694152925"/>
+        </scene>
+        <!--Contact Details View Controller-->
+        <scene sceneID="0CY-n0-Su5">
+            <objects>
+                <viewController id="GPq-NX-K7f" customClass="ContactDetailsViewController" customModule="WaveTalk" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="xng-SS-ouZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wID-lK-wkU"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="jRe-pi-dfJ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="b36-dz-WGM">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <imageView key="tableHeaderView" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="j24-IQ-wSl">
+                                    <rect key="frame" x="0.0" y="64" width="375" height="250"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CellContactDetails" rowHeight="36" id="FwK-On-qYl" customClass="ContactDetailsViewCell" customModule="WaveTalk" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="278" width="375" height="36"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FwK-On-qYl" id="Ipa-eD-Pip">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="36"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BNs-kF-g6M">
+                                                    <rect key="frame" x="21" y="0.0" width="84" height="21"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Field" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Oh-qs-7sc">
+                                                            <rect key="frame" x="0.0" y="0.0" width="42" height="20.5"/>
+                                                            <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="16"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zIF-7b-EQe">
+                                                            <rect key="frame" x="42" y="0.0" width="42" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="zIF-7b-EQe" firstAttribute="width" secondItem="5Oh-qs-7sc" secondAttribute="width" id="upf-3N-byd"/>
+                                                    </constraints>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="BNs-kF-g6M" firstAttribute="centerY" secondItem="Ipa-eD-Pip" secondAttribute="centerY" id="bHY-hO-Yli"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="BNs-kF-g6M" secondAttribute="trailing" id="ih4-Ld-veS"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="fieldLabel" destination="5Oh-qs-7sc" id="gz9-G9-JJx"/>
+                                            <outlet property="valueLabel" destination="zIF-7b-EQe" id="JG1-BB-qxe"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="GPq-NX-K7f" id="nwx-Y9-FYa"/>
+                                    <outlet property="delegate" destination="GPq-NX-K7f" id="uwD-Os-7qA"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="avatarImageView" destination="j24-IQ-wSl" id="G7d-Zr-LYS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a0u-5R-xgE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1924" y="1975.8620689655174"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="oJW-kz-U7w">
@@ -277,7 +355,6 @@
         <!--Forgot Pswd View Controller-->
         <scene sceneID="DgU-RE-B4i">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="XJM-8s-gBM" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="qj8-99-0LE" customClass="ForgotPswdViewController" customModule="WaveTalk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fgl-3e-AFt"/>
@@ -295,6 +372,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XJM-8s-gBM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1758" y="1218"/>
         </scene>
@@ -348,6 +426,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4wc-7x-Wdp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1464.8" y="136.28185907046478"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="hA0-1t-7ef">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cQz-6D-I4z" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="NdN-sr-JuQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="UMr-mJ-3hj" kind="relationship" relationship="rootViewController" id="14J-9a-H6D"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gbt-tR-aDo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="116" y="1977.6611694152925"/>
         </scene>
     </scenes>
     <resources>

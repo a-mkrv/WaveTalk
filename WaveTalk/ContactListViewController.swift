@@ -10,7 +10,17 @@ import UIKit
 
 class ContactListViewController: UITableViewController {
 
-    var Contacts = ["Anton", "Ivan", "Diana", "Oleg"]
+    var contacts: [Contact] = [
+        Contact(userName: "Anton",    lastMessage: "Hello..",    lastPresenceTime: "...",  phoneNumber: "11-11-11", photoImage: "1"),
+        Contact(userName: "Ivan",     lastMessage: "Ok, fine!", lastPresenceTime: "...",   phoneNumber: "22-22-22", photoImage: "2"),
+        Contact(userName: "Diana",    lastMessage: "Goodbye!",  lastPresenceTime: "...",   phoneNumber: "33-33-33", photoImage: "3"),
+        Contact(userName: "Oleg",     lastMessage: "This is the best iOS App", lastPresenceTime: "...", phoneNumber: "44-44-44", photoImage: "4"),
+        Contact(userName: "Matvey",   lastMessage: "I will be tomorrow", lastPresenceTime: "...", phoneNumber: "55-55-55", photoImage: "5"),
+        Contact(userName: "Sanek",    lastMessage: "Hm...",       lastPresenceTime: "...",  phoneNumber: "66-66-66", photoImage: "6"),
+        Contact(userName: "Darya",    lastMessage: "I Love You!", lastPresenceTime: "...",  phoneNumber: "77-77-77", photoImage: "7"),
+        Contact(userName: "Nikolay",    lastMessage: "NNGU - VMK", lastPresenceTime: "...",  phoneNumber: "88-88-88", photoImage: "1"),
+        Contact(userName: "Mama",    lastMessage: "Wow! Look!", lastPresenceTime: "...",  phoneNumber: "99-99-99", photoImage: "2")
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,8 +47,7 @@ class ContactListViewController: UITableViewController {
     //}
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return Contacts.count
+        return contacts.count
     }
 
     
@@ -47,14 +56,12 @@ class ContactListViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: CellID, for: indexPath) as! ContactViewCell
         
-        cell.avatarImage?.image = UIImage(named: "tmp_avatar")
+        cell.avatarImage?.image = UIImage(named: contacts[indexPath.row].photoImage)
         cell.avatarImage.layer.cornerRadius = 30.0
         cell.avatarImage.clipsToBounds = true
-        cell.usernameLabel?.text = Contacts[indexPath.row]
-        cell.presenceLabel?.text = Contacts[indexPath.row]
+        cell.usernameLabel?.text = contacts[indexPath.row].userName
+        cell.presenceLabel?.text = contacts[indexPath.row].lastPresenceTime
         
-        //cell.textLabel?.text = Contacts[indexPath.row]
-        //cell.imageView?.image = UIImage(named: "tmp_avatar")
         return cell
     }
     
@@ -70,13 +77,13 @@ class ContactListViewController: UITableViewController {
             self.present(alertMessage, animated: true, completion: nil)
         }
         
-        let callAction = UIAlertAction(title: "Call " + "123-000-\(indexPath.row)", style: .default, handler: callActionHandler)
+        let callAction = UIAlertAction(title: "Call " + contacts[indexPath.row].phoneNumber, style: .default, handler: callActionHandler)
         
         
         contactInfo.addAction(cancelAction)
         contactInfo.addAction(callAction)
         
-        self.present(contactInfo, animated: true, completion: nil)
+        //self.present(contactInfo, animated: true, completion: nil)
     }
     
     //override var prefersStatusBarHidden: Bool {
@@ -94,16 +101,16 @@ class ContactListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         // Social
         
-        let shareAction = UITableViewRowAction(style: .default, title: "Поделиться", handler: { (action, indexPath) -> Void in
-            let defaultText = "Just checking in at + " + self.Contacts[indexPath.row]
+        let shareAction = UITableViewRowAction(style: .default, title: "Share", handler: { (action, indexPath) -> Void in
+            let defaultText = "Just checking in at + " + self.contacts[indexPath.row].userName
             let activityController = UIActivityViewController(activityItems: [defaultText], applicationActivities: nil)
             
             self.present(activityController, animated: true, completion: nil)
         })
         
         
-        let deleteAction = UITableViewRowAction(style: .default, title: "Удалить", handler: { (action, indexPath) -> Void in
-                self.Contacts.remove(at: indexPath.row)
+        let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: { (action, indexPath) -> Void in
+                self.contacts.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .fade)
         })
         
@@ -114,6 +121,21 @@ class ContactListViewController: UITableViewController {
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetails"
+        {
+            if let indexPath = tableView.indexPathForSelectedRow {
+                let destinationController = segue.destination as! ContactDetailsViewController
+                destinationController.contact = contacts[indexPath.row]
+            }
+        }
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.hidesBarsOnSwipe = true
+    }
     // Override to support editing the table view.
     //override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         

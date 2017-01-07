@@ -16,6 +16,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
+       // UINavigationBar.appearance().backgroundColor = UIColor(red: 58, green: 153, blue: 217, alpha: 1)
+       // UIBarButtonItem.appearance().tintColor = UIColor.white
+        UINavigationBar.appearance().barTintColor = UIColor(red:  58/255.0, green: 153/255.0, blue: 217/255.0, alpha: 100.0/100.0)
+        
+        if let barFont = UIFont(name: "Avenir-Light", size: 24.0) {
+            UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: barFont]
+        }
+        
+        UIApplication.shared.statusBarStyle = .lightContent
         // Override point for customization after application launch
         
         //let pageControl = UIPageControl.appearance()
