@@ -1,73 +1,42 @@
 //
-//  ContactDetailsViewController.swift
+//  tmpViewController.swift
 //  WaveTalk
 //
-//  Created by Anton Makarov on 06.01.17.
+//  Created by Anton Makarov on 07.01.17.
 //  Copyright © 2017 Anton Makarov. All rights reserved.
 //
 
 import UIKit
 
-class ContactDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ContactDetailsViewController: UITableViewController {
 
-    @IBOutlet var avatarImageView: UIImageView!
-    var contact = Contact(userName: "", lastMessage: "", lastPresenceTime: "", phoneNumber: "", photoImage: "")
+    @IBOutlet weak var photoImage: UIImageView!
+    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var presenceLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var phoneLabel: UILabel!
     
+    var contact = Contact(userName: "", lastMessage: "", lastPresenceTime: "", phoneNumber: "", photoImage: "")
+
     
     override func viewDidLoad() {
+        photoImage.image = UIImage(named: contact.photoImage)
+        usernameLabel.text = contact.userName
+        presenceLabel.text = contact.lastPresenceTime
+        phoneLabel.text = contact.phoneNumber
+        
         super.viewDidLoad()
-
-        avatarImageView.image = UIImage(named: contact.photoImage)
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
-    
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CellContactDetails", for: indexPath) as! ContactDetailsViewCell
-        
-        switch indexPath.row {
-        case 0:
-            cell.fieldLabel.text = "Name"
-            cell.valueLabel.text = contact.userName
-        case 1:
-            cell.fieldLabel.text = "Last Presence"
-            cell.valueLabel.text = contact.lastPresenceTime
-        case 2:
-            cell.fieldLabel.text = "Phone"
-            cell.valueLabel.text = contact.phoneNumber
-        default:
-            cell.fieldLabel.text = ""
-            cell.valueLabel.text = ""
-            
-        }
-        
-        
-        return cell
-    }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.hidesBarsOnSwipe = false
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

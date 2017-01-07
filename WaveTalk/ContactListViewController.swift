@@ -8,8 +8,11 @@
 
 import UIKit
 
-class ContactListViewController: UITableViewController {
+class ContactListViewController: UITableViewController, UISearchResultsUpdating {
 
+    var searchController: UISearchController!
+    
+    var searchContacts: [Contact] = []
     var contacts: [Contact] = [
         Contact(userName: "Anton",    lastMessage: "Hello..",    lastPresenceTime: "...",  phoneNumber: "11-11-11", photoImage: "1"),
         Contact(userName: "Ivan",     lastMessage: "Ok, fine!", lastPresenceTime: "...",   phoneNumber: "22-22-22", photoImage: "2"),
@@ -25,6 +28,12 @@ class ContactListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        
+        tableView.tableHeaderView = searchController.searchBar
+        
         tableView.contentInset.top = UIApplication.shared.statusBarFrame.height
         
         // Uncomment the following line to preserve selection between presentations
@@ -47,23 +56,37 @@ class ContactListViewController: UITableViewController {
     //}
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return contacts.count
+        if searchController.isActive {
+            return searchContacts.count
+        } else {
+            return contacts.count
+        }
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+       
+        let contact = (searchController.isActive) ? searchContacts[indexPath.row] : contacts[indexPath.row]
         let CellID = "CellContact"
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: CellID, for: indexPath) as! ContactViewCell
         
-        cell.avatarImage?.image = UIImage(named: contacts[indexPath.row].photoImage)
+        cell.avatarImage?.image = UIImage(named: contact.photoImage)
         cell.avatarImage.layer.cornerRadius = 30.0
         cell.avatarImage.clipsToBounds = true
-        cell.usernameLabel?.text = contacts[indexPath.row].userName
-        cell.presenceLabel?.text = contacts[indexPath.row].lastPresenceTime
+        cell.usernameLabel?.text = contact.userName
+        cell.presenceLabel?.text = contact.lastPresenceTime
         
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if searchController.isActive {
+            return false
+        }   else {
+            return true
+        }
+    }
+    
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -122,11 +145,13 @@ class ContactListViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetails"
+         if segue.identifier == "showContactDetails"
         {
+            print("prepare")
+
             if let indexPath = tableView.indexPathForSelectedRow {
                 let destinationController = segue.destination as! ContactDetailsViewController
-                destinationController.contact = contacts[indexPath.row]
+                destinationController.contact = (searchController.isActive) ? searchContacts[indexPath.row] : contacts[indexPath.row]
             }
         }
     }
@@ -135,7 +160,37 @@ class ContactListViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.hidesBarsOnSwipe = true
+        
+        //let childView = self.childViewControllers.last as! ContactDetailsViewController
+
+        
     }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        if let searchText = searchController.searchBar.text {
+            filterSearchContact(searchText: searchText)
+            tableView.reloadData()
+        }
+    }
+    
+    func filterSearchContact(searchText: String) {
+        searchContacts = contacts.filter({ (contact: Contact) -> Bool in
+            let nameMatch = contact.userName.range(of: searchText, options: NSString.CompareOptions.caseInsensitive)
+            let phoneMatch = contact.phoneNumber.range(of: searchText, options: NSString.CompareOptions.caseInsensitive)
+            
+            return nameMatch != nil || phoneMatch != nil
+        })
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     // Override to support editing the table view.
     //override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
