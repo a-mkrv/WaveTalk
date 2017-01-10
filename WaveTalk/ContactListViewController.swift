@@ -11,18 +11,20 @@ import UIKit
 class ContactListViewController: UITableViewController, UISearchResultsUpdating {
 
     var searchController: UISearchController!
+    private let searchBar = UISearchBar(frame: CGRect.zero)
+    
     
     var searchContacts: [Contact] = []
     var contacts: [Contact] = [
-        Contact(userName: "Anton",    lastMessage: "Hello..",    lastPresenceTime: "...",  phoneNumber: "11-11-11", photoImage: "1"),
-        Contact(userName: "Ivan",     lastMessage: "Ok, fine!", lastPresenceTime: "...",   phoneNumber: "22-22-22", photoImage: "2"),
-        Contact(userName: "Diana",    lastMessage: "Goodbye!",  lastPresenceTime: "...",   phoneNumber: "33-33-33", photoImage: "3"),
-        Contact(userName: "Oleg",     lastMessage: "This is the best iOS App", lastPresenceTime: "...", phoneNumber: "44-44-44", photoImage: "4"),
-        Contact(userName: "Matvey",   lastMessage: "I will be tomorrow", lastPresenceTime: "...", phoneNumber: "55-55-55", photoImage: "5"),
-        Contact(userName: "Sanek",    lastMessage: "Hm...",       lastPresenceTime: "...",  phoneNumber: "66-66-66", photoImage: "6"),
-        Contact(userName: "Darya",    lastMessage: "I Love You!", lastPresenceTime: "...",  phoneNumber: "77-77-77", photoImage: "7"),
-        Contact(userName: "Nikolay",    lastMessage: "NNGU - VMK", lastPresenceTime: "...",  phoneNumber: "88-88-88", photoImage: "1"),
-        Contact(userName: "Mama",    lastMessage: "Wow! Look!", lastPresenceTime: "...",  phoneNumber: "99-99-99", photoImage: "2")
+        Contact(userName: "Anton",    lastMessage: "Hello..",    lastPresenceTime: "...",  phoneNumber: "11-11-11", photoImage: "11"),
+        Contact(userName: "Ivan",     lastMessage: "Ok, fine!", lastPresenceTime: "...",   phoneNumber: "22-22-22", photoImage: "22"),
+        Contact(userName: "Diana",    lastMessage: "Goodbye!",  lastPresenceTime: "...",   phoneNumber: "33-33-33", photoImage: "33"),
+        Contact(userName: "Oleg",     lastMessage: "This is the best iOS App", lastPresenceTime: "...", phoneNumber: "44-44-44", photoImage: "44"),
+        Contact(userName: "Matvey",   lastMessage: "I will be tomorrow", lastPresenceTime: "...", phoneNumber: "55-55-55", photoImage: "55"),
+        Contact(userName: "Sanek",    lastMessage: "Hm...",       lastPresenceTime: "...",  phoneNumber: "66-66-66", photoImage: "66"),
+        Contact(userName: "Darya",    lastMessage: "I Love You!", lastPresenceTime: "...",  phoneNumber: "77-77-77", photoImage: "77"),
+        Contact(userName: "Nikolay",    lastMessage: "NNGU - VMK", lastPresenceTime: "...",  phoneNumber: "88-88-88", photoImage: "44"),
+        Contact(userName: "Mama",    lastMessage: "Wow! Look!", lastPresenceTime: "...",  phoneNumber: "99-99-99", photoImage: "11")
     ]
 
     override func viewDidLoad() {
@@ -32,9 +34,17 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         
-        tableView.tableHeaderView = searchController.searchBar
         
-        tableView.contentInset.top = UIApplication.shared.statusBarFrame.height
+        searchBar.sizeToFit()
+        let searchBarView = SearchBarView(frame: searchBar.bounds)
+        searchBarView.addSubview(searchBar)
+        
+        tableView.tableHeaderView = searchBarView
+        
+        //self.tableView.contentInset = UIEdgeInsetsMake(-32, 0, 0, 0)
+        //tableView.setContentOffset(CGPoint.zero, animated: true)
+
+        //tableView.contentInset.top = UIApplication.shared.statusBarFrame.height
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -43,10 +53,20 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    //check
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if let tableHeaderView = tableView.tableHeaderView {
+            tableView.bringSubview(toFront: tableHeaderView)
+        }
     }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        searchBar.frame.origin.y = max(0, scrollView.contentOffset.y + 20)
+    }
+    
+
 
     // MARK: - Table view data source
 
@@ -113,13 +133,6 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
     //    return true
     //}
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
 
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         // Social
@@ -159,11 +172,8 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.hidesBarsOnSwipe = true
-        
+        //navigationController?.hidesBarsOnSwipe = true
         //let childView = self.childViewControllers.last as! ContactDetailsViewController
-
-        
     }
     
     func updateSearchResults(for searchController: UISearchController) {
@@ -181,51 +191,8 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
             return nameMatch != nil || phoneMatch != nil
         })
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    // Override to support editing the table view.
-    //override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        
-        //if editingStyle == .delete {
-        //    Contacts.remove(at: indexPath.row)
-        //
-        //    tableView.deleteRows(at: [indexPath], with: .fade)
-        //}
-        
-    //}
-    
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

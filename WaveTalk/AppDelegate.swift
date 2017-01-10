@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
+        FIRApp.configure()
        // UINavigationBar.appearance().backgroundColor = UIColor(red: 58, green: 153, blue: 217, alpha: 1)
        // UIBarButtonItem.appearance().tintColor = UIColor.white
         UINavigationBar.appearance().barTintColor = UIColor(red:  58/255.0, green: 153/255.0, blue: 217/255.0, alpha: 100.0/100.0)

@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class ViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
 
+    
     let pageHeaders = ["Fastest!", "Reliable!", "Secure!", "Congratulation!"]
     let pageImages = ["Fastest","Reliable","Secure","Congratulation"]
     let pageDescriptions = [
@@ -25,6 +27,8 @@ class ViewController: UIViewController, UIPageViewControllerDataSource, UIPageVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //FIRAuth.auth()
         
         viewControllers = [viewControllerAtIndex(0)]
         
