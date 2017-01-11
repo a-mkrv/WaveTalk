@@ -11,9 +11,6 @@ import UIKit
 class ContactListViewController: UITableViewController, UISearchResultsUpdating {
 
     var searchController: UISearchController!
-    private let searchBar = UISearchBar(frame: CGRect.zero)
-    
-    
     var searchContacts: [Contact] = []
     var contacts: [Contact] = [
         Contact(userName: "Anton",    lastMessage: "Hello..",    lastPresenceTime: "...",  phoneNumber: "11-11-11", photoImage: "11"),
@@ -27,55 +24,42 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
         Contact(userName: "Mama",    lastMessage: "Wow! Look!", lastPresenceTime: "...",  phoneNumber: "99-99-99", photoImage: "11")
     ]
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
+        tableView.tableHeaderView = searchController.searchBar
         
-        
-        searchBar.sizeToFit()
-        let searchBarView = SearchBarView(frame: searchBar.bounds)
-        searchBarView.addSubview(searchBar)
-        
-        tableView.tableHeaderView = searchBarView
-        
+        searchController.hidesNavigationBarDuringPresentation = false
+        self.definesPresentationContext = true
+
         //self.tableView.contentInset = UIEdgeInsetsMake(-32, 0, 0, 0)
         //tableView.setContentOffset(CGPoint.zero, animated: true)
-
-        //tableView.contentInset.top = UIApplication.shared.statusBarFrame.height
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
-    //check
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
+
         if let tableHeaderView = tableView.tableHeaderView {
             tableView.bringSubview(toFront: tableHeaderView)
         }
     }
     
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        searchBar.frame.origin.y = max(0, scrollView.contentOffset.y + 20)
-    }
     
+    // Scrolling table
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
+    }
 
-    // MARK: - Table view data source
-
-    //override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-    //    return 0
-    //}
-
+    
+    // The number of contacts for displaying
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        // if the search is active, display the results
+        // otherwise all the available contacts
         if searchController.isActive {
             return searchContacts.count
         } else {
@@ -84,8 +68,9 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
     }
 
     
+    // Filling cells
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       
+        
         let contact = (searchController.isActive) ? searchContacts[indexPath.row] : contacts[indexPath.row]
         let CellID = "CellContact"
         let cell = tableView.dequeueReusableCell(withIdentifier: CellID, for: indexPath) as! ContactViewCell
@@ -99,15 +84,19 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
         return cell
     }
     
+    
+    // Able to edit the cell during search
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        
         if searchController.isActive {
             return false
-        }   else {
+        } else {
             return true
         }
     }
     
     
+    // Click on the cell - contact selection
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let contactInfo = UIAlertController(title: nil, message: "Что вы хотите сделать?", preferredStyle: .actionSheet)
@@ -126,17 +115,15 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
         contactInfo.addAction(cancelAction)
         contactInfo.addAction(callAction)
         
+        tableView.deselectRow(at: indexPath, animated: true)
         //self.present(contactInfo, animated: true, completion: nil)
     }
     
-    //override var prefersStatusBarHidden: Bool {
-    //    return true
-    //}
 
-
+    // Styling cell - swipe left [Share, Delete]
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        // Social
         
+        // Share contact
         let shareAction = UITableViewRowAction(style: .default, title: "Share", handler: { (action, indexPath) -> Void in
             let defaultText = "Just checking in at + " + self.contacts[indexPath.row].userName
             let activityController = UIActivityViewController(activityItems: [defaultText], applicationActivities: nil)
@@ -144,7 +131,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
             self.present(activityController, animated: true, completion: nil)
         })
         
-        
+        // Delete contact
         let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: { (action, indexPath) -> Void in
                 self.contacts.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .fade)
@@ -154,14 +141,13 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
         deleteAction.backgroundColor = UIColor.gray
         
         return [deleteAction, shareAction]
-        
     }
     
+    
+    // Opening details of the selected contact
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-         if segue.identifier == "showContactDetails"
-        {
-            print("prepare")
-
+        
+         if segue.identifier == "showContactDetails" {
             if let indexPath = tableView.indexPathForSelectedRow {
                 let destinationController = segue.destination as! ContactDetailsViewController
                 destinationController.contact = (searchController.isActive) ? searchContacts[indexPath.row] : contacts[indexPath.row]
@@ -171,19 +157,26 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
     
     
     override func viewWillAppear(_ animated: Bool) {
+        
         super.viewWillAppear(animated)
-        //navigationController?.hidesBarsOnSwipe = true
-        //let childView = self.childViewControllers.last as! ContactDetailsViewController
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.hidesBarsOnSwipe = false
     }
     
+    
+    // Update the table after filtering contacts
     func updateSearchResults(for searchController: UISearchController) {
+        
         if let searchText = searchController.searchBar.text {
             filterSearchContact(searchText: searchText)
             tableView.reloadData()
         }
     }
     
+    
+    // Filter to search the contacts
     func filterSearchContact(searchText: String) {
+        
         searchContacts = contacts.filter({ (contact: Contact) -> Bool in
             let nameMatch = contact.userName.range(of: searchText, options: NSString.CompareOptions.caseInsensitive)
             let phoneMatch = contact.phoneNumber.range(of: searchText, options: NSString.CompareOptions.caseInsensitive)
@@ -192,6 +185,8 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
         })
     }
 
+    
+    // Receive Memory Warning
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }

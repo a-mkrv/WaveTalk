@@ -35,8 +35,9 @@ class ContactDetailsViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.hidesBarsOnSwipe = false
-        navigationController?.setNavigationBarHidden(false, animated: true)
+        
+        //navigationController?.hidesBarsOnSwipe = false
+        //navigationController?.setNavigationBarHidden(false, animated: true)
     }
 
 }

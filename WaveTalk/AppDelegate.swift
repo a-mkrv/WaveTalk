@@ -13,30 +13,45 @@ import Firebase
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
         FIRApp.configure()
-       // UINavigationBar.appearance().backgroundColor = UIColor(red: 58, green: 153, blue: 217, alpha: 1)
-       // UIBarButtonItem.appearance().tintColor = UIColor.white
-        UINavigationBar.appearance().barTintColor = UIColor(red:  58/255.0, green: 153/255.0, blue: 217/255.0, alpha: 100.0/100.0)
         
+        UINavigationBar.appearance().barTintColor = UIColor(red: 80/255.0, green: 114/255.0, blue: 153/255.0, alpha: 100.0/100.0)
         if let barFont = UIFont(name: "Avenir-Light", size: 24.0) {
             UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: barFont]
         }
         
+        //setGradiendNavigationBar()
         UIApplication.shared.statusBarStyle = .lightContent
-        // Override point for customization after application launch
-        
-        //let pageControl = UIPageControl.appearance()
-        //pageControl.pageIndicatorTintColor = UIColor.lightGray
-        //pageControl.pageIndicatorTintColor = UIColor.black
-        //pageControl.pageIndicatorTintColor = UIColor.white
         
         return true
     }
 
+    func setGradiendNavigationBar() {
+        let gradient = CAGradientLayer()
+        let sizeLength = UIScreen.main.bounds.size.height * 2
+        let defaultNavigationBarFrame = CGRect(x: 0, y: 0, width: sizeLength, height: 64)
+        gradient.frame = defaultNavigationBarFrame
+        let color1 = UIColor(red:  58/255.0, green: 153/255.0, blue: 217/255.0, alpha: 100.0/100.0)
+        let color3 = UIColor.blue
+        let color2 = UIColor.white
+        
+        gradient.colors = [color3.cgColor, color1.cgColor, color2.cgColor]
+        
+        UINavigationBar.appearance().setBackgroundImage(self.fradientImage(fromLayer: gradient), for: .default)
+    }
+    
+    func fradientImage(fromLayer layer: CALayer) -> UIImage {
+        UIGraphicsBeginImageContext(layer.frame.size)
+        layer.render(in: UIGraphicsGetCurrentContext()!)
+        let outputImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return outputImage!
+    }
+    
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
