@@ -79,11 +79,10 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
         cell.avatarImage.layer.cornerRadius = 30.0
         cell.avatarImage.clipsToBounds = true
         cell.usernameLabel?.text = contact.userName
-        cell.presenceLabel?.text = contact.lastPresenceTime
+        cell.phonenumberLabel?.text = contact.phoneNumber
         
         return cell
     }
-    
     
     // Able to edit the cell during search
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -101,7 +100,6 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
         
         let contactInfo = UIAlertController(title: nil, message: "Что вы хотите сделать?", preferredStyle: .actionSheet)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
         
         let callActionHandler = { (action: UIAlertAction!) -> Void in
             let alertMessage = UIAlertController(title: "Сервис недоступен", message: "Повторите позже. Недоступно.", preferredStyle: .alert)

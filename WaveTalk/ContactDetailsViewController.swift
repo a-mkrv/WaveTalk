@@ -17,7 +17,6 @@ class ContactDetailsViewController: UITableViewController {
     @IBOutlet weak var phoneLabel: UILabel!
     
     var contact = Contact(userName: "", lastMessage: "", lastPresenceTime: "", phoneNumber: "", photoImage: "")
-
     
     override func viewDidLoad() {
         photoImage.image = UIImage(named: contact.photoImage)

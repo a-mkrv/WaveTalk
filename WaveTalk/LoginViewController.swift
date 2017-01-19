@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
 
 class LoginViewController: UIViewController {
 
@@ -57,7 +59,15 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginPress(_ sender: Any) {
-        //performSegue(withIdentifier: "mainTabBar", sender: self)
+        /*FIRAuth.auth()?.signInAnonymously() { (user: FIRUser?, error: NSError?) in
+            if error = nil {
+                print("UserID: \(user!.uid)")
+            } else {
+                print(error!.localizedDescription)
+                return
+            }
+        }
+ */
     }
     
     @IBAction func signupPress(_ sender: Any) {

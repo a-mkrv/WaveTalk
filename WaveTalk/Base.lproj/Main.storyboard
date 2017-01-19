@@ -184,8 +184,8 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Presence" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sdt-6T-jgC">
-                                                    <rect key="frame" x="0.0" y="39" width="91.5" height="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mobile phone" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sdt-6T-jgC">
+                                                    <rect key="frame" x="0.0" y="39" width="88" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -205,7 +205,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="avatarImage" destination="bqp-nr-QN7" id="ujt-tb-T0a"/>
-                                    <outlet property="presenceLabel" destination="Sdt-6T-jgC" id="Y1T-bx-nHF"/>
+                                    <outlet property="phonenumberLabel" destination="Sdt-6T-jgC" id="NCr-Qh-Vym"/>
                                     <outlet property="usernameLabel" destination="i6a-Gy-VEr" id="PFF-wp-qSL"/>
                                     <segue destination="zF5-4h-rqt" kind="show" identifier="showContactDetails" id="HtP-eK-VAA"/>
                                 </connections>
@@ -411,10 +411,10 @@
             </objects>
             <point key="canvasLocation" x="2804" y="1977.6611694152925"/>
         </scene>
-        <!--View Controller-->
+        <!--Create Account View Controller-->
         <scene sceneID="oJW-kz-U7w">
             <objects>
-                <viewController id="KoU-ec-JZ5" sceneMemberID="viewController">
+                <viewController id="KoU-ec-JZ5" customClass="CreateAccountViewController" customModule="WaveTalk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Fly-FH-Uex"/>
                         <viewControllerLayoutGuide type="bottom" id="HrO-nl-reY"/>
@@ -455,21 +455,37 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B3b-W9-m8J">
+                                <rect key="frame" x="150" y="493" width="71" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uGh-LH-E3c">
-                                <rect key="frame" x="90" y="454" width="193" height="60"/>
+                                <rect key="frame" x="90" y="405" width="193" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Optima-Regular" family="Optima" pointSize="30"/>
                                 <state key="normal" title="Sign Up">
                                     <color key="titleColor" red="0.1915335953" green="0.53724908829999996" blue="0.71491414310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="createAccount:" destination="KoU-ec-JZ5" eventType="touchUpInside" id="JvL-JK-77h"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="emailField" destination="d0V-TY-JuP" id="jue-Kj-Rt3"/>
+                        <outlet property="passwordField" destination="8jW-d3-Jur" id="vqK-ZA-LXt"/>
+                        <outlet property="usernameField" destination="G3C-gd-HZB" id="hA7-nd-4L6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Og-jO-CHe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="929" y="812"/>
+            <point key="canvasLocation" x="928.79999999999995" y="811.84407796101959"/>
         </scene>
         <!--Forgot Pswd View Controller-->
         <scene sceneID="DgU-RE-B4i">
@@ -797,6 +813,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fcl-9v-fti" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1055" y="3503"/>
+        </scene>
+        <!--Chatting View Controller-->
+        <scene sceneID="Fod-C8-8E6">
+            <objects>
+                <viewController id="CfH-RM-i6l" customClass="ChattingViewController" customModule="WaveTalk" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="e9U-KQ-mQb"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ao3-k8-a8i"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Wen-8I-Fnv">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8Ku-XI-CQn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1031" y="4301"/>
         </scene>
     </scenes>
     <resources>

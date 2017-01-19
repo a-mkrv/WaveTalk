@@ -8,10 +8,11 @@
 
 import UIKit
 
-class SettingsListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SettingsListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SaveSettingsProtocol {
    
     @IBOutlet weak var settingsList: UITableView!
     @IBOutlet weak var photoImage: UIImageView!
+    var NotificationSett = NotificationSettings()
     
     let parameters = ["My Profile",  "Notifications", "Calls & Messages", "Privacy", "Media", "", "About", "Log Out"]
     
@@ -25,8 +26,8 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
         photoImage.layer.cornerRadius = photoImage.frame.height/2
         photoImage.clipsToBounds = true
     }
-    
 
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return parameters.count
     }
@@ -46,7 +47,6 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
             cell.nameOfSetting!.textColor = UIColor(red:  229/255.0, green: 77/255.0, blue: 66/255.0, alpha: 80.0/100.0)
 
         }
-        
         return cell
     }
     
@@ -59,6 +59,13 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
         if cellName != "" && cellName != "Log Out" {
             let VC = storyboard.instantiateViewController(withIdentifier: parameters[indexPath.row])
             VC.navigationItem.title = parameters[indexPath.row]
+
+            if (cellName == "Notifications") {
+                let destinationController = VC as! NotificationSettingsViewController
+                destinationController.delegate = self
+                destinationController.NotificationSett = NotificationSett
+            }
+            
             self.navigationController?.navigationBar.topItem?.title = ""
             self.navigationController?.pushViewController(VC, animated: true)
         }
@@ -67,6 +74,23 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     
+    
+    
+    func setSound(newValue: Bool) {
+        self.NotificationSett.Sound = newValue
+    }
+    
+    func setVibrate(newValue: Bool) {
+        self.NotificationSett.Vibrate = newValue
+    }
+    
+    func setPopUp(newValue: Bool) {
+        self.NotificationSett.PopUp = newValue
+    }
+    
+    func setAlertTime(newValue: String) {
+        self.NotificationSett.Alert = newValue
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
