@@ -11,7 +11,7 @@ import Foundation
 class NotificationSettings {
     
     let defaults = UserDefaults.standard
-
+    
     var Alert: String {
         get {
             return defaults.object(forKey: "AlertTime") as! String
@@ -48,26 +48,25 @@ class NotificationSettings {
         }
     }
     
-    var Repeat: Int {
+    var Repeat: String {
         get {
-            return defaults.integer(forKey: "Repeate")
+            return defaults.object(forKey: "RepeatTime") as! String
         }
         set (newVal) {
-            defaults.set(newVal, forKey: "Repeate")
+            defaults.set(newVal, forKey: "RepeatTime")
         }
     }
     
-    init(Alert: String, Sound: Bool, Vibrate: Bool, PopUp: Bool, Repeat: Int) {
+    init(Alert: String, Sound: Bool, Vibrate: Bool, PopUp: Bool, Repeat: String) {
         self.Alert = Alert
         self.Sound = Sound
         self.Vibrate = Vibrate
         self.PopUp = PopUp
         self.Repeat = Repeat
     }
-
+    
     
     init () {
-    
     }
     
 }
