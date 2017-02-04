@@ -11,6 +11,8 @@ import UIKit
 class UserNameViewController: UIViewController {
     
     @IBOutlet weak var usernameTextField: UITextField!
+    var delegate: ProfileSettingsProtocol?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,9 +24,8 @@ class UserNameViewController: UIViewController {
     }
     
     func saveUserName (sender:UIButton) {
-        
-        // TODO: implement save a username
-        
+        delegate?.setUserName(newValue: usernameTextField.text!)
+        _ = navigationController?.popViewController(animated: true)
     }
     
     override func didReceiveMemoryWarning() {

@@ -14,6 +14,7 @@ class PhoneNumberViewController: UIViewController {
     
     @IBOutlet weak var codeTextField: UITextField!
     @IBOutlet weak var numberTextField: UITextField!
+    var delegate: ProfileSettingsProtocol?
     
     
     override func viewDidLoad() {
@@ -28,12 +29,9 @@ class PhoneNumberViewController: UIViewController {
     
     
     func savePhoneNumber(sender:UIButton) {
-        
-        // TODO: implement save a username
-        
+        delegate?.setPhoneNumber(newValue: codeTextField.text! + numberTextField.text!)
+        _ = navigationController?.popViewController(animated: true)
     }
-    
-    
     
     @IBAction func setCodeBrackets(_ sender: UITextField) {
         
@@ -41,7 +39,7 @@ class PhoneNumberViewController: UIViewController {
         
         if ((codeTextField.text?.characters.count)! > 1) {
             //var str: String = codeTextField.text!
-            //var lastCharacter = str[str.index(before: str.endIndex)]
+            //let lastCharacter = str[str.index(before: str.endIndex)]
             
             //str.remove(at: str.index(before: (str.endIndex)))
             //str.remove(at: str.index(before: (str.endIndex)))

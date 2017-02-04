@@ -18,19 +18,17 @@ class NotificationSettingsViewController: UITableViewController {
     @IBOutlet weak var popupSwitch: UISwitch!
     @IBOutlet weak var repeatLabel: UILabel!
     
-    var delegate:SaveSettingsProtocol?
-    var NotificationSett: NotificationSettings!
-    let defaults = UserDefaults.standard
-    
+    var delegate: NotificationSettingsProtocol?
+    var notificationSettings: NotificationSettings!    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        alertLabel.text = NotificationSett.Alert
-        soundSwitch.setOn(NotificationSett.Sound, animated: true)
-        vibrateSwitch.setOn(NotificationSett.Vibrate, animated: true)
-        popupSwitch.setOn(NotificationSett.PopUp, animated: true)
-        repeatLabel.text = NotificationSett.Repeat
+        alertLabel.text = notificationSettings.Alert
+        soundSwitch.setOn(notificationSettings.Sound, animated: true)
+        vibrateSwitch.setOn(notificationSettings.Vibrate, animated: true)
+        popupSwitch.setOn(notificationSettings.PopUp, animated: true)
+        repeatLabel.text = notificationSettings.Repeat
     }
     
     

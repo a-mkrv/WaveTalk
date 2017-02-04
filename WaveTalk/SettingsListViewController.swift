@@ -8,11 +8,13 @@
 
 import UIKit
 
-class SettingsListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SaveSettingsProtocol {
+class SettingsListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NotificationSettingsProtocol {
     
     @IBOutlet weak var settingsList: UITableView!
     @IBOutlet weak var photoImage: UIImageView!
-    var NotificationSett = NotificationSettings()
+    
+    var notificationSettings = NotificationSettings()
+    var profileSettings = ProfileSettings()
     
     let parameters = ["My Profile",  "Notifications", "Calls & Messages", "Privacy", "Media", "", "About", "Log Out"]
     
@@ -63,7 +65,11 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
             if (cellName == "Notifications") {
                 let destinationController = VC as! NotificationSettingsViewController
                 destinationController.delegate = self
-                destinationController.NotificationSett = NotificationSett
+                destinationController.notificationSettings = notificationSettings
+            }
+            else if (cellName == "My Profile") {
+                let destinationController = VC as! ProfileSettingsViewController
+                destinationController.profileSettings = profileSettings
             }
             
             self.navigationController?.navigationBar.topItem?.title = ""
@@ -75,23 +81,23 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
     
     
     func setSound(newValue: Bool) {
-        self.NotificationSett.Sound = newValue
+        self.notificationSettings.Sound = newValue
     }
     
     func setVibrate(newValue: Bool) {
-        self.NotificationSett.Vibrate = newValue
+        self.notificationSettings.Vibrate = newValue
     }
     
     func setPopUp(newValue: Bool) {
-        self.NotificationSett.PopUp = newValue
+        self.notificationSettings.PopUp = newValue
     }
     
     func setAlertTime(newValue: String) {
-        self.NotificationSett.Alert = newValue
+        self.notificationSettings.Alert = newValue
     }
     
     func setRepeatTime(newValue: String) {
-        self.NotificationSett.Repeat = newValue
+        self.notificationSettings.Repeat = newValue
     }
     
     override func didReceiveMemoryWarning() {

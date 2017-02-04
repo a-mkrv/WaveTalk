@@ -8,19 +8,30 @@
 
 import UIKit
 
-class ProfileSettingsViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
+class ProfileSettingsViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate, ProfileSettingsProtocol {
     
     @IBOutlet weak var profilePhotoImage: UIImageView!
     @IBOutlet weak var firstnameInput: UITextField!
     @IBOutlet weak var lastnameInput: UITextField!
     
+    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var phoneLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
+    
+    var delegate: ProfileSettingsProtocol?
     var pickImageController = UIImagePickerController()
-
+    var profileSettings: ProfileSettings!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initUI()
         
+        usernameLabel.text = profileSettings.userName
+        phoneLabel.text = profileSettings.phoneNumber
+        statusLabel.text = profileSettings.status
     }
+    
     
     func initUI() {
         self.profilePhotoImage.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action:
@@ -39,6 +50,35 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
     }
     
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if (indexPath.section == 1) {
+            switch (indexPath.row) {
+            case 0:
+                let userNameViewController = self.storyboard?.instantiateViewController(withIdentifier: "usernameVC") as! UserNameViewController
+                userNameViewController.delegate = self
+                self.navigationController?.pushViewController(userNameViewController, animated: true)
+                
+                break
+            case 1:
+                let phoneNumberViewController = self.storyboard?.instantiateViewController(withIdentifier: "phonenumberVC") as! PhoneNumberViewController
+                phoneNumberViewController.delegate = self
+                self.navigationController?.pushViewController(phoneNumberViewController, animated: true)
+                
+                break
+            case 2:
+                // Add status
+                break
+            default:
+                break
+            }
+            
+        }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    
     func loadProfilePhoto(_ recognizer: UIPanGestureRecognizer) {
         let alertController = UIAlertController(title: "Update Profile Photo", message: "Choose from", preferredStyle: .actionSheet)
         
@@ -53,7 +93,7 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
         }
         
         let buttonCancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) -> Void in }
-
+        
         alertController.addAction(cameraAction)
         alertController.addAction(libraryAction)
         alertController.addAction(buttonCancel)
@@ -69,7 +109,7 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
         }
     }
     
-
+    
     func pickImageFromLibrary() {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
             pickImageController.sourceType = UIImagePickerControllerSourceType.photoLibrary
@@ -77,7 +117,7 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
         }
     }
     
-
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
         
         if info[UIImagePickerControllerOriginalImage] != nil {
@@ -88,28 +128,19 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
     }
     
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       
-        // TODO: implement Select Row
-
-        
-        if (indexPath.section == 1) {
-            switch (indexPath.row) {
-            case 0:
-                
-                break
-            case 1:
-                
-                break
-            case 2:
-                
-                break
-            default:
-                break
-            }
-        }
-        
-        tableView.deselectRow(at: indexPath, animated: true)
+    func setUserName(newValue: String) {
+        usernameLabel.text = newValue
+        self.profileSettings.userName = newValue
+    }
+    
+    func setPhoneNumber(newValue: String) {
+        phoneLabel.text = newValue
+        self.profileSettings.phoneNumber = newValue
+    }
+    
+    
+    func setStatus(newValue: String) {
+        self.profileSettings.status = newValue
     }
     
     

@@ -8,10 +8,18 @@
 
 import Foundation
 
-protocol SaveSettingsProtocol {
+protocol NotificationSettingsProtocol {
     func setSound(newValue: Bool)
     func setVibrate(newValue: Bool)
     func setPopUp(newValue: Bool)
     func setAlertTime(newValue: String)
     func setRepeatTime(newValue: String)
 }
+
+protocol ProfileSettingsProtocol {
+    func setUserName(newValue: String)
+    func setPhoneNumber(newValue: String)
+    func setStatus(newValue: String)
+}
+
+

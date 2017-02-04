@@ -14,7 +14,14 @@ class NotificationSettings {
     
     var Alert: String {
         get {
-            return defaults.object(forKey: "AlertTime") as! String
+            let alertStr = defaults.object(forKey: "AlertTime") as? String
+            
+            if alertStr != nil {
+                return alertStr!
+            }
+            else {
+                return "On"
+            }
         }
         set (newVal) {
             defaults.set(newVal, forKey: "AlertTime")
@@ -50,7 +57,14 @@ class NotificationSettings {
     
     var Repeat: String {
         get {
-            return defaults.object(forKey: "RepeatTime") as! String
+            let repeatStr = defaults.object(forKey: "RepeatTime") as? String
+            
+            if repeatStr != nil {
+                return repeatStr!
+            }
+            else {
+                return "15 minutes"
+            }
         }
         set (newVal) {
             defaults.set(newVal, forKey: "RepeatTime")

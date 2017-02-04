@@ -11,21 +11,32 @@
 		771E12D21E23A9450084417A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 771E12D11E23A9450084417A /* GoogleService-Info.plist */; };
 		771E12DA1E2502050084417A /* SettingsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771E12D91E2502050084417A /* SettingsListViewController.swift */; };
 		771E12DC1E250A7F0084417A /* SettingsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771E12DB1E250A7F0084417A /* SettingsViewCell.swift */; };
+		77310E1C1E2FAFCD00F67DDF /* ProfileSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77310E1B1E2FAFCD00F67DDF /* ProfileSettingsViewController.swift */; };
 		774113A41E16AE3700DCAC6D /* ContactData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774113A31E16AE3700DCAC6D /* ContactData.swift */; };
+		77560DEC1E3C8A7700C5BD87 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77560DEB1E3C8A7700C5BD87 /* Extensions.swift */; };
 		775A97711DD87BB50027C0F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775A97701DD87BB50027C0F5 /* AppDelegate.swift */; };
 		775A97731DD87BB50027C0F5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775A97721DD87BB50027C0F5 /* ViewController.swift */; };
 		775A97761DD87BB50027C0F5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 775A97741DD87BB50027C0F5 /* Main.storyboard */; };
 		775A977B1DD87BB50027C0F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 775A97791DD87BB50027C0F5 /* LaunchScreen.storyboard */; };
+		7763E5271E34E7DF00F36193 /* SaveSettingsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7763E5261E34E7DF00F36193 /* SaveSettingsProtocol.swift */; };
+		7774E2661E29085B00E0C1BA /* ChattingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7774E2651E29085B00E0C1BA /* ChattingViewController.swift */; };
 		777E62461DE1A0B200840242 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777E62451DE1A0B200840242 /* LoginViewController.swift */; };
-		777E62481DE1D13900840242 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777E62471DE1D13900840242 /* SignUpViewController.swift */; };
+		777E62481DE1D13900840242 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777E62471DE1D13900840242 /* CreateAccountViewController.swift */; };
 		777E624A1DE1DE6B00840242 /* ForgotPswdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777E62491DE1DE6B00840242 /* ForgotPswdViewController.swift */; };
 		77B3EBA51E1E59C10090C6F5 /* ContactListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3EBA41E1E59C10090C6F5 /* ContactListViewController.swift */; };
 		77B3EBA71E1E61FB0090C6F5 /* ContactViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3EBA61E1E61FB0090C6F5 /* ContactViewCell.swift */; };
 		77B63B2C1DE0826400127E96 /* PageContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B63B2B1DE0826400127E96 /* PageContentViewController.swift */; };
+		77C887CA1E269606004C61D9 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77C887C91E269606004C61D9 /* Setting.storyboard */; };
+		77CAC8231E2FBAFD00D5EE11 /* NotificationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CAC8221E2FBAFD00D5EE11 /* NotificationSettingsViewController.swift */; };
+		77CAC8251E30BA9600D5EE11 /* NotificationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CAC8241E30BA9600D5EE11 /* NotificationSettings.swift */; };
+		77CAC8281E30CCE900D5EE11 /* ProfileSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CAC8271E30CCE900D5EE11 /* ProfileSettings.swift */; };
 		77D68F241E224E77002FF652 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77D68F231E224E77002FF652 /* Assets.xcassets */; };
 		77D68F261E226B1A002FF652 /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D68F251E226B1A002FF652 /* SearchBarView.swift */; };
 		77D68F281E22A6C9002FF652 /* DialogViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D68F271E22A6C9002FF652 /* DialogViewCell.swift */; };
 		77D68F2A1E22B83E002FF652 /* DialogListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D68F291E22B83E002FF652 /* DialogListViewController.swift */; };
+		77F31F4C1E3C98720090FED7 /* UserNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F31F4B1E3C98720090FED7 /* UserNameViewController.swift */; };
+		77F31F4E1E3D10F90090FED7 /* PhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F31F4D1E3D10F90090FED7 /* PhoneNumberViewController.swift */; };
+		77F8F2311E3E6607001065BC /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F8F2301E3E6607001065BC /* StatusViewController.swift */; };
 		E1F19E49C8BC6DE8E3E1A989 /* Pods_WaveTalk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7F2C47FD70473EEFCD69DD6 /* Pods_WaveTalk.framework */; };
 /* End PBXBuildFile section */
 
@@ -34,24 +45,35 @@
 		771E12D11E23A9450084417A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		771E12D91E2502050084417A /* SettingsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsListViewController.swift; sourceTree = "<group>"; };
 		771E12DB1E250A7F0084417A /* SettingsViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewCell.swift; sourceTree = "<group>"; };
+		77310E1B1E2FAFCD00F67DDF /* ProfileSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSettingsViewController.swift; sourceTree = "<group>"; };
 		774113A31E16AE3700DCAC6D /* ContactData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactData.swift; sourceTree = "<group>"; };
+		77560DEB1E3C8A7700C5BD87 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		775A976D1DD87BB50027C0F5 /* WaveTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WaveTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		775A97701DD87BB50027C0F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		775A97721DD87BB50027C0F5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		775A97751DD87BB50027C0F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		775A977A1DD87BB50027C0F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		775A977C1DD87BB50027C0F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7763E5261E34E7DF00F36193 /* SaveSettingsProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveSettingsProtocol.swift; sourceTree = "<group>"; };
 		776F91B31DFD69A800B6AB1D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		7774E2651E29085B00E0C1BA /* ChattingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChattingViewController.swift; sourceTree = "<group>"; };
 		777E62451DE1A0B200840242 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		777E62471DE1D13900840242 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		777E62471DE1D13900840242 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		777E62491DE1DE6B00840242 /* ForgotPswdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPswdViewController.swift; sourceTree = "<group>"; };
 		77B3EBA41E1E59C10090C6F5 /* ContactListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactListViewController.swift; sourceTree = "<group>"; };
 		77B3EBA61E1E61FB0090C6F5 /* ContactViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactViewCell.swift; sourceTree = "<group>"; };
 		77B63B2B1DE0826400127E96 /* PageContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageContentViewController.swift; sourceTree = "<group>"; };
+		77C887C91E269606004C61D9 /* Setting.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
+		77CAC8221E2FBAFD00D5EE11 /* NotificationSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSettingsViewController.swift; sourceTree = "<group>"; };
+		77CAC8241E30BA9600D5EE11 /* NotificationSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSettings.swift; sourceTree = "<group>"; };
+		77CAC8271E30CCE900D5EE11 /* ProfileSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSettings.swift; sourceTree = "<group>"; };
 		77D68F231E224E77002FF652 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		77D68F251E226B1A002FF652 /* SearchBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		77D68F271E22A6C9002FF652 /* DialogViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogViewCell.swift; sourceTree = "<group>"; };
 		77D68F291E22B83E002FF652 /* DialogListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogListViewController.swift; sourceTree = "<group>"; };
+		77F31F4B1E3C98720090FED7 /* UserNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNameViewController.swift; sourceTree = "<group>"; };
+		77F31F4D1E3D10F90090FED7 /* PhoneNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneNumberViewController.swift; sourceTree = "<group>"; };
+		77F8F2301E3E6607001065BC /* StatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
 		78B7104A990097914FDF0D3C /* Pods-WaveTalk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WaveTalk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WaveTalk/Pods-WaveTalk.debug.xcconfig"; sourceTree = "<group>"; };
 		C7F2C47FD70473EEFCD69DD6 /* Pods_WaveTalk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WaveTalk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E927018FDA4701A2DA7D6628 /* Pods-WaveTalk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WaveTalk.release.xcconfig"; path = "Pods/Target Support Files/Pods-WaveTalk/Pods-WaveTalk.release.xcconfig"; sourceTree = "<group>"; };
@@ -77,6 +99,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		77310E1A1E2FAF8500F67DDF /* SettingViews */ = {
+			isa = PBXGroup;
+			children = (
+				77CAC8221E2FBAFD00D5EE11 /* NotificationSettingsViewController.swift */,
+				7763E5261E34E7DF00F36193 /* SaveSettingsProtocol.swift */,
+				771E12D91E2502050084417A /* SettingsListViewController.swift */,
+				77310E1B1E2FAFCD00F67DDF /* ProfileSettingsViewController.swift */,
+				77F31F4B1E3C98720090FED7 /* UserNameViewController.swift */,
+				77560DEB1E3C8A7700C5BD87 /* Extensions.swift */,
+				77F31F4D1E3D10F90090FED7 /* PhoneNumberViewController.swift */,
+				77F8F2301E3E6607001065BC /* StatusViewController.swift */,
+				77CAC8261E30CCB900D5EE11 /* Settings */,
+			);
+			name = SettingViews;
+			sourceTree = "<group>";
+		};
 		775A97641DD87BB40027C0F5 = {
 			isa = PBXGroup;
 			children = (
@@ -100,13 +138,12 @@
 			children = (
 				775A97701DD87BB50027C0F5 /* AppDelegate.swift */,
 				77D68F2C1E22BB58002FF652 /* Start/Login */,
-				775A97741DD87BB50027C0F5 /* Main.storyboard */,
-				771E12D91E2502050084417A /* SettingsListViewController.swift */,
-				77D68F251E226B1A002FF652 /* SearchBarView.swift */,
+				7774E2681E29099900E0C1BA /* Storyboards */,
+				7774E2671E29098600E0C1BA /* Chatting */,
 				77D68F2D1E22BB98002FF652 /* Cells */,
 				77D68F2B1E22BB22002FF652 /* Contacts */,
-				77D68F291E22B83E002FF652 /* DialogListViewController.swift */,
 				77B63B2B1DE0826400127E96 /* PageContentViewController.swift */,
+				77310E1A1E2FAF8500F67DDF /* SettingViews */,
 				775A97791DD87BB50027C0F5 /* LaunchScreen.storyboard */,
 				77D68F231E224E77002FF652 /* Assets.xcassets */,
 				771E12D11E23A9450084417A /* GoogleService-Info.plist */,
@@ -115,9 +152,37 @@
 			path = WaveTalk;
 			sourceTree = "<group>";
 		};
+		7774E2671E29098600E0C1BA /* Chatting */ = {
+			isa = PBXGroup;
+			children = (
+				7774E2651E29085B00E0C1BA /* ChattingViewController.swift */,
+				77D68F291E22B83E002FF652 /* DialogListViewController.swift */,
+			);
+			name = Chatting;
+			sourceTree = "<group>";
+		};
+		7774E2681E29099900E0C1BA /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				775A97741DD87BB50027C0F5 /* Main.storyboard */,
+				77C887C91E269606004C61D9 /* Setting.storyboard */,
+			);
+			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		77CAC8261E30CCB900D5EE11 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				77CAC8241E30BA9600D5EE11 /* NotificationSettings.swift */,
+				77CAC8271E30CCE900D5EE11 /* ProfileSettings.swift */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 		77D68F2B1E22BB22002FF652 /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
+				77D68F251E226B1A002FF652 /* SearchBarView.swift */,
 				7705EDC81E21402C008CDF67 /* ContactDetailsViewController.swift */,
 				77B3EBA41E1E59C10090C6F5 /* ContactListViewController.swift */,
 				774113A31E16AE3700DCAC6D /* ContactData.swift */,
@@ -130,7 +195,7 @@
 			children = (
 				775A97721DD87BB50027C0F5 /* ViewController.swift */,
 				777E62491DE1DE6B00840242 /* ForgotPswdViewController.swift */,
-				777E62471DE1D13900840242 /* SignUpViewController.swift */,
+				777E62471DE1D13900840242 /* CreateAccountViewController.swift */,
 				777E62451DE1A0B200840242 /* LoginViewController.swift */,
 			);
 			name = Start/Login;
@@ -185,7 +250,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Anton Makarov";
 				TargetAttributes = {
 					775A976C1DD87BB40027C0F5 = {
@@ -218,6 +283,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				775A977B1DD87BB50027C0F5 /* LaunchScreen.storyboard in Resources */,
+				77C887CA1E269606004C61D9 /* Setting.storyboard in Resources */,
 				771E12D21E23A9450084417A /* GoogleService-Info.plist in Resources */,
 				77D68F241E224E77002FF652 /* Assets.xcassets in Resources */,
 				775A97761DD87BB50027C0F5 /* Main.storyboard in Resources */,
@@ -281,19 +347,29 @@
 			files = (
 				777E62461DE1A0B200840242 /* LoginViewController.swift in Sources */,
 				77B3EBA51E1E59C10090C6F5 /* ContactListViewController.swift in Sources */,
+				7763E5271E34E7DF00F36193 /* SaveSettingsProtocol.swift in Sources */,
 				771E12DA1E2502050084417A /* SettingsListViewController.swift in Sources */,
 				777E624A1DE1DE6B00840242 /* ForgotPswdViewController.swift in Sources */,
 				77B63B2C1DE0826400127E96 /* PageContentViewController.swift in Sources */,
 				7705EDC91E21402C008CDF67 /* ContactDetailsViewController.swift in Sources */,
 				774113A41E16AE3700DCAC6D /* ContactData.swift in Sources */,
+				77310E1C1E2FAFCD00F67DDF /* ProfileSettingsViewController.swift in Sources */,
+				77F8F2311E3E6607001065BC /* StatusViewController.swift in Sources */,
+				77560DEC1E3C8A7700C5BD87 /* Extensions.swift in Sources */,
+				77CAC8231E2FBAFD00D5EE11 /* NotificationSettingsViewController.swift in Sources */,
 				77D68F281E22A6C9002FF652 /* DialogViewCell.swift in Sources */,
+				7774E2661E29085B00E0C1BA /* ChattingViewController.swift in Sources */,
 				77B3EBA71E1E61FB0090C6F5 /* ContactViewCell.swift in Sources */,
 				77D68F2A1E22B83E002FF652 /* DialogListViewController.swift in Sources */,
 				77D68F261E226B1A002FF652 /* SearchBarView.swift in Sources */,
 				775A97731DD87BB50027C0F5 /* ViewController.swift in Sources */,
 				771E12DC1E250A7F0084417A /* SettingsViewCell.swift in Sources */,
 				775A97711DD87BB50027C0F5 /* AppDelegate.swift in Sources */,
-				777E62481DE1D13900840242 /* SignUpViewController.swift in Sources */,
+				77F31F4C1E3C98720090FED7 /* UserNameViewController.swift in Sources */,
+				77F31F4E1E3D10F90090FED7 /* PhoneNumberViewController.swift in Sources */,
+				777E62481DE1D13900840242 /* CreateAccountViewController.swift in Sources */,
+				77CAC8281E30CCE900D5EE11 /* ProfileSettings.swift in Sources */,
+				77CAC8251E30BA9600D5EE11 /* NotificationSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,6 +414,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -387,6 +464,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
