@@ -1,0 +1,5 @@
+{
+ "language": "objective-c",
+ "osx_image": "xcode8.2",
+ "xcode_project": "WaveTalk.xcworkspace"
+}
