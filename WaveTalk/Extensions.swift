@@ -23,3 +23,25 @@ extension UITextField {
         self.layer.masksToBounds = true
     }
 }
+
+//////////////////////////////////////////////
+// View Controller
+
+extension UIViewController {
+    func hideKeyboard() {
+        
+        //FIXME: Fix hiding the keyboard by pressing the screen
+        //Now this is done in part, because lost access to the cells of the table
+        //Only by pressing "Return"
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer( target: self,
+            action: #selector(UIViewController.dismissKeyboard))
+        
+        
+        //view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
+}

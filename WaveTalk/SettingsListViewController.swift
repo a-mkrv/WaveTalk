@@ -10,6 +10,10 @@ import UIKit
 
 class SettingsListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NotificationSettingsProtocol {
     
+    @IBOutlet weak var firstLastName: UILabel!
+    @IBOutlet weak var userName: UILabel!
+    @IBOutlet weak var phoneNumber: UILabel!
+    
     @IBOutlet weak var settingsList: UITableView!
     @IBOutlet weak var photoImage: UIImageView!
     
@@ -21,6 +25,26 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        updateMyInfo()
+        setProfileImage()
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        profileSettings = ProfileSettings()
+        updateMyInfo()
+    }
+    
+    
+    func updateMyInfo() {
+        firstLastName.text = profileSettings.firstName + " " + profileSettings.lastName
+        userName.text = "@" + profileSettings.userName
+        phoneNumber.text = "+" + profileSettings.phoneNumber
+    }
+    
+    
+    func setProfileImage() {
         photoImage.layer.borderWidth = 1
         photoImage.layer.masksToBounds = false
         photoImage.layer.borderColor = UIColor(red:  58/255.0, green: 153/255.0, blue: 217/255.0, alpha: 30.0/100.0).cgColor
@@ -52,6 +76,7 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
         return cell
     }
     
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let cell = tableView.cellForRow(at: indexPath) as! SettingsViewCell
@@ -72,13 +97,16 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
                 destinationController.profileSettings = profileSettings
             }
             
-            self.navigationController?.navigationBar.topItem?.title = ""
+            navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
             self.navigationController?.pushViewController(VC, animated: true)
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    
+    ///////////////////////////////////
+    // PROTOCOL'S METHODS
     
     func setSound(newValue: Bool) {
         self.notificationSettings.Sound = newValue
@@ -99,6 +127,8 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
     func setRepeatTime(newValue: String) {
         self.notificationSettings.Repeat = newValue
     }
+    
+    ///////////////////////////////////
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

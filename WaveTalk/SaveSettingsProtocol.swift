@@ -17,6 +17,7 @@ protocol NotificationSettingsProtocol {
 }
 
 protocol ProfileSettingsProtocol {
+    func setFirstOrLastName(name: String, newValue: String)
     func setUserName(newValue: String)
     func setPhoneNumber(newValue: String)
     func setStatus(newValue: String)

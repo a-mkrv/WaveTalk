@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileSettingsViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate, ProfileSettingsProtocol {
+class ProfileSettingsViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate, UITextFieldDelegate,  ProfileSettingsProtocol {
     
     @IBOutlet weak var profilePhotoImage: UIImageView!
     @IBOutlet weak var firstnameInput: UITextField!
@@ -25,9 +25,13 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboard()
+        
         initUI()
         
-        usernameLabel.text = profileSettings.userName
+        firstnameInput.text = profileSettings.firstName
+        lastnameInput.text = profileSettings.lastName
+        usernameLabel.text = "@" + profileSettings.userName
         phoneLabel.text = profileSettings.phoneNumber
         statusLabel.text = profileSettings.status
     }
@@ -46,7 +50,10 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
         profilePhotoImage.clipsToBounds = true
         
         firstnameInput.setBorderBottom()
+        firstnameInput.delegate = self
+        
         lastnameInput.setBorderBottom()
+        lastnameInput.delegate = self
     }
     
     
@@ -57,6 +64,7 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
             case 0:
                 let userNameViewController = self.storyboard?.instantiateViewController(withIdentifier: "usernameVC") as! UserNameViewController
                 userNameViewController.delegate = self
+                userNameViewController.userName = profileSettings.userName
                 self.navigationController?.pushViewController(userNameViewController, animated: true)
                 
                 break
@@ -128,10 +136,46 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
     }
     
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == self.firstnameInput {
+            saveFirstName(textField)
+        }
+        
+        if textField == self.lastnameInput {
+            saveLastName(textField)
+        }
+        
+        self.view.endEditing(true)
+        return false
+    }
+    
+    
+    @IBAction func saveFirstName(_ sender: UITextField) {
+        setFirstOrLastName(name: "FirstName", newValue: firstnameInput.text!)
+    }
+    
+    @IBAction func saveLastName(_ sender: UITextField) {
+        setFirstOrLastName(name: "LastName", newValue: lastnameInput.text!)
+    }
+    
+    
+    ///////////////////////////////////
+    // PROTOCOL'S METHODS
+    
+    func setFirstOrLastName(name: String, newValue: String) {
+        if name == "FirstName" {
+            self.profileSettings.firstName = newValue
+        } else if name == "LastName" {
+            self.profileSettings.lastName = newValue
+        }
+    }
+    
+    
     func setUserName(newValue: String) {
-        usernameLabel.text = newValue
+        usernameLabel.text = "@" + newValue
         self.profileSettings.userName = newValue
     }
+    
     
     func setPhoneNumber(newValue: String) {
         phoneLabel.text = newValue
@@ -143,6 +187,7 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
         self.profileSettings.status = newValue
     }
     
+    ///////////////////////////////////
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

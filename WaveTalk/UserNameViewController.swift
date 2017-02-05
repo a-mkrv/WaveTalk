@@ -11,8 +11,9 @@ import UIKit
 class UserNameViewController: UIViewController {
     
     @IBOutlet weak var usernameTextField: UITextField!
-    var delegate: ProfileSettingsProtocol?
     
+    var userName: String = ""
+    var delegate: ProfileSettingsProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +21,7 @@ class UserNameViewController: UIViewController {
         let rightAddBarButtonItem: UIBarButtonItem = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.saveUserName))
         self.navigationItem.setRightBarButton(rightAddBarButtonItem, animated: true)
         
+        usernameTextField.text = userName
         usernameTextField.setBorderBottom()
     }
     
