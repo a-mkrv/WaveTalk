@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="XGC-rK-Uwu">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qb5-oz-0dR">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -56,7 +56,7 @@
         <!--Login View Controller-->
         <scene sceneID="ZDt-p8-we4">
             <objects>
-                <viewController id="qb5-oz-0dR" customClass="LoginViewController" customModule="WaveTalk" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="loginBoard" id="qb5-oz-0dR" customClass="LoginViewController" customModule="WaveTalk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jU2-OY-Xcb"/>
                         <viewControllerLayoutGuide type="bottom" id="dve-x6-2xe"/>
@@ -87,18 +87,6 @@
                                 <fontDescription key="fontDescription" name="Optima-Regular" family="Optima" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NZQ-lE-TyL">
-                                <rect key="frame" x="119" y="415" width="136" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Optima-Regular" family="Optima" pointSize="32"/>
-                                <state key="normal" title="Log In">
-                                    <color key="titleColor" red="0.1915335953" green="0.53724908829999996" blue="0.71491414310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="loginPress:" destination="qb5-oz-0dR" eventType="touchUpInside" id="zL7-6Q-f4S"/>
-                                    <segue destination="XGC-rK-Uwu" kind="show" id="Odm-Pn-XnD"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="WaveTalk Inc. 2017" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VO2-lk-hsh">
                                 <rect key="frame" x="115" y="635" width="145" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -107,7 +95,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="igZ-lK-34X">
-                                <rect key="frame" x="125" y="513" width="125" height="50"/>
+                                <rect key="frame" x="125" y="516" width="125" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Optima-Regular" family="Optima" pointSize="30"/>
                                 <state key="normal" title="Sign Up">
@@ -122,10 +110,21 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="Forgot password?">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="forgotpassPress:" destination="qb5-oz-0dR" eventType="touchUpInside" id="Yts-uQ-D4c"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NZQ-lE-TyL">
+                                <rect key="frame" x="119" y="416" width="136" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Optima-Regular" family="Optima" pointSize="32"/>
+                                <state key="normal" title="Log In">
+                                    <color key="titleColor" red="0.1915335953" green="0.53724908829999996" blue="0.71491414310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="loginPress:" destination="qb5-oz-0dR" eventType="touchUpInside" id="1Y8-VF-vdn"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -133,7 +132,7 @@
                     </view>
                     <connections>
                         <outlet property="forgotButton" destination="XrF-wA-BGR" id="Von-nk-b5I"/>
-                        <outlet property="loginButton" destination="NZQ-lE-TyL" id="L47-no-ln0"/>
+                        <outlet property="loginButton" destination="NZQ-lE-TyL" id="YSU-uq-Peo"/>
                         <outlet property="loginInput" destination="UTQ-zU-acy" id="1pY-H3-4VN"/>
                         <outlet property="logoImage" destination="pHu-bC-OoY" id="PZe-vA-vT1"/>
                         <outlet property="passwordInput" destination="uUn-Ib-NNq" id="Qdt-ym-Bux"/>
@@ -150,7 +149,7 @@
         <!--Contacts-->
         <scene sceneID="W8h-JI-e8l">
             <objects>
-                <tableViewController id="UMr-mJ-3hj" customClass="ContactListViewController" customModule="WaveTalk" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ContactsBoard" id="UMr-mJ-3hj" customClass="ContactListViewController" customModule="WaveTalk" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" id="XZe-Fd-6Wz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -411,10 +410,10 @@
             </objects>
             <point key="canvasLocation" x="2804" y="1977.6611694152925"/>
         </scene>
-        <!--Create Account View Controller-->
+        <!--Registration View Controller-->
         <scene sceneID="oJW-kz-U7w">
             <objects>
-                <viewController id="KoU-ec-JZ5" customClass="CreateAccountViewController" customModule="WaveTalk" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="KoU-ec-JZ5" customClass="RegistrationViewController" customModule="WaveTalk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Fly-FH-Uex"/>
                         <viewControllerLayoutGuide type="bottom" id="HrO-nl-reY"/>
@@ -427,32 +426,18 @@
                                 <rect key="frame" x="0.0" y="430" width="375" height="264"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" alpha="0.29999999999999999" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="User Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="G3C-gd-HZB">
-                                <rect key="frame" x="90" y="159" width="195" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Registration" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XOv-w4-FRx">
                                 <rect key="frame" x="54" y="37" width="266" height="61"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Optima-Regular" family="Optima" pointSize="38"/>
-                                <color key="textColor" red="0.1915335953" green="0.53724908829999996" blue="0.71491414310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.19153359532356262" green="0.53724908828735352" blue="0.71491414308547974" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" alpha="0.29999999999999999" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8jW-d3-Jur">
-                                <rect key="frame" x="88" y="326" width="195" height="40"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="d0V-TY-JuP">
+                                <rect key="frame" x="78" y="243" width="215" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" alpha="0.29999999999999999" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Email / Phone" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="d0V-TY-JuP">
-                                <rect key="frame" x="90" y="244" width="195" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B3b-W9-m8J">
@@ -462,6 +447,9 @@
                                 <state key="normal" title="Cancel">
                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="backToLogin:" destination="KoU-ec-JZ5" eventType="touchUpInside" id="u0w-r2-lpJ"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uGh-LH-E3c">
                                 <rect key="frame" x="90" y="405" width="193" height="60"/>
@@ -474,11 +462,25 @@
                                     <action selector="createAccount:" destination="KoU-ec-JZ5" eventType="touchUpInside" id="JvL-JK-77h"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="G3C-gd-HZB">
+                                <rect key="frame" x="78" y="153" width="215" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8jW-d3-Jur">
+                                <rect key="frame" x="80" y="322" width="215" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="emailField" destination="d0V-TY-JuP" id="jue-Kj-Rt3"/>
+                        <outlet property="emailField" destination="d0V-TY-JuP" id="hXB-xX-yrg"/>
                         <outlet property="passwordField" destination="8jW-d3-Jur" id="vqK-ZA-LXt"/>
                         <outlet property="usernameField" destination="G3C-gd-HZB" id="hA7-nd-4L6"/>
                     </connections>
@@ -586,7 +588,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="U0M-Ff-OIY">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="XGC-rK-Uwu" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tabBarBoard" automaticallyAdjustsScrollViewInsets="NO" id="XGC-rK-Uwu" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="tMh-Wh-oIG">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>

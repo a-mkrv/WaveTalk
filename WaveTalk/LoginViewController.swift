@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import SCLAlertView
 import Firebase
 import FirebaseAuth
 
 class LoginViewController: UIViewController {
-
+    
     @IBOutlet weak var loginInput: UITextField!
     @IBOutlet weak var passwordInput: UITextField!
     @IBOutlet weak var logoImage: UIImageView!
@@ -19,35 +20,44 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var forgotButton: UIButton!
     @IBOutlet weak var wavesImage: UIImageView!
-    var animated = false
-
+    var previewAnimated = true
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        if !animated {
+        
+        loginInput.setBorderBottom()
+        passwordInput.setBorderBottom()
+        
+        //TODO: Show animation only at the first start / relogin
+        
+        if previewAnimated {
             self.logoImage.frame.origin.y -= 200
             self.wavesImage.frame.origin.y += 200
             self.logoImage.alpha = 0
             self.alphaOffOn(value: 0)
             
-            animated = true
+            previewAnimated = false
         }
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        UIView.animate(withDuration: 2.5, animations: {
-            self.logoImage.alpha = 1
-            self.logoImage.frame.origin.y += 200
-            self.wavesImage.frame.origin.y -= 200
-        }, completion: {
-            (value: Bool) in
-            UIView.animate(withDuration: 1.0, animations: { () -> Void in
-                self.alphaOffOn(value: 1)
+        if !previewAnimated {
+            UIView.animate(withDuration: 2.5, animations: {
+                self.logoImage.alpha = 1
+                self.logoImage.frame.origin.y += 200
+                self.wavesImage.frame.origin.y -= 200
+            }, completion: {
+                (value: Bool) in
+                UIView.animate(withDuration: 1.0, animations: { () -> Void in
+                    self.alphaOffOn(value: 1)
+                })
             })
-        })
+            
+        previewAnimated = false
+        }
     }
     
     func alphaOffOn(value: CGFloat) {
@@ -59,15 +69,23 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginPress(_ sender: Any) {
-        /*FIRAuth.auth()?.signInAnonymously() { (user: FIRUser?, error: NSError?) in
-            if error = nil {
-                print("UserID: \(user!.uid)")
+        FIRAuth.auth()?.signIn(withEmail: self.loginInput.text!, password: self.passwordInput.text!) { (user, error) in
+            
+            if error == nil {
+                
+                print("You have successfully logged in")
+                
+                // Go to the HomeViewController (TabBar) if the login is sucessful
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "tabBarBoard")
+                self.present(vc!, animated: true, completion: nil)
+                
             } else {
-                print(error!.localizedDescription)
-                return
+                // Error
+                SCLAlertView().showTitle( "Error", subTitle: "\nInvalid Login or Password\n",
+                    duration: 0.0, completeText: "Try again", style: .error, colorStyle: 0x4196BE
+                )
             }
         }
- */
     }
     
     @IBAction func signupPress(_ sender: Any) {
