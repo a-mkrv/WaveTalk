@@ -24,8 +24,8 @@ class ContactDetailsViewController: UITableViewController {
         presenceLabel.text = contact.lastPresenceTime
         phoneLabel.text = contact.phoneNumber
         
+        self.navigationItem.title = usernameLabel.text
         super.viewDidLoad()
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,9 +34,6 @@ class ContactDetailsViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        //navigationController?.hidesBarsOnSwipe = false
-        //navigationController?.setNavigationBarHidden(false, animated: true)
     }
 
 }

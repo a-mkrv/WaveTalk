@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class SettingsListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NotificationSettingsProtocol {
     
@@ -86,6 +87,7 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
         if cellName != "" && cellName != "Log Out" {
             let VC = storyboard.instantiateViewController(withIdentifier: parameters[indexPath.row])
             VC.navigationItem.title = parameters[indexPath.row]
+            tableView.deselectRow(at: indexPath, animated: true)
             
             if (cellName == "Notifications") {
                 let destinationController = VC as! NotificationSettingsViewController
@@ -99,11 +101,22 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
             
             navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
             self.navigationController?.pushViewController(VC, animated: true)
+        } else if cellName == "Log Out" {
+            handleLogout()
         }
         
-        tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    func handleLogout() {
+        do {
+            try FIRAuth.auth()?.signOut()
+        } catch let logoutError {
+            print("LogoutError ", logoutError)
+        }
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "loginBoard")
+        self.present(vc!, animated: true, completion: nil)
+    }
     
     ///////////////////////////////////
     // PROTOCOL'S METHODS

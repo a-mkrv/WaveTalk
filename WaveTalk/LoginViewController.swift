@@ -41,6 +41,7 @@ class LoginViewController: UIViewController {
         }
     }
     
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -56,9 +57,10 @@ class LoginViewController: UIViewController {
                 })
             })
             
-        previewAnimated = false
+            previewAnimated = false
         }
     }
+    
     
     func alphaOffOn(value: CGFloat) {
         self.loginInput.alpha = value
@@ -68,13 +70,11 @@ class LoginViewController: UIViewController {
         self.forgotButton.alpha = value
     }
     
+    
     @IBAction func loginPress(_ sender: Any) {
         FIRAuth.auth()?.signIn(withEmail: self.loginInput.text!, password: self.passwordInput.text!) { (user, error) in
             
             if error == nil {
-                
-                print("You have successfully logged in")
-                
                 // Go to the HomeViewController (TabBar) if the login is sucessful
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "tabBarBoard")
                 self.present(vc!, animated: true, completion: nil)
@@ -82,19 +82,22 @@ class LoginViewController: UIViewController {
             } else {
                 // Error
                 SCLAlertView().showTitle( "Error", subTitle: "\nInvalid Login or Password\n",
-                    duration: 0.0, completeText: "Try again", style: .error, colorStyle: 0x4196BE
+                                          duration: 0.0, completeText: "Try again", style: .error, colorStyle: 0x4196BE
                 )
             }
         }
     }
     
+    
     @IBAction func signupPress(_ sender: Any) {
         performSegue(withIdentifier: "SignUp", sender: self)
     }
     
+    
     @IBAction func forgotpassPress(_ sender: Any) {
         performSegue(withIdentifier: "ForgotPassword", sender: self)
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

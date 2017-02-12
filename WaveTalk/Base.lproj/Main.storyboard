@@ -80,11 +80,10 @@
                                 <fontDescription key="fontDescription" name="Optima-Regular" family="Optima" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" alpha="0.29999999999999999" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Password:" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uUn-Ib-NNq">
+                            <textField opaque="NO" clipsSubviews="YES" alpha="0.29999999999999999" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Password:" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uUn-Ib-NNq">
                                 <rect key="frame" x="86" y="313" width="203" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="textColor" red="0.1915335953" green="0.53724908829999996" blue="0.71491414310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" name="Optima-Regular" family="Optima" pointSize="17"/>
+                                <nil key="textColor"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="WaveTalk Inc. 2017" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VO2-lk-hsh">
@@ -215,7 +214,15 @@
                             <outlet property="delegate" destination="UMr-mJ-3hj" id="trz-GM-CnB"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Contacts" id="WIx-fw-LWz"/>
+                    <navigationItem key="navigationItem" title="Contacts" id="WIx-fw-LWz">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="wHv-5J-B0t">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="addContactToList:" destination="UMr-mJ-3hj" id="g0Y-d1-btA"/>
+                                <segue destination="Qd4-oV-jG5" kind="show" id="hvS-dm-FBl"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="searchDisplayController" destination="gKy-Jp-Kzb" id="1RM-bb-LT0"/>
                     </connections>
@@ -240,10 +247,10 @@
             </objects>
             <point key="canvasLocation" x="1994.4000000000001" y="1977.6611694152925"/>
         </scene>
-        <!--Contact Details View Controller-->
+        <!--About-->
         <scene sceneID="iJa-fo-aEZ">
             <objects>
-                <tableViewController hidesBottomBarWhenPushed="YES" id="zF5-4h-rqt" customClass="ContactDetailsViewController" customModule="WaveTalk" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="About" hidesBottomBarWhenPushed="YES" id="zF5-4h-rqt" customClass="ContactDetailsViewController" customModule="WaveTalk" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="static" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="IQF-9D-PV8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -408,7 +415,111 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a8g-Sl-p6x" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2804" y="1977.6611694152925"/>
+            <point key="canvasLocation" x="3490" y="1662"/>
+        </scene>
+        <!--Add Contact-->
+        <scene sceneID="83R-sS-ATG">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="Qd4-oV-jG5" customClass="AddContactViewController" customModule="WaveTalk" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="PpQ-j6-uPe"/>
+                        <viewControllerLayoutGuide type="bottom" id="EhF-Fs-8R7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="uN1-XS-UqB">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="contact-us-icon" translatesAutoresizingMaskIntoConstraints="NO" id="qDF-9o-ZDP">
+                                <rect key="frame" x="24" y="519" width="327" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zal-Z1-Ae4">
+                                <rect key="frame" x="36" y="99" width="302" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pTi-Ql-2zV">
+                                <rect key="frame" x="43" y="161" width="288" height="95"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <attributedString key="attributedText">
+                                    <fragment>
+                                        <string key="content">Please enter: 
+</string>
+                                        <attributes>
+                                            <font key="NSFont" size="16" name=".AppleSystemUIFont"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Username">
+                                        <attributes>
+                                            <color key="NSColor" red="0.31372549019607843" green="0.44705882352941173" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="16" name=".AppleSystemUIFont"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.5" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content=" or ">
+                                        <attributes>
+                                            <font key="NSFont" size="16" name=".AppleSystemUIFont"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.5" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="E-mail">
+                                        <attributes>
+                                            <color key="NSColor" red="0.3147301971912384" green="0.44589251279830933" blue="0.60060685873031616" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="16" name=".AppleSystemUIFont"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.5" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content=" ">
+                                        <attributes>
+                                            <color key="NSColor" red="0.1333528459072113" green="0.56803888082504272" blue="0.97722727060317993" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="16" name=".AppleSystemUIFont"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.5" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="or ">
+                                        <attributes>
+                                            <font key="NSFont" size="16" name=".AppleSystemUIFont"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.5" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Phone Number">
+                                        <attributes>
+                                            <color key="NSColor" red="0.31372549019607843" green="0.44705882352941173" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="16" name=".AppleSystemUIFont"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.5" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content=" for searching of the requested contact">
+                                        <attributes>
+                                            <font key="NSFont" size="16" name=".AppleSystemUIFont"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.5" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Add Contact" id="xv5-wt-31b">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="WOc-if-eCe">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="addContact:" destination="Qd4-oV-jG5" id="Xjz-6x-WhS"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="requestField" destination="zal-Z1-Ae4" id="sA6-GN-hsx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p0D-vS-h2N" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3488.8000000000002" y="2318.5907046476764"/>
         </scene>
         <!--Registration View Controller-->
         <scene sceneID="oJW-kz-U7w">
@@ -469,7 +580,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8jW-d3-Jur">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8jW-d3-Jur">
                                 <rect key="frame" x="80" y="322" width="215" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
@@ -585,10 +696,10 @@
             </objects>
             <point key="canvasLocation" x="1055.2" y="1977.6611694152925"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Main User Tab View Controller-->
         <scene sceneID="U0M-Ff-OIY">
             <objects>
-                <tabBarController storyboardIdentifier="tabBarBoard" automaticallyAdjustsScrollViewInsets="NO" id="XGC-rK-Uwu" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tabBarBoard" automaticallyAdjustsScrollViewInsets="NO" id="XGC-rK-Uwu" customClass="MainUserTabViewController" customModule="WaveTalk" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="tMh-Wh-oIG">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
@@ -843,8 +954,9 @@
         <image name="Logo" width="2559" height="2287"/>
         <image name="Waves" width="3333" height="3333"/>
         <image name="chat" width="30" height="30"/>
-        <image name="settings" width="30" height="30"/>
-        <image name="user" width="30" height="30"/>
+        <image name="contact-us-icon" width="1024" height="496"/>
+        <image name="settings" width="40" height="40"/>
+        <image name="user" width="40" height="40"/>
     </resources>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>

@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FirebaseDatabase
 import SCLAlertView
 import SkyFloatingLabelTextField
 
@@ -47,10 +48,31 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate {
             paswd = validData(inputField: passwordField, subTitle: "\nPassword must be greater\n than 6 characters", minLength: 6)
         }
         
+        //TODO: Change the registration process - to make sure the phone number (add a field) and change emeyl binding (optional)
         
         if (login != "" && email != "" && paswd != "") {
             FIRAuth.auth()?.createUser(withEmail: email, password: paswd, completion: { (user: FIRUser?, error) in
+                
                 if error == nil {
+                    
+                    guard let uid = user?.uid else {
+                        return
+                    }
+                    
+                    let ref = FIRDatabase.database().reference(fromURL: "https://wavetalk-d3236.firebaseio.com/")
+                    let userReference = ref.child("users").child(uid)
+                    let values = ["username" : login, "email" : email]
+                    
+                    userReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
+                        
+                        if err != nil {
+                            print(err!)
+                            return
+                        } else {
+                            print("Saved user info into Firebase DB")
+                        }
+                    })
+                    
                     let appearance = SCLAlertView.SCLAppearance(
                         showCloseButton: false
                     )

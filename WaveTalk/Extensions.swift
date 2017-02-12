@@ -58,8 +58,7 @@ extension UIViewController {
         //Now this is done in part, because lost access to the cells of the table
         //Only by pressing "Return"
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer( target: self,
-                                                                  action: #selector(UIViewController.dismissKeyboard))
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer( target:self, action: #selector(UIViewController.dismissKeyboard))
         
         
         //view.addGestureRecognizer(tap)

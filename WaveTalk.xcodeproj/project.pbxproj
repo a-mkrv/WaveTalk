@@ -23,6 +23,8 @@
 		777E62461DE1A0B200840242 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777E62451DE1A0B200840242 /* LoginViewController.swift */; };
 		777E62481DE1D13900840242 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777E62471DE1D13900840242 /* RegistrationViewController.swift */; };
 		777E624A1DE1DE6B00840242 /* ForgotPswdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777E62491DE1DE6B00840242 /* ForgotPswdViewController.swift */; };
+		77A4E3DD1E508DF900F8AD50 /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A4E3DC1E508DF900F8AD50 /* AddContactViewController.swift */; };
+		77A4E3DF1E50EDFA00F8AD50 /* MainUserTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A4E3DE1E50EDFA00F8AD50 /* MainUserTabViewController.swift */; };
 		77B3EBA51E1E59C10090C6F5 /* ContactListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3EBA41E1E59C10090C6F5 /* ContactListViewController.swift */; };
 		77B3EBA71E1E61FB0090C6F5 /* ContactViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3EBA61E1E61FB0090C6F5 /* ContactViewCell.swift */; };
 		77B63B2C1DE0826400127E96 /* PageContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B63B2B1DE0826400127E96 /* PageContentViewController.swift */; };
@@ -60,6 +62,8 @@
 		777E62451DE1A0B200840242 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		777E62471DE1D13900840242 /* RegistrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		777E62491DE1DE6B00840242 /* ForgotPswdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPswdViewController.swift; sourceTree = "<group>"; };
+		77A4E3DC1E508DF900F8AD50 /* AddContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
+		77A4E3DE1E50EDFA00F8AD50 /* MainUserTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainUserTabViewController.swift; sourceTree = "<group>"; };
 		77B3EBA41E1E59C10090C6F5 /* ContactListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactListViewController.swift; sourceTree = "<group>"; };
 		77B3EBA61E1E61FB0090C6F5 /* ContactViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactViewCell.swift; sourceTree = "<group>"; };
 		77B63B2B1DE0826400127E96 /* PageContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageContentViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +147,7 @@
 				77D68F2D1E22BB98002FF652 /* Cells */,
 				77D68F2B1E22BB22002FF652 /* Contacts */,
 				77B63B2B1DE0826400127E96 /* PageContentViewController.swift */,
+				77A4E3DE1E50EDFA00F8AD50 /* MainUserTabViewController.swift */,
 				77310E1A1E2FAF8500F67DDF /* SettingViews */,
 				775A97791DD87BB50027C0F5 /* LaunchScreen.storyboard */,
 				77D68F231E224E77002FF652 /* Assets.xcassets */,
@@ -182,6 +187,7 @@
 		77D68F2B1E22BB22002FF652 /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
+				77A4E3DC1E508DF900F8AD50 /* AddContactViewController.swift */,
 				77D68F251E226B1A002FF652 /* SearchBarView.swift */,
 				7705EDC81E21402C008CDF67 /* ContactDetailsViewController.swift */,
 				77B3EBA41E1E59C10090C6F5 /* ContactListViewController.swift */,
@@ -368,7 +374,9 @@
 				77F31F4C1E3C98720090FED7 /* UserNameViewController.swift in Sources */,
 				77F31F4E1E3D10F90090FED7 /* PhoneNumberViewController.swift in Sources */,
 				777E62481DE1D13900840242 /* RegistrationViewController.swift in Sources */,
+				77A4E3DD1E508DF900F8AD50 /* AddContactViewController.swift in Sources */,
 				77CAC8281E30CCE900D5EE11 /* ProfileSettings.swift in Sources */,
+				77A4E3DF1E50EDFA00F8AD50 /* MainUserTabViewController.swift in Sources */,
 				77CAC8251E30BA9600D5EE11 /* NotificationSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

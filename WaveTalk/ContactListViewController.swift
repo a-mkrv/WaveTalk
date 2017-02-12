@@ -36,6 +36,9 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
         searchController.hidesNavigationBarDuringPresentation = false
         self.definesPresentationContext = true
 
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+       // let rightAddBarButtonItem: UIBarButtonItem = UIBarButtonItem(title: "+", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.didReceiveMemoryWarning))
+        //self.navigationItem.setRightBarButton(rightAddBarButtonItem, animated: true)
         //self.tableView.contentInset = UIEdgeInsetsMake(-32, 0, 0, 0)
         //tableView.setContentOffset(CGPoint.zero, animated: true)
     }
@@ -184,6 +187,10 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
     }
 
     
+    @IBAction func addContactToList(_ sender: Any) {
+        
+
+    }
     // Receive Memory Warning
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
