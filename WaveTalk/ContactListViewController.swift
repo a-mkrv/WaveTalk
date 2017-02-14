@@ -7,23 +7,14 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseDatabase
 
 class ContactListViewController: UITableViewController, UISearchResultsUpdating {
 
     var searchController: UISearchController!
-    var searchContacts: [Contact] = []
-    var contacts: [Contact] = [
-        Contact(userName: "Anton",    lastMessage: "Hello..",    lastPresenceTime: "...",  phoneNumber: "11-11-11", photoImage: "11"),
-        Contact(userName: "Ivan",     lastMessage: "Ok, fine!", lastPresenceTime: "...",   phoneNumber: "22-22-22", photoImage: "22"),
-        Contact(userName: "Diana",    lastMessage: "Goodbye!",  lastPresenceTime: "...",   phoneNumber: "33-33-33", photoImage: "33"),
-        Contact(userName: "Oleg",     lastMessage: "This is the best iOS App", lastPresenceTime: "...", phoneNumber: "44-44-44", photoImage: "44"),
-        Contact(userName: "Matvey",   lastMessage: "I will be tomorrow", lastPresenceTime: "...", phoneNumber: "55-55-55", photoImage: "55"),
-        Contact(userName: "Sanek",    lastMessage: "Hm...",       lastPresenceTime: "...",  phoneNumber: "66-66-66", photoImage: "66"),
-        Contact(userName: "Darya",    lastMessage: "I Love You!", lastPresenceTime: "...",  phoneNumber: "77-77-77", photoImage: "77"),
-        Contact(userName: "Nikolay",    lastMessage: "NNGU - VMK", lastPresenceTime: "...",  phoneNumber: "88-88-88", photoImage: "44"),
-        Contact(userName: "Mama",    lastMessage: "Wow! Look!", lastPresenceTime: "...",  phoneNumber: "99-99-99", photoImage: "11")
-    ]
-
+    var searchContacts = [Contact]()
+    var contacts = [Contact]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,18 +28,68 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
         self.definesPresentationContext = true
 
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-       // let rightAddBarButtonItem: UIBarButtonItem = UIBarButtonItem(title: "+", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.didReceiveMemoryWarning))
-        //self.navigationItem.setRightBarButton(rightAddBarButtonItem, animated: true)
-        //self.tableView.contentInset = UIEdgeInsetsMake(-32, 0, 0, 0)
-        //tableView.setContentOffset(CGPoint.zero, animated: true)
+       
+        checkUserIsLoggedIn()
+        
+        fetchUser()
     }
 
+    
+    
+    //FIXME: App will crash if class properties don't exactly match up with the firebase dictionary keys
+    //FIXME: Change logic of contacts - Now crashes after trying go to detail
+    
+    func fetchUser() {
+        FIRDatabase.database().reference().child("users").observe(.childAdded, with: { (FIRDataSnapshot) in
+    
+            if let dictionary = FIRDataSnapshot.value as? [String : Any] {
+                let user = Contact()
+                print(dictionary)
+                user.setValuesForKeys(dictionary)
+                self.contacts.append(user)
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+            
+        }, withCancel: nil)
+    }
+    
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
         if let tableHeaderView = tableView.tableHeaderView {
             tableView.bringSubview(toFront: tableHeaderView)
         }
+    }
+    
+    
+    func checkUserIsLoggedIn() {
+        if  FIRAuth.auth()?.currentUser?.uid == nil {
+            perform(#selector(handleLogout), with: nil, afterDelay: 0)
+        } else {
+            let uid = FIRAuth.auth()?.currentUser?.uid
+            FIRDatabase.database().reference().child("users").child(uid!).observeSingleEvent(of: .value, with: {
+                (FIRDataSnapshot) in
+                
+                print(FIRDataSnapshot)
+                
+            }, withCancel: nil)
+        }
+    }
+    
+    
+    func handleLogout() {
+        do {
+            try FIRAuth.auth()?.signOut()
+        } catch let logoutError {
+            print("LogoutError ", logoutError)
+        }
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "loginBoard")
+        self.present(vc!, animated: true, completion: nil)
     }
     
     
@@ -78,11 +119,11 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
         let CellID = "CellContact"
         let cell = tableView.dequeueReusableCell(withIdentifier: CellID, for: indexPath) as! ContactViewCell
         
-        cell.avatarImage?.image = UIImage(named: contact.photoImage)
-        cell.avatarImage.layer.cornerRadius = 30.0
-        cell.avatarImage.clipsToBounds = true
-        cell.usernameLabel?.text = contact.userName
-        cell.phonenumberLabel?.text = contact.phoneNumber
+        //cell.avatarImage?.image = UIImage(named: contact.photoImage!)
+        //cell.avatarImage.layer.cornerRadius = 30.0
+        //cell.avatarImage.clipsToBounds = true
+        cell.usernameLabel?.text = contact.username
+        //cell.phonenumberLabel?.text = contact.phoneNumber
         
         return cell
     }
@@ -110,7 +151,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
             self.present(alertMessage, animated: true, completion: nil)
         }
         
-        let callAction = UIAlertAction(title: "Call " + contacts[indexPath.row].phoneNumber, style: .default, handler: callActionHandler)
+        let callAction = UIAlertAction(title: "Call " + contacts[indexPath.row].phoneNumber!, style: .default, handler: callActionHandler)
         
         
         contactInfo.addAction(cancelAction)
@@ -126,7 +167,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
         
         // Share contact
         let shareAction = UITableViewRowAction(style: .default, title: "Share", handler: { (action, indexPath) -> Void in
-            let defaultText = "Just checking in at + " + self.contacts[indexPath.row].userName
+            let defaultText = "Just checking in at + " + self.contacts[indexPath.row].username!
             let activityController = UIActivityViewController(activityItems: [defaultText], applicationActivities: nil)
             
             self.present(activityController, animated: true, completion: nil)
@@ -179,8 +220,8 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
     func filterSearchContact(searchText: String) {
         
         searchContacts = contacts.filter({ (contact: Contact) -> Bool in
-            let nameMatch = contact.userName.range(of: searchText, options: NSString.CompareOptions.caseInsensitive)
-            let phoneMatch = contact.phoneNumber.range(of: searchText, options: NSString.CompareOptions.caseInsensitive)
+            let nameMatch = contact.username?.range(of: searchText, options: NSString.CompareOptions.caseInsensitive)
+            let phoneMatch = contact.phoneNumber?.range(of: searchText, options: NSString.CompareOptions.caseInsensitive)
             
             return nameMatch != nil || phoneMatch != nil
         })

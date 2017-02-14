@@ -16,11 +16,11 @@ class ContactDetailsViewController: UITableViewController {
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var phoneLabel: UILabel!
     
-    var contact = Contact(userName: "", lastMessage: "", lastPresenceTime: "", phoneNumber: "", photoImage: "")
+    var contact = Contact()
     
     override func viewDidLoad() {
-        photoImage.image = UIImage(named: contact.photoImage)
-        usernameLabel.text = contact.userName
+        photoImage.image = UIImage(named: contact.photoImage!)
+        usernameLabel.text = contact.username
         presenceLabel.text = contact.lastPresenceTime
         phoneLabel.text = contact.phoneNumber
         
