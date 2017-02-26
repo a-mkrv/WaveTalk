@@ -119,15 +119,20 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
         let CellID = "CellContact"
         let cell = tableView.dequeueReusableCell(withIdentifier: CellID, for: indexPath) as! ContactViewCell
         
-        //cell.avatarImage?.image = UIImage(named: contact.photoImage!)
-        //cell.avatarImage.layer.cornerRadius = 30.0
-        //cell.avatarImage.clipsToBounds = true
+        cell.avatarImage?.image = UIImage(named: "55")
+        cell.avatarImage.layer.cornerRadius = 30.0
+        cell.avatarImage.clipsToBounds = true
         cell.usernameLabel?.text = contact.username
         cell.phonenumberLabel?.text = contact.phoneNumber_or_Email
-        //cell.phonenumberLabel?.text = contact.phoneNumber
+        
+    
+        if let profileImageURL = contact.profileImageURL {
+            cell.avatarImage.loadImageUsingCacheWithUrlString(urlString: profileImageURL)
+        }
         
         return cell
     }
+    
     
     // Able to edit the cell during search
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

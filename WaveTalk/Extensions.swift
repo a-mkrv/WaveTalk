@@ -68,3 +68,47 @@ extension UIViewController {
         view.endEditing(true)
     }
 }
+
+//////////////////////////////////////////////
+// Image View
+
+let imageCache = NSCache<AnyObject, AnyObject>()
+
+extension UIImageView {
+    
+    func loadImageUsingCacheWithUrlString(urlString : String) {
+        
+        self.image = nil
+        
+        // check cache for image
+        
+        if let cacheImage = imageCache.object(forKey: urlString as AnyObject) as? UIImage {
+            self.image = cacheImage
+            return
+        }
+        
+        // otherwise
+        
+        let url = NSURL(string: urlString)
+        let request = NSMutableURLRequest(url: url as! URL)
+        
+        URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
+            
+            if error != nil {
+                print(error!)
+                return
+            }
+            
+            DispatchQueue.main.async {
+                
+                if let downloadedImage = UIImage(data: data!) {
+                    imageCache.setObject(downloadedImage, forKey: urlString as AnyObject)
+                    
+                    self.image = downloadedImage
+                }
+            }
+            
+        }).resume()
+
+    }
+}
