@@ -687,7 +687,7 @@
                         <inset key="imageInsets" minX="0.0" minY="1" maxX="0.0" maxY="-1"/>
                     </tabBarItem>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="NdN-sr-JuQ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="NdN-sr-JuQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -901,7 +901,7 @@
                     <tabBarItem key="tabBarItem" title="Dialogues" image="chat" id="IdE-8w-Wez">
                         <inset key="imageInsets" minX="0.0" minY="1" maxX="0.0" maxY="-1"/>
                     </tabBarItem>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="DXm-XQ-56v">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="DXm-XQ-56v">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -921,7 +921,7 @@
                         <inset key="imageInsets" minX="0.0" minY="1" maxX="0.0" maxY="-1"/>
                     </tabBarItem>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="TIZ-Oo-C59">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="TIZ-Oo-C59">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

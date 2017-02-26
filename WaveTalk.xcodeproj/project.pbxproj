@@ -111,7 +111,6 @@
 				771E12D91E2502050084417A /* SettingsListViewController.swift */,
 				77310E1B1E2FAFCD00F67DDF /* ProfileSettingsViewController.swift */,
 				77F31F4B1E3C98720090FED7 /* UserNameViewController.swift */,
-				77560DEB1E3C8A7700C5BD87 /* Extensions.swift */,
 				77F31F4D1E3D10F90090FED7 /* PhoneNumberViewController.swift */,
 				77F8F2301E3E6607001065BC /* StatusViewController.swift */,
 				77CAC8261E30CCB900D5EE11 /* Settings */,
@@ -141,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				775A97701DD87BB50027C0F5 /* AppDelegate.swift */,
+				77560DEB1E3C8A7700C5BD87 /* Extensions.swift */,
 				77D68F2C1E22BB58002FF652 /* Start/Login */,
 				7774E2681E29099900E0C1BA /* Storyboards */,
 				7774E2671E29098600E0C1BA /* Chatting */,

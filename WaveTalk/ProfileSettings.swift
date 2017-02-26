@@ -92,12 +92,15 @@ class ProfileSettings {
         }
     }
     
-    init(firstName: String, lastName: String, userName: String, phoneNumber: String, status: String) {
+    var profileImageURL: String?
+    
+    init(firstName: String, lastName: String, userName: String, phoneNumber: String, status: String, profileImageURL: String) {
         self.firstName = firstName
         self.lastName = lastName
         self.userName = userName
         self.phoneNumber = phoneNumber
         self.status = status
+        self.profileImageURL = profileImageURL
     }
     
     

@@ -20,21 +20,23 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
     
     var notificationSettings = NotificationSettings()
     var profileSettings = ProfileSettings()
-    
+
     let parameters = ["My Profile",  "Notifications", "Calls & Messages", "Privacy", "Media", "", "About", "Log Out"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        updateMyInfo()
         setProfileImage()
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        profileSettings = ProfileSettings()
-        updateMyInfo()
+        
+        //FIXME:    Add a check for variability of data
+        //          Badly to make a request each time to a database
+        
+        fetchUserAndSetupNavigationBarTitle()
     }
     
     
@@ -42,6 +44,30 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
         firstLastName.text = profileSettings.firstName + " " + profileSettings.lastName
         userName.text = "@" + profileSettings.userName
         phoneNumber.text = "+" + profileSettings.phoneNumber
+    }
+    
+    
+    func fetchUserAndSetupNavigationBarTitle() {
+        guard let uid = FIRAuth.auth()?.currentUser?.uid else {
+            return
+        }
+        
+        FIRDatabase.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: {
+            (FIRDataSnapshot) in
+            
+            if let dictionary = FIRDataSnapshot.value as? [String : AnyObject] {
+                self.profileSettings.userName = (dictionary["username"] as? String)!
+                self.profileSettings.status = (dictionary["status"] as? String)!
+                self.profileSettings.phoneNumber = (dictionary["phoneNumber_or_Email"] as? String)!
+                self.profileSettings.profileImageURL = (dictionary["profileImageURL"] as? String)!
+                
+                if let profileImageURL = self.profileSettings.profileImageURL {
+                    self.photoImage.loadImageUsingCacheWithUrlString(urlString: profileImageURL)
+                }
+                
+                self.updateMyInfo()
+            }
+        }, withCancel: nil)
     }
     
     
