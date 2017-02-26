@@ -19,10 +19,11 @@ class ContactDetailsViewController: UITableViewController {
     var contact = Contact()
     
     override func viewDidLoad() {
-        photoImage.image = UIImage(named: contact.photoImage!)
+        //photoImage.image = UIImage(named: contact.photoImage!)
         usernameLabel.text = contact.username
         presenceLabel.text = contact.lastPresenceTime
-        phoneLabel.text = contact.phoneNumber
+        statusLabel.text = contact.status
+        phoneLabel.text = contact.phoneNumber_or_Email
         
         self.navigationItem.title = usernameLabel.text
         super.viewDidLoad()

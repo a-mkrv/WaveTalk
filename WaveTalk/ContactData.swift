@@ -10,10 +10,10 @@ import UIKit
 
 class Contact: NSObject {
     var username: String?
-    var email: String?
+    var phoneNumber_or_Email: String?
     var lastPresenceTime: String?
-    var phoneNumber: String?
-    var photoImage: String?
+    var profileImageURL: String?
+    var status: String?
     
 //    init(userName: String, lastMessage: String, lastPresenceTime: String = "...", phoneNumber: String, photoImage: String) {
 //        self.userName = userName

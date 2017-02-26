@@ -123,6 +123,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
         //cell.avatarImage.layer.cornerRadius = 30.0
         //cell.avatarImage.clipsToBounds = true
         cell.usernameLabel?.text = contact.username
+        cell.phonenumberLabel?.text = contact.phoneNumber_or_Email
         //cell.phonenumberLabel?.text = contact.phoneNumber
         
         return cell
@@ -151,7 +152,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
             self.present(alertMessage, animated: true, completion: nil)
         }
         
-        let callAction = UIAlertAction(title: "Call " + contacts[indexPath.row].phoneNumber!, style: .default, handler: callActionHandler)
+        let callAction = UIAlertAction(title: "Call " + contacts[indexPath.row].phoneNumber_or_Email!, style: .default, handler: callActionHandler)
         
         
         contactInfo.addAction(cancelAction)
@@ -221,7 +222,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
         
         searchContacts = contacts.filter({ (contact: Contact) -> Bool in
             let nameMatch = contact.username?.range(of: searchText, options: NSString.CompareOptions.caseInsensitive)
-            let phoneMatch = contact.phoneNumber?.range(of: searchText, options: NSString.CompareOptions.caseInsensitive)
+            let phoneMatch = contact.phoneNumber_or_Email?.range(of: searchText, options: NSString.CompareOptions.caseInsensitive)
             
             return nameMatch != nil || phoneMatch != nil
         })

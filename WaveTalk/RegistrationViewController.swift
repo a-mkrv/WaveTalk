@@ -13,17 +13,37 @@ import SCLAlertView
 import SkyFloatingLabelTextField
 
 
-class RegistrationViewController: UIViewController, UITextFieldDelegate {
+class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
+    @IBOutlet weak var userProfilePhoto: UIImageView!
+    
+    var pickImageController = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //TODO: Add checking of validity in realtime
         //TODO: Add phone field
+        
+        initUI()
+    }
+    
+    
+    func initUI() {
+        self.userProfilePhoto.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action:
+            #selector(loadProfilePhotos(_:))
+            )
+        )
+        
+        userProfilePhoto.isUserInteractionEnabled = true
+        userProfilePhoto.layer.cornerRadius = 64.0
+        userProfilePhoto.clipsToBounds = true
+        
+        pickImageController.delegate = self
+        pickImageController.allowsEditing = true
         
         usernameField.setRegistrationFieldStyleWith(title: "Username")
         usernameField.delegate = self
@@ -32,11 +52,11 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    
     @IBAction func createAccount(_ sender: Any) {
         var login = ""
         var email = ""
         var paswd = ""
+        let status = "Hello! Now I'm here, too!"
         
         login = validData(inputField: usernameField, subTitle: "\nUsername must be greater\n than 5 characters", minLength: 5)
         
@@ -59,34 +79,62 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate {
                         return
                     }
                     
-                    let ref = FIRDatabase.database().reference(fromURL: "https://wavetalk-d3236.firebaseio.com/")
-                    let userReference = ref.child("users").child(uid)
-                    let values = ["username" : login, "email" : email]
+                    let imageName = NSUUID().uuidString
+                    let storageRef = FIRStorage.storage().reference().child("profile_images").child("\(imageName).png")
                     
-                    userReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
+                    if let uploadData = UIImagePNGRepresentation(self.userProfilePhoto.image!) {
                         
-                        if err != nil {
-                            print(err!)
-                            return
-                        } else {
-                            print("Saved user info into Firebase DB")
-                        }
-                    })
-                    
-                    let appearance = SCLAlertView.SCLAppearance(
-                        showCloseButton: false
-                    )
-                    let alertView = SCLAlertView(appearance: appearance)
-                    
-                    alertView.addButton("Go to Log In") {
-                        self.backToLogin(self)
+                        storageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
+                            
+                            if error != nil {
+                                print(error!)
+                                return
+                            }
+                            
+                            
+                            //TODO: Add "Please wait..." dialog.
+                            
+                            if let profileImageURL = metadata?.downloadURL()?.absoluteString {
+                                
+                                let values = ["username" : login, "phoneNumber_or_Email" : email, "status" : status, "lastPresenceTime" : String(describing: Date()), "profileImageURL" : profileImageURL]
+                                
+                                self.registerUserIntoWithUI(uid: uid, values: values as [String : AnyObject])
+                            }
+                        })
                     }
-                    alertView.showSuccess("Successful registration!", subTitle: "Welcome to Whisper")
                 } else {
-                    //registration failure
+                    SCLAlertView().showTitle( "Registration Error", subTitle: "\n\nUser with the same data already exists", duration: 0.0, completeText: "Ok", style: .error, colorStyle: 0x4196BE)
                 }
             })
         }
+    }
+    
+    func registerUserIntoWithUI(uid: String, values: [String: AnyObject]) {
+        
+        let ref = FIRDatabase.database().reference(fromURL: "https://wavetalk-d3236.firebaseio.com/")
+        let userReference = ref.child("users").child(uid)
+        
+        userReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
+            
+            if err != nil {
+                print(err!)
+                return
+            } else {
+                print("Saved user info into Firebase DB")
+            }
+        })
+        
+        let appearance = SCLAlertView.SCLAppearance(
+            showCloseButton: false
+        )
+        
+        let alertView = SCLAlertView(appearance: appearance)
+        
+        alertView.addButton("Go to Log In") {
+            self.backToLogin(self)
+        }
+        
+        alertView.showSuccess("Successful registration!", subTitle: "Welcome to Whisper")
     }
     
     
@@ -122,6 +170,63 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate {
         
         let email = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return email.evaluate(with: emailStr)
+    }
+    
+    
+    func loadProfilePhotos(_ recognizer: UIPanGestureRecognizer) {
+        let alertController = UIAlertController(title: "Update Profile Photo", message: "Choose from", preferredStyle: .actionSheet)
+        
+        let cameraAction = UIAlertAction(title: "Camera", style: .default) {
+            action in
+            self.pickImageFromCamera()
+        }
+        
+        let libraryAction = UIAlertAction(title: "Photo Library", style: .default) {
+            action in
+            self.pickImageFromLibrary()
+        }
+        
+        let buttonCancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) -> Void in }
+        
+        alertController.addAction(cameraAction)
+        alertController.addAction(libraryAction)
+        alertController.addAction(buttonCancel)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    
+    func pickImageFromCamera() {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+            pickImageController.sourceType = UIImagePickerControllerSourceType.camera
+            self.present(pickImageController, animated: true, completion: nil)
+        }
+    }
+    
+    
+    func pickImageFromLibrary() {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
+            pickImageController.sourceType = UIImagePickerControllerSourceType.photoLibrary
+            self.present(pickImageController, animated: true, completion: nil)
+        }
+    }
+    
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
+        
+        var selectedImageFromPicker: UIImage?
+        
+        if let editedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
+            selectedImageFromPicker = editedImage
+        } else if let originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            selectedImageFromPicker = originalImage
+        }
+        
+        if let selectedImage = selectedImageFromPicker {
+            userProfilePhoto.image = selectedImage
+        }
+        
+        picker.dismiss(animated: true, completion: nil)
     }
     
     
