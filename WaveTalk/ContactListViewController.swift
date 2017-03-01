@@ -12,6 +12,7 @@ import FirebaseDatabase
 
 class ContactListViewController: UITableViewController, UISearchResultsUpdating {
 
+    var myProfile = Contact()
     var searchController: UISearchController!
     var searchContacts = [Contact]()
     var contacts = [Contact]()
@@ -70,15 +71,27 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
         if  FIRAuth.auth()?.currentUser?.uid == nil {
             perform(#selector(handleLogout), with: nil, afterDelay: 0)
         } else {
-            let uid = FIRAuth.auth()?.currentUser?.uid
-            FIRDatabase.database().reference().child("users").child(uid!).observeSingleEvent(of: .value, with: {
-                (FIRDataSnapshot) in
-                
-                print(FIRDataSnapshot)
-                
-            }, withCancel: nil)
+//            fetchUserAndSetupNavigationBarTitle()
         }
     }
+    
+    
+//    func fetchUserAndSetupNavigationBarTitle() {
+//        guard let uid = FIRAuth.auth()?.currentUser?.uid else {
+//            return
+//        }
+//        
+//        FIRDatabase.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: {
+//            (FIRDataSnapshot) in
+//            
+//            if let dictionary = FIRDataSnapshot.value as? [String : AnyObject] {
+//                self.myProfile.username = dictionary["username"] as? String
+//                self.myProfile.status = dictionary["status"] as? String
+//                self.myProfile.phoneNumber_or_Email = dictionary["phoneNumber_or_Email"] as? String
+//                self.myProfile.profileImageURL = dictionary["profileImageURL"] as? String
+//            }
+//        }, withCancel: nil)
+//    }
     
     
     func handleLogout() {

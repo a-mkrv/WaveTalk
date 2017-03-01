@@ -15,9 +15,9 @@ import SkyFloatingLabelTextField
 
 class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
     
-    @IBOutlet weak var emailField: UITextField!
-    @IBOutlet weak var usernameField: UITextField!
-    @IBOutlet weak var passwordField: UITextField!
+    @IBOutlet weak var emailField: FloatLabelTextField!
+    @IBOutlet weak var usernameField: FloatLabelTextField!
+    @IBOutlet weak var passwordField: FloatLabelTextField!
     @IBOutlet weak var userProfilePhoto: UIImageView!
     
     var pickImageController = UIImagePickerController()
@@ -37,18 +37,27 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
             #selector(loadProfilePhotos(_:))
             )
         )
-        
-        userProfilePhoto.isUserInteractionEnabled = true
-        userProfilePhoto.layer.cornerRadius = 64.0
-        userProfilePhoto.clipsToBounds = true
+        let colorBorder = UIColor(red: 80/255.0, green: 114/255.0, blue: 153/255.0, alpha: 100.0/100.0).cgColor
         
         pickImageController.delegate = self
         pickImageController.allowsEditing = true
         
-        usernameField.setRegistrationFieldStyleWith(title: "Username")
-        usernameField.delegate = self
-        passwordField.setRegistrationFieldStyleWith(title: "Password")
-        emailField.setRegistrationFieldStyleWith(title: "Email")
+        usernameField.setBorderBottom(colorBorder)
+        emailField.setBorderBottom(colorBorder)
+        passwordField.setBorderBottom(colorBorder)
+        
+        userProfilePhoto.isUserInteractionEnabled = true
+        userProfilePhoto.layer.cornerRadius = userProfilePhoto.frame.size.width/2.0
+        userProfilePhoto.clipsToBounds = true
+        userProfilePhoto.layer.borderWidth = 1.5
+        userProfilePhoto.layer.borderColor = colorBorder
+        userProfilePhoto.layer.backgroundColor = UIColor.white.cgColor
+        
+        
+        //usernameField.setRegistrationFieldStyleWith(title: "Username")
+        //usernameField.delegate = self
+        //passwordField.setRegistrationFieldStyleWith(title: "Password")
+        //emailField.setRegistrationFieldStyleWith(title: "Email")
     }
     
     
@@ -138,28 +147,22 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
     }
     
     
-    func validData(inputField: UITextField, subTitle: String, minLength: Int) -> String {
-        var field: String = ""
+    func validData(inputField: FloatLabelTextField, subTitle: String, minLength: Int) -> String {
+        var field: String = inputField.text!
         
-        for view in inputField.subviews {
-            if view.isKind(of: UITextField.self) {
-                field = (view as! UITextField).text!
-                
-                if (field.characters.count) < minLength {
-                    if inputField == emailField && !isValidEmail(emailStr: field){
-                        SCLAlertView().showTitle(
-                            "Invalid", subTitle: subTitle,
-                            duration: 0.0, completeText: "OK", style: .error, colorStyle: 0x4196BE
-                        )
-                    } else {
-                        SCLAlertView().showTitle(
-                            "Invalid", subTitle: subTitle,
-                            duration: 0.0, completeText: "OK", style: .error, colorStyle: 0x4196BE
-                        )
-                    }
-                    field = ""
-                }
+        if (field.characters.count) < minLength {
+            if inputField == emailField && !isValidEmail(emailStr: field){
+                SCLAlertView().showTitle(
+                    "Invalid", subTitle: subTitle,
+                    duration: 0.0, completeText: "OK", style: .error, colorStyle: 0x4196BE
+                )
+            } else {
+                SCLAlertView().showTitle(
+                    "Invalid", subTitle: subTitle,
+                    duration: 0.0, completeText: "OK", style: .error, colorStyle: 0x4196BE
+                )
             }
+            field = ""
         }
         return field
     }

@@ -33,8 +33,15 @@ class ChattingViewController: JSQMessagesViewController {
     
     
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
+        
+        let ref = FIRDatabase.database().reference().child("message")
+        let childRef = ref.childByAutoId()
+        
         messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, text: text))
         collectionView.reloadData()
+        
+        let values = ["text" : text, "name" : senderDisplayName]
+        childRef.updateChildValues(values)
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageDataForItemAt indexPath: IndexPath!) -> JSQMessageData! {

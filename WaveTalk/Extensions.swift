@@ -13,13 +13,17 @@ import SkyFloatingLabelTextField
 // Text Field
 
 extension UITextField {
-    func setBorderBottom() {
-        let borderBottom = CALayer()
-        let borderWidth = CGFloat(2.0)
-        borderBottom.borderColor = UIColor(red: 80/255.0, green: 114/255.0, blue: 153/255.0, alpha: 100.0/100.0).cgColor
-        borderBottom.frame = CGRect(x: 0, y: self.frame.height - 1.0, width: self.frame.width , height: self.frame.height - 1.0)
-        borderBottom.borderWidth = borderWidth
+    func setBorderBottom(_ colorBorder: CGColor = UIColor(red: 80/255.0, green: 114/255.0, blue: 153/255.0, alpha: 100.0/100.0).cgColor, widthBorder : CGFloat = 1.0) {
+        
         self.borderStyle = UITextBorderStyle.none
+        self.backgroundColor = UIColor.clear
+        
+        let borderBottom = CALayer()
+        let width = widthBorder
+        
+        borderBottom.borderColor = colorBorder
+        borderBottom.frame = CGRect(x: 0, y: self.frame.height - width, width: self.frame.width , height: self.frame.height - 1.0)
+        borderBottom.borderWidth = width
         self.layer.addSublayer(borderBottom)
         self.layer.masksToBounds = true
     }
@@ -41,7 +45,7 @@ extension UITextField {
         
         textField.lineHeight = 1.0 // bottom line height in points
         textField.selectedLineHeight = 1.0
-
+        
         //textField.delegate = CreateAccountViewController()
         self.borderStyle = UITextBorderStyle.none
         self.addSubview(textField)
@@ -109,6 +113,6 @@ extension UIImageView {
             }
             
         }).resume()
-
+        
     }
 }

@@ -13,8 +13,8 @@ import FirebaseAuth
 
 class LoginViewController: UIViewController {
     
-    @IBOutlet weak var loginInput: UITextField!
-    @IBOutlet weak var passwordInput: UITextField!
+    @IBOutlet weak var loginInput: FloatLabelTextField!
+    @IBOutlet weak var passwordInput: FloatLabelTextField!
     @IBOutlet weak var logoImage: UIImageView!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signupButton: UIButton!
@@ -26,8 +26,10 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loginInput.setBorderBottom()
-        passwordInput.setBorderBottom()
+        let colorBorder = UIColor(red: 80/255.0, green: 114/255.0, blue: 153/255.0, alpha: 100.0/100.0).cgColor
+        
+        loginInput.setBorderBottom(colorBorder)
+        passwordInput.setBorderBottom(colorBorder)
         
         //TODO: Show animation only at the first start / relogin
         

@@ -23,6 +23,7 @@
 		777E62461DE1A0B200840242 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777E62451DE1A0B200840242 /* LoginViewController.swift */; };
 		777E62481DE1D13900840242 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777E62471DE1D13900840242 /* RegistrationViewController.swift */; };
 		777E624A1DE1DE6B00840242 /* ForgotPswdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777E62491DE1DE6B00840242 /* ForgotPswdViewController.swift */; };
+		778590341E66A98700B85DDF /* FloatLabelTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778590321E66A98700B85DDF /* FloatLabelTextField.swift */; };
 		77A4E3DD1E508DF900F8AD50 /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A4E3DC1E508DF900F8AD50 /* AddContactViewController.swift */; };
 		77A4E3DF1E50EDFA00F8AD50 /* MainUserTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A4E3DE1E50EDFA00F8AD50 /* MainUserTabViewController.swift */; };
 		77B3EBA51E1E59C10090C6F5 /* ContactListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3EBA41E1E59C10090C6F5 /* ContactListViewController.swift */; };
@@ -62,6 +63,7 @@
 		777E62451DE1A0B200840242 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		777E62471DE1D13900840242 /* RegistrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		777E62491DE1DE6B00840242 /* ForgotPswdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPswdViewController.swift; sourceTree = "<group>"; };
+		778590321E66A98700B85DDF /* FloatLabelTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatLabelTextField.swift; sourceTree = "<group>"; };
 		77A4E3DC1E508DF900F8AD50 /* AddContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
 		77A4E3DE1E50EDFA00F8AD50 /* MainUserTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainUserTabViewController.swift; sourceTree = "<group>"; };
 		77B3EBA41E1E59C10090C6F5 /* ContactListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactListViewController.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 			children = (
 				775A97701DD87BB50027C0F5 /* AppDelegate.swift */,
 				77560DEB1E3C8A7700C5BD87 /* Extensions.swift */,
+				778590321E66A98700B85DDF /* FloatLabelTextField.swift */,
 				77D68F2C1E22BB58002FF652 /* Start/Login */,
 				7774E2681E29099900E0C1BA /* Storyboards */,
 				7774E2671E29098600E0C1BA /* Chatting */,
@@ -358,6 +361,7 @@
 				777E624A1DE1DE6B00840242 /* ForgotPswdViewController.swift in Sources */,
 				77B63B2C1DE0826400127E96 /* PageContentViewController.swift in Sources */,
 				7705EDC91E21402C008CDF67 /* ContactDetailsViewController.swift in Sources */,
+				778590341E66A98700B85DDF /* FloatLabelTextField.swift in Sources */,
 				774113A41E16AE3700DCAC6D /* ContactData.swift in Sources */,
 				77310E1C1E2FAFCD00F67DDF /* ProfileSettingsViewController.swift in Sources */,
 				77F8F2311E3E6607001065BC /* StatusViewController.swift in Sources */,
