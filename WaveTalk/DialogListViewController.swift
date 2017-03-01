@@ -7,19 +7,49 @@
 //
 
 import UIKit
+import Firebase
 
 class DialogListViewController: UITableViewController {
-
+    
+    var dialogUsers = [Contact]()
+    var messages = [Message]()
+    var messagesDictionary = [String : Message] ()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        fetchUser()
+        observeMessages()
     }
-
+    
+    
+    func observeMessages() {
+        let ref = FIRDatabase.database().reference().child("message")
+        ref.observe(.childAdded, with: { (snapshot) in
+            
+            if let dictionary = snapshot.value as? [String : Any] {
+                let message = Message()
+                message.setValuesForKeys(dictionary)
+                //self.messages.append(message)
+                
+                if let toId = message.toId {
+                    self.messagesDictionary[toId] = message
+                    
+                    self.messages = Array(self.messagesDictionary.values)
+                    self.messages.sort(by: {(message1, message2) -> Bool in
+                        return message1.messageTime! > message2.messageTime!
+                    })
+                }
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }, withCancel: nil)
+    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -27,67 +57,50 @@ class DialogListViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return messages.count
     }
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let CellID = "CellDialog"
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellID, for: indexPath) as! DialogViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CellDialog", for: indexPath) as! DialogViewCell
         
-        cell.usernameLabel.text = "Username"
-        // Configure the cell...
+        let message = messages[indexPath.row]
+        cell.message = message
         
         return cell
     }
-
     
     
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    func fetchUser() {
+        FIRDatabase.database().reference().child("users").observe(.childAdded, with: { (snapshot) in
+            
+            if let dictionary = snapshot.value as? [String : Any] {
+                let user = Contact()
+                user.id = snapshot.key
+                
+                print(dictionary)
+                user.setValuesForKeys(dictionary)
+                self.dialogUsers.append(user)
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+            
+        }, withCancel: nil)
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        
+        if segue.identifier == "openChatView" {
+            if let indexPath = tableView.indexPathForSelectedRow {
+                let destinationController = segue.destination as! ChattingViewController
+                destinationController.user = dialogUsers[indexPath.row].username
+                destinationController.userId = dialogUsers[indexPath.row].id
+                navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+            }
+        }
     }
-    */
-
 }

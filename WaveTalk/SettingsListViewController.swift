@@ -20,7 +20,7 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
     
     var notificationSettings = NotificationSettings()
     var profileSettings = ProfileSettings()
-
+    
     let parameters = ["My Profile",  "Notifications", "Calls & Messages", "Privacy", "Media", "", "About", "Log Out"]
     
     override func viewDidLoad() {
@@ -53,9 +53,9 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
         }
         
         FIRDatabase.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: {
-            (FIRDataSnapshot) in
+            (snapshot) in
             
-            if let dictionary = FIRDataSnapshot.value as? [String : AnyObject] {
+            if let dictionary = snapshot.value as? [String : AnyObject] {
                 self.profileSettings.userName = (dictionary["username"] as? String)!
                 self.profileSettings.status = (dictionary["status"] as? String)!
                 self.profileSettings.phoneNumber = (dictionary["phoneNumber_or_Email"] as? String)!

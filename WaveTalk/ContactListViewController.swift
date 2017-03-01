@@ -11,7 +11,7 @@ import Firebase
 import FirebaseDatabase
 
 class ContactListViewController: UITableViewController, UISearchResultsUpdating {
-
+    
     var myProfile = Contact()
     var searchController: UISearchController!
     var searchContacts = [Contact]()
@@ -19,7 +19,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
@@ -27,23 +27,21 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
         
         searchController.hidesNavigationBarDuringPresentation = false
         self.definesPresentationContext = true
-
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-       
-        checkUserIsLoggedIn()
         
-        fetchUser()
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        
+        checkUserIsLoggedIn()
     }
-
+    
     
     
     //FIXME: App will crash if class properties don't exactly match up with the firebase dictionary keys
     //FIXME: Change logic of contacts - Now crashes after trying go to detail
     
     func fetchUser() {
-        FIRDatabase.database().reference().child("users").observe(.childAdded, with: { (FIRDataSnapshot) in
-    
-            if let dictionary = FIRDataSnapshot.value as? [String : Any] {
+        FIRDatabase.database().reference().child("users").observe(.childAdded, with: { (snapshot) in
+            
+            if let dictionary = snapshot.value as? [String : Any] {
                 let user = Contact()
                 print(dictionary)
                 user.setValuesForKeys(dictionary)
@@ -53,14 +51,13 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
                     self.tableView.reloadData()
                 }
             }
-            
         }, withCancel: nil)
     }
     
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-
+        
         if let tableHeaderView = tableView.tableHeaderView {
             tableView.bringSubview(toFront: tableHeaderView)
         }
@@ -71,27 +68,9 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
         if  FIRAuth.auth()?.currentUser?.uid == nil {
             perform(#selector(handleLogout), with: nil, afterDelay: 0)
         } else {
-//            fetchUserAndSetupNavigationBarTitle()
+            fetchUser()
         }
     }
-    
-    
-//    func fetchUserAndSetupNavigationBarTitle() {
-//        guard let uid = FIRAuth.auth()?.currentUser?.uid else {
-//            return
-//        }
-//        
-//        FIRDatabase.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: {
-//            (FIRDataSnapshot) in
-//            
-//            if let dictionary = FIRDataSnapshot.value as? [String : AnyObject] {
-//                self.myProfile.username = dictionary["username"] as? String
-//                self.myProfile.status = dictionary["status"] as? String
-//                self.myProfile.phoneNumber_or_Email = dictionary["phoneNumber_or_Email"] as? String
-//                self.myProfile.profileImageURL = dictionary["profileImageURL"] as? String
-//            }
-//        }, withCancel: nil)
-//    }
     
     
     func handleLogout() {
@@ -108,9 +87,9 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
     
     // Scrolling table
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-
+        
     }
-
+    
     
     // The number of contacts for displaying
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -123,7 +102,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
             return contacts.count
         }
     }
-
+    
     
     // Filling cells
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -138,7 +117,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
         cell.usernameLabel?.text = contact.username
         cell.phonenumberLabel?.text = contact.phoneNumber_or_Email
         
-    
+        
         if let profileImageURL = contact.profileImageURL {
             cell.avatarImage.loadImageUsingCacheWithUrlString(urlString: profileImageURL)
         }
@@ -180,7 +159,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
         //self.present(contactInfo, animated: true, completion: nil)
     }
     
-
+    
     // Styling cell - swipe left [Share, Delete]
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
@@ -194,8 +173,8 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
         
         // Delete contact
         let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: { (action, indexPath) -> Void in
-                self.contacts.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .fade)
+            self.contacts.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
         })
         
         shareAction.backgroundColor = UIColor.blue
@@ -208,7 +187,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
     // Opening details of the selected contact
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-         if segue.identifier == "showContactDetails" {
+        if segue.identifier == "showContactDetails" {
             if let indexPath = tableView.indexPathForSelectedRow {
                 let destinationController = segue.destination as! ContactDetailsViewController
                 destinationController.contact = (searchController.isActive) ? searchContacts[indexPath.row] : contacts[indexPath.row]
@@ -245,11 +224,11 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
             return nameMatch != nil || phoneMatch != nil
         })
     }
-
+    
     
     @IBAction func addContactToList(_ sender: Any) {
         
-
+        
     }
     // Receive Memory Warning
     override func didReceiveMemoryWarning() {

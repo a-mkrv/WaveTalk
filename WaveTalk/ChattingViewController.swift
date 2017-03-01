@@ -9,24 +9,33 @@
 import UIKit
 import JSQMessagesViewController
 import FirebaseDatabase
+import FirebaseAuth
 
 class ChattingViewController: JSQMessagesViewController {
-
+    
     var messages = [JSQMessage] ()
+    
+    var userId: String?
+    var user: String? {
+        didSet {
+            self.navigationItem.title = user
+        }
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.senderId = "1"
         self.senderDisplayName = "Mario"
     }
-
+    
     
     override func didPressAccessoryButton(_ sender: UIButton!) {
         let imagePicker = UIImagePickerController()
         imagePicker.navigationBar.isTranslucent = false
         imagePicker.navigationBar.tintColor = .white
-
+        
         imagePicker.delegate = self
         self.present(imagePicker, animated: true, completion: nil)
     }
@@ -34,13 +43,19 @@ class ChattingViewController: JSQMessagesViewController {
     
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
         
-        let ref = FIRDatabase.database().reference().child("message")
-        let childRef = ref.childByAutoId()
-        
         messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, text: text))
         collectionView.reloadData()
+        sendToFirebase(text)
+    }
+    
+    
+    func sendToFirebase(_ text: String!) {
+        let ref = FIRDatabase.database().reference().child("message")
+        let childRef = ref.childByAutoId()
+        let fromId = FIRAuth.auth()?.currentUser?.uid
+        let messageTime = String(describing: Date())
+        let values = ["text" : text, "toId" : userId, "fromId" : fromId, "messageTime" : messageTime]
         
-        let values = ["text" : text, "name" : senderDisplayName]
         childRef.updateChildValues(values)
     }
     

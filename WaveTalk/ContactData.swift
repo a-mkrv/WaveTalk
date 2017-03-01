@@ -14,6 +14,7 @@ class Contact: NSObject {
     var lastPresenceTime: String?
     var profileImageURL: String?
     var status: String?
+    var id: String?
     
 //    init(userName: String, lastMessage: String, lastPresenceTime: String = "...", phoneNumber: String, photoImage: String) {
 //        self.userName = userName

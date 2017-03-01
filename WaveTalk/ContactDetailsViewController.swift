@@ -9,7 +9,7 @@
 import UIKit
 
 class ContactDetailsViewController: UITableViewController {
-
+    
     @IBOutlet weak var photoImage: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var presenceLabel: UILabel!
@@ -19,7 +19,7 @@ class ContactDetailsViewController: UITableViewController {
     var contact = Contact()
     
     override func viewDidLoad() {
-        //photoImage.image = UIImage(named: contact.photoImage!)
+        photoImage.loadImageUsingCacheWithUrlString(urlString: contact.profileImageURL!)
         usernameLabel.text = contact.username
         presenceLabel.text = contact.lastPresenceTime
         statusLabel.text = contact.status
@@ -28,7 +28,7 @@ class ContactDetailsViewController: UITableViewController {
         self.navigationItem.title = usernameLabel.text
         super.viewDidLoad()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -36,5 +36,5 @@ class ContactDetailsViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
-
+    
 }
