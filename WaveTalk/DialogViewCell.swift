@@ -16,24 +16,43 @@ class DialogViewCell: UITableViewCell {
     @IBOutlet weak var lastmessageLabel: UILabel!
     @IBOutlet weak var timemessageLabel: UILabel!
     
+    var dialogUsers = [Contact]()
+    
     var message: Message? {
         didSet {
-            if let toId = message?.toId {
-                let ref = FIRDatabase.database().reference().child("users").child(toId)
-                ref.observe(.value, with: {(snapshot) in
-                    if let dictionary = snapshot.value as? [String : Any] {
-                        self.usernameLabel.text = dictionary["username"] as? String
-                        
-                        if let profileImageURL = dictionary["profileImageURL"] {
-                            self.avatarImage.loadImageUsingCacheWithUrlString(urlString: profileImageURL as! String)
-                            self.avatarImage.layer.cornerRadius = 30.0
-                            self.avatarImage.clipsToBounds = true
-                        }
-                    }
-                }, withCancel: nil)
-            }
+            
+            setupNameAndProfileImage()
+            
+            self.lastmessageLabel.text = message?.text
             self.timemessageLabel.text = timeFormat(date: (message?.messageTime)!)
         }
+    }
+    
+    private func setupNameAndProfileImage() {
+        let chatParnerId: String?
+        
+        if message?.fromId == FIRAuth.auth()?.currentUser?.uid {
+            chatParnerId = message?.toId
+        } else {
+            chatParnerId = message?.fromId
+        }
+        
+        if let id = chatParnerId {
+            let ref = FIRDatabase.database().reference().child("users").child(id)
+            ref.observe(.value, with: {(snapshot) in
+                if let dictionary = snapshot.value as? [String : Any] {
+                    
+                    self.usernameLabel.text = dictionary["username"] as? String
+                    if let profileImageURL = dictionary["profileImageURL"] {
+                        self.avatarImage.loadImageUsingCacheWithUrlString(urlString: profileImageURL as! String)
+                        self.avatarImage.layer.cornerRadius = 30.0
+                        self.avatarImage.clipsToBounds = true
+                    }
+                }
+            }, withCancel: nil)
+        }
+        
+        
     }
     
     
@@ -51,13 +70,10 @@ class DialogViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
     }
     
 }

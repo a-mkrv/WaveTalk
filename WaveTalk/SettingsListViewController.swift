@@ -140,7 +140,7 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
             print("LogoutError ", logoutError)
         }
         
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "loginBoard")
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "welcomePage")
         self.present(vc!, animated: true, completion: nil)
     }
     

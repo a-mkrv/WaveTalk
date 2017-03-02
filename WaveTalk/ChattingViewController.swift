@@ -25,7 +25,7 @@ class ChattingViewController: JSQMessagesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.senderId = "1"
         self.senderDisplayName = "Mario"
     }
@@ -35,14 +35,12 @@ class ChattingViewController: JSQMessagesViewController {
         let imagePicker = UIImagePickerController()
         imagePicker.navigationBar.isTranslucent = false
         imagePicker.navigationBar.tintColor = .white
-        
         imagePicker.delegate = self
         self.present(imagePicker, animated: true, completion: nil)
     }
     
     
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
-        
         messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, text: text))
         collectionView.reloadData()
         sendToFirebase(text)
@@ -56,7 +54,20 @@ class ChattingViewController: JSQMessagesViewController {
         let messageTime = String(describing: Date())
         let values = ["text" : text, "toId" : userId, "fromId" : fromId, "messageTime" : messageTime]
         
-        childRef.updateChildValues(values)
+        childRef.updateChildValues(values) { (error, ref) in
+            if error != nil {
+                print(error!)
+                return
+            }
+            
+            let userMessagesRef = FIRDatabase.database().reference().child("user-messages").child(fromId!)
+            let messageId = childRef.key
+            
+            userMessagesRef.updateChildValues([messageId : 1])
+            
+            let recipientUserMessagesRef = FIRDatabase.database().reference().child("user-messages").child(self.userId!)
+            recipientUserMessagesRef.updateChildValues([messageId : 1])
+        }
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageDataForItemAt indexPath: IndexPath!) -> JSQMessageData! {

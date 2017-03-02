@@ -43,7 +43,8 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
             
             if let dictionary = snapshot.value as? [String : Any] {
                 let user = Contact()
-                print(dictionary)
+                user.id = snapshot.key
+                
                 user.setValuesForKeys(dictionary)
                 self.contacts.append(user)
                 
@@ -80,7 +81,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
             print("LogoutError ", logoutError)
         }
         
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "loginBoard")
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "welcomePage")
         self.present(vc!, animated: true, completion: nil)
     }
     

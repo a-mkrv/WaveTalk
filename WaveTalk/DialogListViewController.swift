@@ -11,48 +11,57 @@ import Firebase
 
 class DialogListViewController: UITableViewController {
     
-    var dialogUsers = [Contact]()
     var messages = [Message]()
     var messagesDictionary = [String : Message] ()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        fetchUser()
-        observeMessages()
+        loadListOfDialogues()
+    }
+    
+    func loadListOfDialogues() {
+        messages.removeAll()
+        messagesDictionary.removeAll()
+        tableView.reloadData()
+        
+        observeUserMessages()
     }
     
     
-    func observeMessages() {
-        let ref = FIRDatabase.database().reference().child("message")
+    func observeUserMessages() {
+        guard let uid = FIRAuth.auth()?.currentUser?.uid else {
+            return
+        }
+        
+        let ref = FIRDatabase.database().reference().child("user-messages").child(uid)
         ref.observe(.childAdded, with: { (snapshot) in
+            let messageId = snapshot.key
+            let messagesReference = FIRDatabase.database().reference().child("message").child(messageId)
             
-            if let dictionary = snapshot.value as? [String : Any] {
-                let message = Message()
-                message.setValuesForKeys(dictionary)
-                //self.messages.append(message)
+            messagesReference.observeSingleEvent(of: .value, with: { (snapshot) in
                 
-                if let toId = message.toId {
-                    self.messagesDictionary[toId] = message
+                if let dictionary = snapshot.value as? [String : Any] {
+                    let message = Message()
+                    message.setValuesForKeys(dictionary)
                     
-                    self.messages = Array(self.messagesDictionary.values)
-                    self.messages.sort(by: {(message1, message2) -> Bool in
-                        return message1.messageTime! > message2.messageTime!
-                    })
+                    if let toId = message.toId {
+                        self.messagesDictionary[toId] = message
+                        
+                        self.messages = Array(self.messagesDictionary.values)
+                        self.messages.sort(by: {(message1, message2) -> Bool in
+                            return message1.messageTime! > message2.messageTime!
+                        })
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
                 }
                 
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            }
+            }, withCancel: nil)
         }, withCancel: nil)
-    }
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
     
     
@@ -62,7 +71,6 @@ class DialogListViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellDialog", for: indexPath) as! DialogViewCell
         
         let message = messages[indexPath.row]
@@ -72,35 +80,22 @@ class DialogListViewController: UITableViewController {
     }
     
     
-    func fetchUser() {
-        FIRDatabase.database().reference().child("users").observe(.childAdded, with: { (snapshot) in
-            
-            if let dictionary = snapshot.value as? [String : Any] {
-                let user = Contact()
-                user.id = snapshot.key
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "openChatView" {
+            if let indexPath = tableView.indexPathForSelectedRow {
+                let cell = tableView.cellForRow(at: indexPath) as! DialogViewCell
+                let destinationController = segue.destination as! ChattingViewController
+                destinationController.user = cell.usernameLabel!.text!
+                destinationController.userId = messages[indexPath.row].toId
                 
-                print(dictionary)
-                user.setValuesForKeys(dictionary)
-                self.dialogUsers.append(user)
-                
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
+                navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
             }
             
-        }, withCancel: nil)
+        }
     }
     
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == "openChatView" {
-            if let indexPath = tableView.indexPathForSelectedRow {
-                let destinationController = segue.destination as! ChattingViewController
-                destinationController.user = dialogUsers[indexPath.row].username
-                destinationController.userId = dialogUsers[indexPath.row].id
-                navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-            }
-        }
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
 }

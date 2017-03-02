@@ -42,9 +42,9 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
         pickImageController.delegate = self
         pickImageController.allowsEditing = true
         
-        usernameField.setBorderBottom(colorBorder)
-        emailField.setBorderBottom(colorBorder)
-        passwordField.setBorderBottom(colorBorder)
+        usernameField.setBorderBottom()
+        emailField.setBorderBottom()
+        passwordField.setBorderBottom()
         
         userProfilePhoto.isUserInteractionEnabled = true
         userProfilePhoto.layer.cornerRadius = userProfilePhoto.frame.size.width/2.0
