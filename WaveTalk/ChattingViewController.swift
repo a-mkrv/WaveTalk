@@ -14,20 +14,55 @@ import FirebaseAuth
 class ChattingViewController: JSQMessagesViewController {
     
     var messages = [JSQMessage] ()
+    var user = Contact()
     
-    var userId: String?
-    var user: String? {
+    var setUserTitle: String? {
         didSet {
-            self.navigationItem.title = user
+            self.navigationItem.title = setUserTitle
+            
+            observeMessages()
         }
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        
         self.senderId = "1"
         self.senderDisplayName = "Mario"
+    }
+    
+    
+    func observeMessages() {
+        guard let uid = FIRAuth.auth()?.currentUser?.uid else {
+            return
+        }
+        
+        let userMessagesRef = FIRDatabase.database().reference().child("user-messages").child(uid)
+        userMessagesRef.observe(.childAdded, with: { (snapshot) in
+            
+            let messageId = snapshot.key
+            let messagesRef = FIRDatabase.database().reference().child("message").child(messageId)
+            messagesRef.observe(.value, with: { (snapshot) in
+                
+                guard let dictionary = snapshot.value as? [String : Any] else {
+                    return
+                }
+                
+                let message = Message()
+                message.setValuesForKeys(dictionary)
+                
+                if message.chatPartnerId() == self.user.id {
+                    self.messages.append(JSQMessage(senderId: self.user.id, displayName: self.user.username, text: message.text))
+                    DispatchQueue.main.async {
+                        self.collectionView.reloadData()
+                    }
+                }
+                
+            }, withCancel: nil)
+            
+        }, withCancel: nil)
     }
     
     
@@ -52,7 +87,7 @@ class ChattingViewController: JSQMessagesViewController {
         let childRef = ref.childByAutoId()
         let fromId = FIRAuth.auth()?.currentUser?.uid
         let messageTime = String(describing: Date())
-        let values = ["text" : text, "toId" : userId, "fromId" : fromId, "messageTime" : messageTime]
+        let values = ["text" : text, "toId" : user.id, "fromId" : fromId, "messageTime" : messageTime]
         
         childRef.updateChildValues(values) { (error, ref) in
             if error != nil {
@@ -65,14 +100,16 @@ class ChattingViewController: JSQMessagesViewController {
             
             userMessagesRef.updateChildValues([messageId : 1])
             
-            let recipientUserMessagesRef = FIRDatabase.database().reference().child("user-messages").child(self.userId!)
+            let recipientUserMessagesRef = FIRDatabase.database().reference().child("user-messages").child(self.user.id!)
             recipientUserMessagesRef.updateChildValues([messageId : 1])
         }
     }
     
+    
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageDataForItemAt indexPath: IndexPath!) -> JSQMessageData! {
         return messages[indexPath.item]
     }
+    
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource! {
         
@@ -80,13 +117,16 @@ class ChattingViewController: JSQMessagesViewController {
         return bubbleFactory?.outgoingMessagesBubbleImage(with: .black)
     }
     
+    
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource! {
         return nil
     }
     
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return messages.count
     }
+    
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as! JSQMessagesCollectionViewCell

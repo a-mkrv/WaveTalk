@@ -38,8 +38,8 @@ class ContactDetailsViewController: UITableViewController {
         
         if segue.identifier == "startChatWithUser" {
                 let destinationController = segue.destination as! ChattingViewController
-                destinationController.user = contact.username
-                destinationController.userId = contact.id
+                destinationController.user = contact
+                destinationController.setUserTitle = contact.username
                 navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         }
     }

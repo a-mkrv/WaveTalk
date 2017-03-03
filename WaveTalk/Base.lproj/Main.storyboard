@@ -191,7 +191,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8cn-K0-IRn" id="NFk-Vm-YHJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bqp-nr-QN7">
@@ -897,7 +897,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0MO-Jg-t8l" id="IIh-MS-Wwm">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AO0-Bp-g9m" userLabel="Avatar Image">
@@ -910,7 +910,7 @@
                                             <rect key="frame" x="82" y="8" width="86" height="56"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="UserName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SaB-dJ-yY0">
-                                                    <rect key="frame" x="0.0" y="0.0" width="82" height="27"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="81.5" height="27"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -947,7 +947,7 @@
                                     <outlet property="lastmessageLabel" destination="igN-qg-Ax2" id="jdy-CY-90O"/>
                                     <outlet property="timemessageLabel" destination="JmC-kX-b3E" id="bLI-zg-neI"/>
                                     <outlet property="usernameLabel" destination="SaB-dJ-yY0" id="Bia-DP-zVb"/>
-                                    <segue destination="CfH-RM-i6l" kind="show" identifier="openChatView" id="5SZ-1j-ApJ"/>
+                                    <segue destination="CfH-RM-i6l" kind="show" identifier="openChatView" id="plo-jb-I3n"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1128,7 +1128,7 @@
         <image name="user" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="qaF-6O-Rok"/>
+        <segue reference="plo-jb-I3n"/>
         <segue reference="kf0-dw-qHQ"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

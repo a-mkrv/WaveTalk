@@ -79,19 +79,57 @@ class DialogListViewController: UITableViewController {
         return cell
     }
     
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         if segue.identifier == "openChatView" {
             if let indexPath = tableView.indexPathForSelectedRow {
-                let cell = tableView.cellForRow(at: indexPath) as! DialogViewCell
-                let destinationController = segue.destination as! ChattingViewController
-                destinationController.user = cell.usernameLabel!.text!
-                destinationController.userId = messages[indexPath.row].toId
+                let dialog = messages[indexPath.row]
+                let currentCell = tableView.cellForRow(at: indexPath) as! DialogViewCell
                 
-                navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+                guard let chatPartnerId = dialog.chatPartnerId() else {
+                    return
+                }
+                
+                let destinationController = segue.destination as! ChattingViewController
+                destinationController.setUserTitle = currentCell.usernameLabel.text
+                
+                
+                let ref = FIRDatabase.database().reference().child("users").child(chatPartnerId)
+                ref.observeSingleEvent(of: .value, with: { (snapshot) in
+                    
+                    guard let dictionary = snapshot.value as? [String : Any] else {
+                        return
+                    }
+                    
+                    let user = Contact()
+                    user.id = chatPartnerId
+                    
+                    user.setValuesForKeys(dictionary)
+                    destinationController.user = user
+                    
+                }, withCancel: nil)
             }
             
+            navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         }
+    }
+    
+    
+    func getUserData(chatPartnerId: String) -> Contact {
+        let user = Contact()
+        
+        let ref = FIRDatabase.database().reference().child("users").child(chatPartnerId)
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let dictionary = snapshot.value as? [String : Any] else {
+                return
+            }
+            
+            user.id = chatPartnerId
+            user.setValuesForKeys(dictionary)
+            
+        }, withCancel: nil)
+        
+        return user
     }
     
     

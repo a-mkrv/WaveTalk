@@ -20,24 +20,15 @@ class DialogViewCell: UITableViewCell {
     
     var message: Message? {
         didSet {
-            
-            setupNameAndProfileImage()
-            
             self.lastmessageLabel.text = message?.text
             self.timemessageLabel.text = timeFormat(date: (message?.messageTime)!)
+            
+            setupNameAndProfileImage()
         }
     }
     
     private func setupNameAndProfileImage() {
-        let chatParnerId: String?
-        
-        if message?.fromId == FIRAuth.auth()?.currentUser?.uid {
-            chatParnerId = message?.toId
-        } else {
-            chatParnerId = message?.fromId
-        }
-        
-        if let id = chatParnerId {
+        if let id = message?.chatPartnerId() {
             let ref = FIRDatabase.database().reference().child("users").child(id)
             ref.observe(.value, with: {(snapshot) in
                 if let dictionary = snapshot.value as? [String : Any] {
@@ -51,8 +42,6 @@ class DialogViewCell: UITableViewCell {
                 }
             }, withCancel: nil)
         }
-        
-        
     }
     
     
