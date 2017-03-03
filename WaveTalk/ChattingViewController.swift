@@ -16,6 +16,9 @@ class ChattingViewController: JSQMessagesViewController {
     var messages = [JSQMessage] ()
     var user = Contact()
     
+    lazy var outgoingBubbleImageView: JSQMessagesBubbleImage = self.setupOutgoingBubble()
+    lazy var incomingBubbleImageView: JSQMessagesBubbleImage = self.setupIncomingBubble()
+    
     var setUserTitle: String? {
         didSet {
             self.navigationItem.title = setUserTitle
@@ -28,9 +31,20 @@ class ChattingViewController: JSQMessagesViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        self.senderId = "1"
+        self.senderId = FIRAuth.auth()?.currentUser?.uid
         self.senderDisplayName = "Mario"
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let image = UIImage(named: "background.png")
+        let imgBackground:UIImageView = UIImageView(frame: self.view.bounds)
+        imgBackground.image = image
+        imgBackground.contentMode = UIViewContentMode.scaleAspectFill
+        imgBackground.clipsToBounds = true
+        self.collectionView?.backgroundView = imgBackground
     }
     
     
@@ -54,7 +68,12 @@ class ChattingViewController: JSQMessagesViewController {
                 message.setValuesForKeys(dictionary)
                 
                 if message.chatPartnerId() == self.user.id {
-                    self.messages.append(JSQMessage(senderId: self.user.id, displayName: self.user.username, text: message.text))
+                    if (uid == message.fromId) {
+                        self.messages.append(JSQMessage(senderId: uid, displayName: self.user.username, text: message.text))
+                    } else {
+                        self.messages.append(JSQMessage(senderId: self.user.id, displayName: self.user.username, text: message.text))
+                    }
+                    
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()
                     }
@@ -63,6 +82,8 @@ class ChattingViewController: JSQMessagesViewController {
             }, withCancel: nil)
             
         }, withCancel: nil)
+        
+        finishReceivingMessage()
     }
     
     
@@ -76,9 +97,11 @@ class ChattingViewController: JSQMessagesViewController {
     
     
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
-        messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, text: text))
+        //messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, text: text))
         collectionView.reloadData()
         sendToFirebase(text)
+        
+        finishSendingMessage()
     }
     
     
@@ -113,13 +136,13 @@ class ChattingViewController: JSQMessagesViewController {
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource! {
         
-        let bubbleFactory = JSQMessagesBubbleImageFactory()
-        return bubbleFactory?.outgoingMessagesBubbleImage(with: .black)
-    }
-    
-    
-    override func collectionView(_ collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource! {
-        return nil
+        let message = messages[indexPath.item]
+        
+        if message.senderId == senderId {
+            return outgoingBubbleImageView
+        } else {
+            return incomingBubbleImageView
+        }
     }
     
     
@@ -128,11 +151,48 @@ class ChattingViewController: JSQMessagesViewController {
     }
     
     
+    override func collectionView(_ collectionView: JSQMessagesCollectionView, avatarImageDataForItemAt indexPath: IndexPath) -> JSQMessageAvatarImageDataSource? {
+        return nil
+    }
+    
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as! JSQMessagesCollectionViewCell
+        let message = messages[indexPath.item]
+        
+        FIRDatabase.database().reference().child("users").child(self.senderId).observeSingleEvent(of: .value, with: {
+            (snapshot) in
+            if let dictionary = snapshot.value as? [String : AnyObject] {
+                if let profileURL = (dictionary["profileImageURL"] as? String) {
+                    if message.senderId == self.senderId {
+                        cell.avatarImageView.loadImageUsingCacheWithUrlString(urlString: profileURL)
+                        
+                    } else {
+                        cell.avatarImageView.loadImageUsingCacheWithUrlString(urlString: self.user.profileImageURL!)
+                    }
+                    
+                    cell.textView?.textColor = UIColor.black
+                    cell.avatarImageView.clipsToBounds = true;
+                    cell.avatarImageView.layer.cornerRadius = 15;
+                    cell.avatarImageView.isHidden = false;
+                }
+            }
+        }, withCancel: nil)
+        
         return cell
     }
+    
+    private func setupOutgoingBubble() -> JSQMessagesBubbleImage {
+        let bubbleImageFactory = JSQMessagesBubbleImageFactory()
+        return bubbleImageFactory!.outgoingMessagesBubbleImage(with: UIColor(red: 242.0/255, green: 250.0/255, blue: 223.0/255, alpha: 1.0))
+    }
+    
+    private func setupIncomingBubble() -> JSQMessagesBubbleImage {
+        let bubbleImageFactory = JSQMessagesBubbleImageFactory()
+        return bubbleImageFactory!.incomingMessagesBubbleImage(with: UIColor(red: 1, green: 1, blue: 1, alpha: 1.0))
+    }
 }
+
 
 extension ChattingViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
