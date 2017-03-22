@@ -18,21 +18,34 @@ This project is developing as a diploma thesis for the University.
 ---
 
 In the plans:
-+ Finish the UI part - approximate sketches
++ ~~Finish the UI part - approximate sketches~~
 + Change the architecture (the desire to MVC)
 + Add encryption, both on client Windows
   - RSA
   - MD5 - inefficient, probably will replace
-+ Total user database
-+ The first successful sending a message
++ ~~Total user database~~ (
++ ~~The first successful sending a message~~ (in the future, use own server instead Firebase)
 + Add calls
++ Modify the process of registration
+
+---
+
+Instruments:
++ Xcode 8
++ Swift 3 / iOS 9+
++ SourceTree
++ Frameworks:
+  - [JSQMessagesViewController](https://github.com/jessesquires/JSQMessagesViewController "JSQMessagesViewController")
+  - [SCLAlertView](https://github.com/vikmeup/SCLAlertView-Swift "SCLAlertView")
+  - [Firebase SDK](https://firebase.google.com "Firebase SDK")
 
 ---
 
 ### The current developments
 
-<img src="https://cloud.githubusercontent.com/assets/12527666/22626780/9334fd0e-ebc6-11e6-94f6-cbc72d1f20fe.png" width="200">
-<img src="https://cloud.githubusercontent.com/assets/12527666/22626781/935e553c-ebc6-11e6-9e91-72533d0dda6d.png" width="200">
-<img src="https://cloud.githubusercontent.com/assets/12527666/22626783/9360b764-ebc6-11e6-9aeb-cc80501a0fc1.png" width="200">
-<img src="https://cloud.githubusercontent.com/assets/12527666/22626782/935fab58-ebc6-11e6-9c49-213e9e3d5e97.png" width="200">
-
+<img src="https://cloud.githubusercontent.com/assets/12527666/23563079/2f06217e-0056-11e7-9b4f-6660b7b49437.png" width="280">
+<img src="https://cloud.githubusercontent.com/assets/12527666/23563078/2f05c116-0056-11e7-90da-6563894ba0b1.png"
+width=280"> 
+<img src="https://cloud.githubusercontent.com/assets/12527666/23563076/2f03a7e6-0056-11e7-9ebb-b384cf0db7e4.png" width=280">
+<img src="https://cloud.githubusercontent.com/assets/12527666/23563719/f0583efa-0058-11e7-84c8-b21748c2c011.png" width=280">
+<img src="https://cloud.githubusercontent.com/assets/12527666/23563786/4565b95e-0059-11e7-89c6-5e1c53450afe.png" width=280">
