@@ -10,6 +10,7 @@ import UIKit
 import SCLAlertView
 import Firebase
 import FirebaseAuth
+import SwiftSocket
 
 class LoginViewController: UIViewController {
     
@@ -20,11 +21,15 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var forgotButton: UIButton!
     @IBOutlet weak var wavesImage: UIImageView!
-    var previewAnimated = true
     
+    var previewAnimated = true
+    var authClient: TCPClient?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        authClient = TCPClient(address: "127.0.0.1", port: 55155)
+        authClient?.connect(timeout: 10)
         
         let colorBorder = UIColor(red: 80/255.0, green: 114/255.0, blue: 153/255.0, alpha: 100.0/100.0).cgColor
         
@@ -72,21 +77,46 @@ class LoginViewController: UIViewController {
         self.forgotButton.alpha = value
     }
     
+    private func sendRequest(using client: TCPClient) -> String? {
+        if let login = self.loginInput.text, let pass = self.passwordInput.text {
+            
+            switch client.send(string: "AUTH" + login + " /s " + pass) {
+            case .success:
+                return readResponse(from: client)
+            case .failure(let error):
+                print(error)
+                return nil
+            }
+            
+        } else {
+            return nil
+        }
+    }
+    
+    private func readResponse(from client: TCPClient) -> String? {
+        guard let response = client.read(1024*10) else { return nil }
+        
+        return String(bytes: response, encoding: .utf8)
+    }
     
     @IBAction func loginPress(_ sender: Any) {
-        FIRAuth.auth()?.signIn(withEmail: self.loginInput.text!, password: self.passwordInput.text!) { (user, error) in
+        if let response = sendRequest(using: authClient!) {
             
-            if error == nil {
-                // Go to the HomeViewController (TabBar) if the login is sucessful
+            switch(response) {
+            case "ERRA":
+                SCLAlertView().showTitle( "Error", subTitle: "\nInvalid Login or Password\n", duration: 0.0, completeText: "Try again", style: .error, colorStyle: 0x4196BE)
+                break
+                
+            case "OKEY":
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "tabBarBoard")
                 self.present(vc!, animated: true, completion: nil)
+                break
                 
-            } else {
-                // Error
-                SCLAlertView().showTitle( "Error", subTitle: "\nInvalid Login or Password\n",
-                                          duration: 0.0, completeText: "Try again", style: .error, colorStyle: 0x4196BE
-                )
+            default:
+                print("Auth Error - Bad request")
             }
+        } else {
+            print("Auth Error - Bad response")
         }
     }
     
@@ -105,3 +135,24 @@ class LoginViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
 }
+
+// Use Firebase
+//
+//@IBAction func loginPress(_ sender: Any) {
+//
+//    FIRAuth.auth()?.signIn(withEmail: self.loginInput.text!, password: self.passwordInput.text!) { (user, error) in
+//
+//        if error == nil {
+//            // Go to the HomeViewController (TabBar) if the login is sucessful
+//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "tabBarBoard")
+//            self.present(vc!, animated: true, completion: nil)
+//
+//        } else {
+//            // Error
+//            SCLAlertView().showTitle( "Error", subTitle: "\nInvalid Login or Password\n",
+//                                      duration: 0.0, completeText: "Try again", style: .error, colorStyle: 0x4196BE
+//            )
+//        }
+//    }
+//
+//}

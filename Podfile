@@ -13,5 +13,6 @@ target 'WaveTalk' do
   pod 'JSQMessagesViewController'
   pod 'SCLAlertView'
   pod 'SkyFloatingLabelTextField', '~> 2.0.0'
+  pod 'SwiftSocket'
 
 end
