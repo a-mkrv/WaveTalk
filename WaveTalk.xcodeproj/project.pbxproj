@@ -27,6 +27,7 @@
 		778590341E66A98700B85DDF /* FloatLabelTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778590321E66A98700B85DDF /* FloatLabelTextField.swift */; };
 		77A4E3DD1E508DF900F8AD50 /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A4E3DC1E508DF900F8AD50 /* AddContactViewController.swift */; };
 		77A4E3DF1E50EDFA00F8AD50 /* MainUserTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A4E3DE1E50EDFA00F8AD50 /* MainUserTabViewController.swift */; };
+		77A6C6BF1E82D88E002B66FB /* RSACrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A6C6BE1E82D88E002B66FB /* RSACrypt.swift */; };
 		77B3EBA51E1E59C10090C6F5 /* ContactListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3EBA41E1E59C10090C6F5 /* ContactListViewController.swift */; };
 		77B3EBA71E1E61FB0090C6F5 /* ContactViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3EBA61E1E61FB0090C6F5 /* ContactViewCell.swift */; };
 		77B63B2C1DE0826400127E96 /* PageContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B63B2B1DE0826400127E96 /* PageContentViewController.swift */; };
@@ -68,6 +69,7 @@
 		778590321E66A98700B85DDF /* FloatLabelTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatLabelTextField.swift; sourceTree = "<group>"; };
 		77A4E3DC1E508DF900F8AD50 /* AddContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
 		77A4E3DE1E50EDFA00F8AD50 /* MainUserTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainUserTabViewController.swift; sourceTree = "<group>"; };
+		77A6C6BE1E82D88E002B66FB /* RSACrypt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSACrypt.swift; sourceTree = "<group>"; };
 		77B3EBA41E1E59C10090C6F5 /* ContactListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactListViewController.swift; sourceTree = "<group>"; };
 		77B3EBA61E1E61FB0090C6F5 /* ContactViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactViewCell.swift; sourceTree = "<group>"; };
 		77B63B2B1DE0826400127E96 /* PageContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageContentViewController.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 				775A97701DD87BB50027C0F5 /* AppDelegate.swift */,
 				77560DEB1E3C8A7700C5BD87 /* Extensions.swift */,
 				778590321E66A98700B85DDF /* FloatLabelTextField.swift */,
+				77A6C6BE1E82D88E002B66FB /* RSACrypt.swift */,
 				77D68F2C1E22BB58002FF652 /* Start/Login */,
 				7774E2681E29099900E0C1BA /* Storyboards */,
 				7774E2671E29098600E0C1BA /* Chatting */,
@@ -364,6 +367,7 @@
 				77786E171E670FC300A24FF5 /* Message.swift in Sources */,
 				777E624A1DE1DE6B00840242 /* ForgotPswdViewController.swift in Sources */,
 				77B63B2C1DE0826400127E96 /* PageContentViewController.swift in Sources */,
+				77A6C6BF1E82D88E002B66FB /* RSACrypt.swift in Sources */,
 				7705EDC91E21402C008CDF67 /* ContactDetailsViewController.swift in Sources */,
 				778590341E66A98700B85DDF /* FloatLabelTextField.swift in Sources */,
 				774113A41E16AE3700DCAC6D /* ContactData.swift in Sources */,

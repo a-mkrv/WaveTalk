@@ -23,13 +23,13 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var wavesImage: UIImageView!
     
     var previewAnimated = true
-    var authClient: TCPClient?
+    var authSocket: TCPClient?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        authClient = TCPClient(address: "127.0.0.1", port: 55155)
-        authClient?.connect(timeout: 10)
+        authSocket = TCPClient(address: "127.0.0.1", port: 55155)
+        authSocket?.connect(timeout: 10)
         
         let colorBorder = UIColor(red: 80/255.0, green: 114/255.0, blue: 153/255.0, alpha: 100.0/100.0).cgColor
         
@@ -77,6 +77,7 @@ class LoginViewController: UIViewController {
         self.forgotButton.alpha = value
     }
     
+    
     private func sendRequest(using client: TCPClient) -> String? {
         if let login = self.loginInput.text, let pass = self.passwordInput.text {
             
@@ -93,14 +94,16 @@ class LoginViewController: UIViewController {
         }
     }
     
+    
     private func readResponse(from client: TCPClient) -> String? {
         guard let response = client.read(1024*10) else { return nil }
         
         return String(bytes: response, encoding: .utf8)
     }
     
+    
     @IBAction func loginPress(_ sender: Any) {
-        if let response = sendRequest(using: authClient!) {
+        if let response = sendRequest(using: authSocket!) {
             
             switch(response) {
             case "ERRA":
@@ -108,20 +111,22 @@ class LoginViewController: UIViewController {
                 break
                 
             case "OKEY":
+                authSocket?.close()
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "tabBarBoard")
                 self.present(vc!, animated: true, completion: nil)
                 break
                 
             default:
-                print("Auth Error - Bad request")
+                print("Auth Error - Bad response")
             }
         } else {
-            print("Auth Error - Bad response")
+            print("Auth Error - Bad request")
         }
     }
     
     
     @IBAction func signupPress(_ sender: Any) {
+        authSocket?.close()
         performSegue(withIdentifier: "SignUp", sender: self)
     }
     

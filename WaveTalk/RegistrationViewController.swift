@@ -11,6 +11,8 @@ import Firebase
 import FirebaseDatabase
 import SCLAlertView
 import SkyFloatingLabelTextField
+import SwiftSocket
+import CryptoSwift
 
 
 class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
@@ -21,12 +23,19 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
     @IBOutlet weak var userProfilePhoto: UIImageView!
     
     var pickImageController = UIImagePickerController()
+    var regSocket: TCPClient?
+    var rsaCrypt = RSACrypt()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //TODO: Add checking of validity in realtime
         //TODO: Add phone field
+        
+        regSocket = TCPClient(address: "127.0.0.1", port: 55155)
+        regSocket?.connect(timeout: 10)
+        
+        rsaCrypt.generationKeys()
         
         initUI()
     }
@@ -65,7 +74,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
         var login = ""
         var email = ""
         var paswd = ""
-        let status = "Hello! Now I'm here, too!"
+        _ = "Hello! Now I'm here, too!"
         
         login = validData(inputField: usernameField, subTitle: "\nUsername must be greater\n than 5 characters", minLength: 5)
         
@@ -78,60 +87,109 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
         }
         
         //TODO: Change the registration process - to make sure the phone number (add a field) and change emeyl binding (optional)
-        
         if (login != "" && email != "" && paswd != "") {
-            FIRAuth.auth()?.createUser(withEmail: email, password: paswd, completion: { (user: FIRUser?, error) in
+            let dataSet = (login, email, paswd)
+            
+            if let response = sendRequest(using: regSocket!, with: dataSet) {
                 
-                if error == nil {
-                    
-                    guard let uid = user?.uid else {
-                        return
-                    }
-                    
-                    let imageName = NSUUID().uuidString
-                    let storageRef = FIRStorage.storage().reference().child("profile_images").child("\(imageName).png")
-                    
-                    if let profileImage = self.userProfilePhoto.image, let uploadData = UIImageJPEGRepresentation(profileImage, 0.1) {
-                        
-                        storageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
-                            
-                            if error != nil {
-                                print(error!)
-                                return
-                            }
-                            
-                            
-                            //TODO: Add "Please wait..." dialog.
-                            
-                            if let profileImageURL = metadata?.downloadURL()?.absoluteString {
-                                
-                                let values = ["username" : login, "phoneNumber_or_Email" : email, "status" : status, "lastPresenceTime" : String(describing: Date()), "profileImageURL" : profileImageURL]
-                                
-                                self.registerUserIntoWithUI(uid: uid, values: values as [String : AnyObject])
-                            }
-                        })
-                    }
-                } else {
+                switch(response) {
+                case "ALRD":
                     SCLAlertView().showTitle( "Registration Error", subTitle: "\n\nUser with the same data already exists", duration: 0.0, completeText: "Ok", style: .error, colorStyle: 0x4196BE)
+                    break
+                    
+                case "WELC":
+                    regSocket?.close()
+                    self.registerUserIntoWithUI()
+                    break
+                    
+                default:
+                    print("Registration Error - Bad response")
                 }
-            })
+            } else {
+                print("Registration Error - Bad request")
+                
+            }
+            
+            //let values = ["username" : login, "phoneNumber_or_Email" : email, "status" : status, "lastPresenceTime" : String(describing: Date()), "profileImageURL" : profileImageURL]
+            
+            //self.registerUserIntoWithUI(uid: uid, values: values as [String : AnyObject])
+
         }
     }
     
-    func registerUserIntoWithUI(uid: String, values: [String: AnyObject]) {
+    
+    private func sendRequest(using client: TCPClient, with dataSet : (String, String, String)) -> String? {
         
-        let ref = FIRDatabase.database().reference(fromURL: "https://wavetalk-d3236.firebaseio.com/")
-        let userReference = ref.child("users").child(uid)
+        var pass = dataSet.2.md5()
+        let salt = saltGeneration();
+        pass = (pass + salt).md5()
+        let rsaKeys = String(rsaCrypt.getE()) + " " + String(rsaCrypt.getModule())
         
-        userReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
+        var request: String = "REGI" + dataSet.0 + " /s Empty /s " + pass + " /s Empty /s Empty /s "
+        request.append(rsaKeys + " /s " + salt)
+        
+        switch client.send(string: request) {
+        case .success:
+            return readResponse(from: client)
+        case .failure(let error):
+            print(error)
+            return nil
+        }
+    }
+    
+    
+    private func readResponse(from client: TCPClient) -> String? {
+        guard let response = client.read(1024*10) else { return nil }
+        
+        return String(bytes: response, encoding: .utf8)
+    }
+    
+    
+    func saltGeneration() -> String
+    {
+        var pass: String = ""
+        
+        for _ in 0 ..< 8 {
+            let key = arc4random_uniform(3)
+            var wordPass: Character!
             
-            if err != nil {
-                print(err!)
-                return
-            } else {
-                print("Saved user info into Firebase DB")
+            switch (key)
+            {
+            case 0:
+                wordPass = Character(UnicodeScalar(Int(arc4random_uniform(9)) + 48)!)
+                break
+            case 1:
+                wordPass = Character(UnicodeScalar(Int(arc4random_uniform(26)) + 65)!)
+                break
+            case 2:
+                wordPass = Character(UnicodeScalar(Int(arc4random_uniform(26)) + 97)!)
+                break
+            default:
+                break
             }
-        })
+            pass.append(wordPass)
+        }
+        
+        return pass
+    }
+    
+    
+    func registerUserIntoWithUI(/*uid: String, values: [String: AnyObject]*/) {
+        
+        // Use Firebase
+        //
+        //        let ref = FIRDatabase.database().reference(fromURL: "https://wavetalk-d3236.firebaseio.com/")
+        //        let userReference = ref.child("users").child(uid)
+        //
+        //        userReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
+        //
+        //            if err != nil {
+        //                print(err!)
+        //                return
+        //            } else {
+        //                print("Saved user info into Firebase DB")
+        //            }
+        //        })
         
         let appearance = SCLAlertView.SCLAppearance(
             showCloseButton: false
@@ -243,3 +301,44 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
         super.didReceiveMemoryWarning()
     }
 }
+
+
+// Use Firebase
+//
+//if (login != "" && email != "" && paswd != "") {
+//    FIRAuth.auth()?.createUser(withEmail: email, password: paswd, completion: { (user: FIRUser?, error) in
+//
+//        if error == nil {
+//
+//            guard let uid = user?.uid else {
+//                return
+//            }
+//
+//            let imageName = NSUUID().uuidString
+//            let storageRef = FIRStorage.storage().reference().child("profile_images").child("\(imageName).png")
+//
+//            if let profileImage = self.userProfilePhoto.image, let uploadData = UIImageJPEGRepresentation(profileImage, 0.1) {
+//
+//                storageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
+//
+//                    if error != nil {
+//                        print(error!)
+//                        return
+//                    }
+//
+//
+//                    //TODO: Add "Please wait..." dialog.
+//
+//                    if let profileImageURL = metadata?.downloadURL()?.absoluteString {
+//
+//                        let values = ["username" : login, "phoneNumber_or_Email" : email, "status" : status, "lastPresenceTime" : String(describing: Date()), "profileImageURL" : profileImageURL]
+//
+//                        self.registerUserIntoWithUI(uid: uid, values: values as [String : AnyObject])
+//                    }
+//                })
+//            }
+//        } else {
+//            SCLAlertView().showTitle( "Registration Error", subTitle: "\n\nUser with the same data already exists", duration: 0.0, completeText: "Ok", style: .error, colorStyle: 0x4196BE)
+//        }
+//    })
+//}
