@@ -18,9 +18,11 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var settingsList: UITableView!
     @IBOutlet weak var photoImage: UIImageView!
     
+    var tcpDelegate: NetworkTCPProtocol?
     var notificationSettings = NotificationSettings()
     var profileSettings = ProfileSettings()
     
+    let userDefaults = UserDefaults.standard
     let parameters = ["My Profile",  "Notifications", "Calls & Messages", "Privacy", "Media", "", "About", "Log Out"]
     
     override func viewDidLoad() {
@@ -130,17 +132,21 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
         } else if cellName == "Log Out" {
             handleLogout()
         }
-        
     }
     
     func handleLogout() {
-        do {
-            try FIRAuth.auth()?.signOut()
-        } catch let logoutError {
-            print("LogoutError ", logoutError)
-        }
+        userDefaults.set("userIsEmpty", forKey: "myUserName")
+
+        self.tcpDelegate?.setCancelConnect(request: "Cancel")
+
+//        do {
+//            try FIRAuth.auth()?.signOut()
+//        } catch let logoutError {
+//            print("LogoutError ", logoutError)
+//        }
         
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "welcomePage")
+        
         self.present(vc!, animated: true, completion: nil)
     }
     

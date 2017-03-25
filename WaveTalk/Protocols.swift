@@ -23,4 +23,8 @@ protocol ProfileSettingsProtocol {
     func setStatus(newValue: String)
 }
 
+protocol NetworkTCPProtocol {
+    func setCancelConnect(request: String)
+}
+
 

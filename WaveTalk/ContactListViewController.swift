@@ -10,15 +10,21 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 
-class ContactListViewController: UITableViewController, UISearchResultsUpdating {
+class ContactListViewController: UITableViewController, UISearchResultsUpdating, NetworkTCPProtocol {
     
     var myProfile = Contact()
+    var userName: String?
     var searchController: UISearchController!
     var searchContacts = [Contact]()
     var contacts = [Contact]()
     
+    var clientSocket = TCPSocket()
+    let userDefaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+                
+        clientSocket.connect()
         
         searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
@@ -38,21 +44,44 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
     //FIXME: App will crash if class properties don't exactly match up with the firebase dictionary keys
     //FIXME: Change logic of contacts - Now crashes after trying go to detail
     
-    func fetchUser() {
-        FIRDatabase.database().reference().child("users").observe(.childAdded, with: { (snapshot) in
-            
-            if let dictionary = snapshot.value as? [String : Any] {
-                let user = Contact()
-                user.id = snapshot.key
+    func fetchUser(personDates: Bool) {
+        
+        if (personDates)
+        {
+            if let response = sendRequest(using: clientSocket) {
                 
-                user.setValuesForKeys(dictionary)
-                self.contacts.append(user)
+                var bodyOfResponse: String = ""
+                let head = response.getHeadOfResponse(with: &bodyOfResponse)
                 
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
+                switch(head) {
+                case "FLST":
+                    print("Successful recieve datas")
+                    print(bodyOfResponse)
+                    break
+                    
+                default:
+                    print("Auth Error - Bad response")
                 }
+            } else {
+                print("Auth Error - Bad request")
             }
-        }, withCancel: nil)
+        }
+    }
+    
+    
+    private func sendRequest(using client: TCPSocket) -> String? {
+        if userName != nil {
+            
+            switch client.client.send(string: "LOAD" + userName!) {
+            case .success:
+                return client.readResponse()
+            case .failure(let error):
+                print(error)
+                return nil
+            }
+        } else {
+            return nil
+        }
     }
     
     
@@ -66,21 +95,30 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
     
     
     func checkUserIsLoggedIn() {
-        if  FIRAuth.auth()?.currentUser?.uid == nil {
+        let signIn = userDefaults.object(forKey: "myUserName") as? String
+
+        if signIn == "userIsEmpty" {
             perform(#selector(handleLogout), with: nil, afterDelay: 0)
         } else {
-            fetchUser()
+            userName = signIn!
+            fetchUser(personDates: true)
         }
+        
+//        if  FIRAuth.auth()?.currentUser?.uid == nil {
+//            perform(#selector(handleLogout), with: nil, afterDelay: 0)
+//        } else {
+//            fetchUser()
+//        }
     }
     
     
     func handleLogout() {
-        do {
-            try FIRAuth.auth()?.signOut()
-        } catch let logoutError {
-            print("LogoutError ", logoutError)
-        }
-        
+//        do {
+//            try FIRAuth.auth()?.signOut()
+//        } catch let logoutError {
+//            print("LogoutError ", logoutError)
+//        }
+        clientSocket.disconnect()
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "welcomePage")
         self.present(vc!, animated: true, completion: nil)
     }
@@ -227,6 +265,11 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
     }
     
     
+    func setCancelConnect(request: String) {
+        clientSocket.disconnect()
+    }
+    
+    
     @IBAction func addContactToList(_ sender: Any) {
         
         
@@ -236,3 +279,24 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating 
         super.didReceiveMemoryWarning()
     }
 }
+
+
+
+
+
+// Use Firebase
+//
+//        FIRDatabase.database().reference().child("users").observe(.childAdded, with: { (snapshot) in
+//
+//            if let dictionary = snapshot.value as? [String : Any] {
+//                let user = Contact()
+//                user.id = snapshot.key
+//
+//                user.setValuesForKeys(dictionary)
+//                self.contacts.append(user)
+//
+//                DispatchQueue.main.async {
+//                    self.tableView.reloadData()
+//                }
+//            }
+//        }, withCancel: nil)

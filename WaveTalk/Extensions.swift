@@ -53,6 +53,22 @@ extension UITextField {
 }
 
 //////////////////////////////////////////////
+// String
+
+extension String {
+    func getHeadOfResponse(with body: inout String) -> String
+    {
+        let startIndex = self.characters.index(self.startIndex, offsetBy: 0)
+        let endIndex = self.characters.index(self.startIndex, offsetBy: 4)
+        let range = startIndex..<endIndex
+        
+        body = self.substring(from: self.characters.index(self.startIndex, offsetBy: 4))
+        
+        return self.substring(with: range)
+    }
+}
+
+//////////////////////////////////////////////
 // View Controller
 
 extension UIViewController {

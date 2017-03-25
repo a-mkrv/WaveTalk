@@ -10,7 +10,6 @@ import UIKit
 import SCLAlertView
 import Firebase
 import FirebaseAuth
-import SwiftSocket
 
 class LoginViewController: UIViewController {
     
@@ -23,13 +22,14 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var wavesImage: UIImageView!
     
     var previewAnimated = true
-    var authSocket: TCPClient?
+    var authSocket = TCPSocket()
     
+    let userDefaults = UserDefaults.standard
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        authSocket = TCPClient(address: "127.0.0.1", port: 55155)
-        authSocket?.connect(timeout: 10)
+        authSocket.connect()
         
         let colorBorder = UIColor(red: 80/255.0, green: 114/255.0, blue: 153/255.0, alpha: 100.0/100.0).cgColor
         
@@ -78,40 +78,39 @@ class LoginViewController: UIViewController {
     }
     
     
-    private func sendRequest(using client: TCPClient) -> String? {
+    private func sendRequest(using client: TCPSocket) -> String? {
         if let login = self.loginInput.text, let pass = self.passwordInput.text {
-            
-            switch client.send(string: "AUTH" + login + " /s " + pass) {
+
+            switch client.client.send(string: "AUTH" + login + " /s " + pass.md5()) {
             case .success:
-                return readResponse(from: client)
+                return client.readResponse()
             case .failure(let error):
                 print(error)
                 return nil
             }
-            
         } else {
             return nil
         }
     }
     
     
-    private func readResponse(from client: TCPClient) -> String? {
-        guard let response = client.read(1024*10) else { return nil }
-        
-        return String(bytes: response, encoding: .utf8)
-    }
-    
-    
     @IBAction func loginPress(_ sender: Any) {
-        if let response = sendRequest(using: authSocket!) {
+        if let response = sendRequest(using: authSocket) {
             
-            switch(response) {
+            var bodyOfResponse: String = ""
+            let head = response.getHeadOfResponse(with: &bodyOfResponse)
+            
+            switch(head) {
             case "ERRA":
                 SCLAlertView().showTitle( "Error", subTitle: "\nInvalid Login or Password\n", duration: 0.0, completeText: "Try again", style: .error, colorStyle: 0x4196BE)
                 break
                 
             case "OKEY":
-                authSocket?.close()
+                authSocket.disconnect()
+                
+                userDefaults.set(self.loginInput.text, forKey: "myUserName")
+                userDefaults.set(bodyOfResponse, forKey: "myPublicKey")
+                
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "tabBarBoard")
                 self.present(vc!, animated: true, completion: nil)
                 break
@@ -126,7 +125,7 @@ class LoginViewController: UIViewController {
     
     
     @IBAction func signupPress(_ sender: Any) {
-        authSocket?.close()
+        authSocket.disconnect()
         performSegue(withIdentifier: "SignUp", sender: self)
     }
     

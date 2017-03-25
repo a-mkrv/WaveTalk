@@ -11,7 +11,6 @@ import Firebase
 import FirebaseDatabase
 import SCLAlertView
 import SkyFloatingLabelTextField
-import SwiftSocket
 import CryptoSwift
 
 
@@ -23,7 +22,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
     @IBOutlet weak var userProfilePhoto: UIImageView!
     
     var pickImageController = UIImagePickerController()
-    var regSocket: TCPClient?
+    var regSocket = TCPSocket()
     var rsaCrypt = RSACrypt()
     
     override func viewDidLoad() {
@@ -32,8 +31,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
         //TODO: Add checking of validity in realtime
         //TODO: Add phone field
         
-        regSocket = TCPClient(address: "127.0.0.1", port: 55155)
-        regSocket?.connect(timeout: 10)
+        regSocket.connect()
         
         rsaCrypt.generationKeys()
         
@@ -90,7 +88,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
         if (login != "" && email != "" && paswd != "") {
             let dataSet = (login, email, paswd)
             
-            if let response = sendRequest(using: regSocket!, with: dataSet) {
+            if let response = sendRequest(using: regSocket, with: dataSet) {
                 
                 switch(response) {
                 case "ALRD":
@@ -98,7 +96,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
                     break
                     
                 case "WELC":
-                    regSocket?.close()
+                    regSocket.disconnect()
                     self.registerUserIntoWithUI()
                     break
                     
@@ -118,7 +116,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
     }
     
     
-    private func sendRequest(using client: TCPClient, with dataSet : (String, String, String)) -> String? {
+    private func sendRequest(using client: TCPSocket, with dataSet : (String, String, String)) -> String? {
         
         var pass = dataSet.2.md5()
         let salt = saltGeneration();
@@ -128,20 +126,13 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
         var request: String = "REGI" + dataSet.0 + " /s Empty /s " + pass + " /s Empty /s Empty /s "
         request.append(rsaKeys + " /s " + salt)
         
-        switch client.send(string: request) {
+        switch client.client.send(string: request) {
         case .success:
-            return readResponse(from: client)
+            return client.readResponse()
         case .failure(let error):
             print(error)
             return nil
         }
-    }
-    
-    
-    private func readResponse(from client: TCPClient) -> String? {
-        guard let response = client.read(1024*10) else { return nil }
-        
-        return String(bytes: response, encoding: .utf8)
     }
     
     

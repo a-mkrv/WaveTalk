@@ -15,6 +15,9 @@ class MainUserTabViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        for viewController in self.viewControllers! {
+            _ = viewController.view
+        }
     }
     
     
