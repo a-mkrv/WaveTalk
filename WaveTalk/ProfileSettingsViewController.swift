@@ -34,7 +34,9 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
         usernameLabel.text = "@" + profileSettings.userName
         phoneLabel.text = profileSettings.phoneNumber
         statusLabel.text = profileSettings.status
-        profilePhotoImage.loadImageUsingCacheWithUrlString(urlString: profileSettings.profileImageURL!)
+        
+        //FIXME
+        //profilePhotoImage.loadImageUsingCacheWithUrlString(urlString: profileSettings.profileImageURL!)
     }
     
     

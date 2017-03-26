@@ -1128,8 +1128,8 @@
         <image name="user" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="plo-jb-I3n"/>
         <segue reference="kf0-dw-qHQ"/>
+        <segue reference="qaF-6O-Rok"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import FirebaseAuth
 
 class ViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
 
@@ -27,8 +26,6 @@ class ViewController: UIViewController, UIPageViewControllerDataSource, UIPageVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //FIRAuth.auth()
         
         viewControllers = [viewControllerAtIndex(0)]
         

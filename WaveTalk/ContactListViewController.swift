@@ -23,7 +23,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
         clientSocket.connect()
         
         searchController = UISearchController(searchResultsController: nil)
@@ -57,6 +57,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
                 case "FLST":
                     print("Successful recieve datas")
                     print(bodyOfResponse)
+                    parseResponseData(response: bodyOfResponse)
                     break
                     
                 default:
@@ -65,6 +66,56 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
             } else {
                 print("Auth Error - Bad request")
             }
+        }
+    }
+    
+    
+    /// Parse response from server - Users / Keys / Messages. Adding through Client::AddUserChat(...)
+    func parseResponseData(response: String) {
+        let res = response
+        let dataList = res.components(separatedBy: " //s ")
+        let keyList = dataList[0].components(separatedBy: " /s ")
+        let userList = dataList[1].components(separatedBy: " /s ")
+        let presenceStatus = dataList[2].components(separatedBy: " /s ")
+        var split: [String]
+        
+        var userData: [String] = ["", "", "", "", ""]
+        // 0 - userName, 
+        // 1 - email/phone,
+        // 2 - onlineStatus, 
+        // 3 - pubKey, 
+        // 4 - LiveStatus
+        
+        for i in 0 ..< userList.count {
+            split = keyList[i].components(separatedBy: " _ ")
+            userData[0] = split[0] // Set username
+            userData[3] = split[1] // Set public key
+            
+            split = userList[i].components(separatedBy: " _ ")
+            // split[1] - sex of person
+        
+            split = presenceStatus[i].components(separatedBy: " _ ")
+            userData[2] = split[1] // Set Online presence status
+            userData[1] = split[2] // Set Phone / Email
+            userData[4] = split[0] // Set Live status
+            
+            addUserToContactList(name: userData[0], emailPhone: userData[1], prTime: userData[2], pubFriendKey: userData[3], liveStatus: userData[4])
+        }
+    }
+    
+    func addUserToContactList(name: String, emailPhone: String, prTime: String, pubFriendKey: String, liveStatus: String) {
+        
+        let user = Contact()
+        user.username = name
+        user.phoneNumber_or_Email = emailPhone
+        user.pubKey = pubFriendKey
+        user.lastPresenceTime = prTime
+        user.status = liveStatus
+        
+        self.contacts.append(user)
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
         }
     }
     
@@ -96,7 +147,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
     
     func checkUserIsLoggedIn() {
         let signIn = userDefaults.object(forKey: "myUserName") as? String
-
+        
         if signIn == "userIsEmpty" {
             perform(#selector(handleLogout), with: nil, afterDelay: 0)
         } else {
@@ -104,20 +155,20 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
             fetchUser(personDates: true)
         }
         
-//        if  FIRAuth.auth()?.currentUser?.uid == nil {
-//            perform(#selector(handleLogout), with: nil, afterDelay: 0)
-//        } else {
-//            fetchUser()
-//        }
+        //        if  FIRAuth.auth()?.currentUser?.uid == nil {
+        //            perform(#selector(handleLogout), with: nil, afterDelay: 0)
+        //        } else {
+        //            fetchUser()
+        //        }
     }
     
     
     func handleLogout() {
-//        do {
-//            try FIRAuth.auth()?.signOut()
-//        } catch let logoutError {
-//            print("LogoutError ", logoutError)
-//        }
+        //        do {
+        //            try FIRAuth.auth()?.signOut()
+        //        } catch let logoutError {
+        //            print("LogoutError ", logoutError)
+        //        }
         clientSocket.disconnect()
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "welcomePage")
         self.present(vc!, animated: true, completion: nil)
