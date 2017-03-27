@@ -10,13 +10,14 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 
-class ContactListViewController: UITableViewController, UISearchResultsUpdating, NetworkTCPProtocol {
+class ContactListViewController: UITableViewController, UISearchResultsUpdating, NetworkTCPProtocol, FindUsersProtocol {
     
     var myProfile = Contact()
     var userName: String?
     var searchController: UISearchController!
     var searchContacts = [Contact]()
     var contacts = [Contact]()
+    var log = Logger()
     
     var clientSocket = TCPSocket()
     let userDefaults = UserDefaults.standard
@@ -25,7 +26,6 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
         super.viewDidLoad()
         
         clientSocket.connect()
-        
         searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
@@ -282,6 +282,16 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
                 let destinationController = segue.destination as! ContactDetailsViewController
                 destinationController.contact = (searchController.isActive) ? searchContacts[indexPath.row] : contacts[indexPath.row]
             }
+        } else if segue.identifier == "addContact" {
+
+            let destinationController = segue.destination as! AddContactViewController
+            destinationController.delegate = self
+            destinationController.searchSocket = clientSocket
+            destinationController.myUserName = userName!
+            
+            for users in contacts {
+                destinationController.existContacts.append(users.username!)
+            }
         }
     }
     
@@ -316,8 +326,15 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
     }
     
     
+    func addNewContact(contact: Contact) {
+        contacts.append(contact)
+        self.tableView.reloadData()
+    }
+    
+    
     func setCancelConnect(request: String) {
         clientSocket.disconnect()
+        
     }
     
     

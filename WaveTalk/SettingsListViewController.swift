@@ -135,7 +135,7 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func handleLogout() {
-        userDefaults.set("userIsEmpty", forKey: "myUserName")
+        //userDefaults.set("userIsEmpty", forKey: "myUserName")
 
         self.tcpDelegate?.setCancelConnect(request: "Cancel")
 

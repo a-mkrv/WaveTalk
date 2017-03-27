@@ -27,4 +27,6 @@ protocol NetworkTCPProtocol {
     func setCancelConnect(request: String)
 }
 
-
+protocol FindUsersProtocol {
+    func addNewContact(contact: Contact)
+}
