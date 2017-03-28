@@ -11,7 +11,9 @@ import Firebase
 
 class MainUserTabViewController: UITabBarController {
     
-    
+    var myProfile = Contact()
+    var clientSocket = TCPSocket()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         

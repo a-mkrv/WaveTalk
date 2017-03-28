@@ -7,10 +7,10 @@
 //
 
 import UIKit
-import Firebase
-import FirebaseDatabase
+//import Firebase
+//import FirebaseDatabase
 
-class ContactListViewController: UITableViewController, UISearchResultsUpdating, NetworkTCPProtocol, FindUsersProtocol {
+class ContactListViewController: UITableViewController, UISearchResultsUpdating, FindUsersProtocol {
     
     var myProfile = Contact()
     var userName: String?
@@ -24,6 +24,10 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let tabBarVC = self.tabBarController  as! MainUserTabViewController
+        clientSocket = tabBarVC.clientSocket
+        myProfile = tabBarVC.myProfile
         
         clientSocket.connect()
         searchController = UISearchController(searchResultsController: nil)
@@ -55,16 +59,14 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
                 
                 switch(head) {
                 case "FLST":
-                    print("Successful recieve datas")
-                    print(bodyOfResponse)
                     parseResponseData(response: bodyOfResponse)
                     break
                     
                 default:
-                    print("Auth Error - Bad response")
+                    log.error(msg: "Auth Error - Bad response" as AnyObject)
                 }
             } else {
-                print("Auth Error - Bad request")
+                log.error(msg: "Auth Error - Bad request" as AnyObject)
             }
         }
     }
@@ -127,7 +129,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
             case .success:
                 return client.readResponse()
             case .failure(let error):
-                print(error)
+                log.error(msg: error as AnyObject)
                 return nil
             }
         } else {
@@ -152,6 +154,8 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
             perform(#selector(handleLogout), with: nil, afterDelay: 0)
         } else {
             userName = signIn!
+            myProfile.username = userName
+            
             fetchUser(personDates: true)
         }
         
@@ -292,7 +296,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
             for users in contacts {
                 destinationController.existContacts.append(users.username!)
             }
-        }
+    }
     }
     
     
@@ -329,12 +333,6 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
     func addNewContact(contact: Contact) {
         contacts.append(contact)
         self.tableView.reloadData()
-    }
-    
-    
-    func setCancelConnect(request: String) {
-        clientSocket.disconnect()
-        
     }
     
     

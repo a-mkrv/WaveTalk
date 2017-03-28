@@ -43,6 +43,7 @@
 		77F31F4C1E3C98720090FED7 /* UserNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F31F4B1E3C98720090FED7 /* UserNameViewController.swift */; };
 		77F31F4E1E3D10F90090FED7 /* PhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F31F4D1E3D10F90090FED7 /* PhoneNumberViewController.swift */; };
 		77F8F2311E3E6607001065BC /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F8F2301E3E6607001065BC /* StatusViewController.swift */; };
+		77FA990E1E89218B00612FCA /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FA990D1E89218B00612FCA /* Logger.swift */; };
 		E1F19E49C8BC6DE8E3E1A989 /* Pods_WaveTalk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7F2C47FD70473EEFCD69DD6 /* Pods_WaveTalk.framework */; };
 /* End PBXBuildFile section */
 
@@ -86,6 +87,7 @@
 		77F31F4B1E3C98720090FED7 /* UserNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNameViewController.swift; sourceTree = "<group>"; };
 		77F31F4D1E3D10F90090FED7 /* PhoneNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneNumberViewController.swift; sourceTree = "<group>"; };
 		77F8F2301E3E6607001065BC /* StatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
+		77FA990D1E89218B00612FCA /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		78B7104A990097914FDF0D3C /* Pods-WaveTalk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WaveTalk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WaveTalk/Pods-WaveTalk.debug.xcconfig"; sourceTree = "<group>"; };
 		C7F2C47FD70473EEFCD69DD6 /* Pods_WaveTalk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WaveTalk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E927018FDA4701A2DA7D6628 /* Pods-WaveTalk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WaveTalk.release.xcconfig"; path = "Pods/Target Support Files/Pods-WaveTalk/Pods-WaveTalk.release.xcconfig"; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 			children = (
 				7739A6B31E8664070081BECB /* TCPSocket.swift */,
 				775A97701DD87BB50027C0F5 /* AppDelegate.swift */,
+				77FA990D1E89218B00612FCA /* Logger.swift */,
 				77560DEB1E3C8A7700C5BD87 /* Extensions.swift */,
 				7763E5261E34E7DF00F36193 /* Protocols.swift */,
 				778590321E66A98700B85DDF /* FloatLabelTextField.swift */,
@@ -370,6 +373,7 @@
 				77786E171E670FC300A24FF5 /* Message.swift in Sources */,
 				777E624A1DE1DE6B00840242 /* ForgotPswdViewController.swift in Sources */,
 				77B63B2C1DE0826400127E96 /* PageContentViewController.swift in Sources */,
+				77FA990E1E89218B00612FCA /* Logger.swift in Sources */,
 				77A6C6BF1E82D88E002B66FB /* RSACrypt.swift in Sources */,
 				7705EDC91E21402C008CDF67 /* ContactDetailsViewController.swift in Sources */,
 				778590341E66A98700B85DDF /* FloatLabelTextField.swift in Sources */,

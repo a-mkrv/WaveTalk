@@ -283,6 +283,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
     
     
     @IBAction func backToLogin(_ sender: Any) {
+        regSocket.disconnect()
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "loginBoard")
         self.present(vc!, animated: true, completion: nil)
     }

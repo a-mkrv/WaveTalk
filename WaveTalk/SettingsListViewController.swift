@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import SCLAlertView
 
 class SettingsListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NotificationSettingsProtocol {
     
@@ -18,7 +19,9 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var settingsList: UITableView!
     @IBOutlet weak var photoImage: UIImageView!
     
-    var tcpDelegate: NetworkTCPProtocol?
+    var log = Logger()
+    var myProfile = Contact()
+    var settingsSocket = TCPSocket()
     var notificationSettings = NotificationSettings()
     var profileSettings = ProfileSettings()
     
@@ -28,6 +31,10 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let tabBarVC = self.tabBarController  as! MainUserTabViewController
+        settingsSocket = tabBarVC.clientSocket
+        myProfile = tabBarVC.myProfile
+        
         setProfileImage()
     }
     
@@ -35,41 +42,22 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        //FIXME:    Add a check for variability of data
-        //          Badly to make a request each time to a database
-        
         fetchUserAndSetupNavigationBarTitle()
     }
     
     
     func updateMyInfo() {
         firstLastName.text = profileSettings.firstName + " " + profileSettings.lastName
-        userName.text = "@" + profileSettings.userName
-        phoneNumber.text = "+" + profileSettings.phoneNumber
-    }
-    
-    
-    func fetchUserAndSetupNavigationBarTitle() {
-        guard let uid = FIRAuth.auth()?.currentUser?.uid else {
-            return
+        
+        if (firstLastName.text == " ") {
+            firstLastName.text = "First / Last Name"
+            firstLastName.textColor = UIColor.lightGray
+        } else {
+            firstLastName.textColor = .black
         }
         
-        FIRDatabase.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: {
-            (snapshot) in
-            
-            if let dictionary = snapshot.value as? [String : AnyObject] {
-                self.profileSettings.userName = (dictionary["username"] as? String)!
-                self.profileSettings.status = (dictionary["status"] as? String)!
-                self.profileSettings.phoneNumber = (dictionary["phoneNumber_or_Email"] as? String)!
-                self.profileSettings.profileImageURL = (dictionary["profileImageURL"] as? String)!
-                
-                if let profileImageURL = self.profileSettings.profileImageURL {
-                    self.photoImage.loadImageUsingCacheWithUrlString(urlString: profileImageURL)
-                }
-                
-                self.updateMyInfo()
-            }
-        }, withCancel: nil)
+        userName.text = "@" + profileSettings.userName
+        phoneNumber.text = "+" + profileSettings.phoneNumber
     }
     
     
@@ -80,6 +68,62 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
         
         photoImage.layer.cornerRadius = photoImage.frame.height/2
         photoImage.clipsToBounds = true
+    }
+    
+    
+    func fetchUserAndSetupNavigationBarTitle() {
+        if let response = sendRequest(using: settingsSocket) {
+            
+            var bodyOfResponse: String = ""
+            let head = response.getHeadOfResponse(with: &bodyOfResponse)
+            
+            switch(head) {
+            case "INFN": //Bad response
+                
+                break
+                
+            case "INFP": //Get information
+                let userData = bodyOfResponse.components(separatedBy: " /s ")
+                // 0 - Sex, 1 - Age, 2 - City, 3 - OnlineStatus, 4 - Email/Phone, 5 - LiveStatus
+                
+                myProfile.lastPresenceTime = userData[3]
+                myProfile.phoneNumber_or_Email = userData[4]
+                myProfile.status = userData[5]
+                
+                profileSettings.firstName = ""
+                profileSettings.lastName = ""
+                profileSettings.phoneNumber = userData[4]
+                profileSettings.status = userData[5]
+                profileSettings.userName = myProfile.username!
+                
+                self.updateMyInfo()
+                break
+                
+            default:
+                log.error(msg: "Auth Error - Bad response" as AnyObject)
+            }
+        } else {
+            log.error(msg: "Auth Error - Bad request" as AnyObject)
+        }
+    }
+    
+    private func sendRequest(using client: TCPSocket) -> String? {
+        var request = "GETI"
+        
+        guard let myUserName = myProfile.username else {
+            log.error(msg: "UserName is Empty" as AnyObject)
+            return nil
+        }
+        
+        request.append(myUserName)
+        
+        switch client.client.send(string: request) {
+        case .success:
+            return client.readResponse()
+        case .failure(let error):
+            log.error(msg: error as AnyObject)
+            return nil
+        }
     }
     
     
@@ -135,20 +179,32 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func handleLogout() {
-        //userDefaults.set("userIsEmpty", forKey: "myUserName")
+        let appearance = SCLAlertView.SCLAppearance(
+            showCloseButton: false
+        )
+        
+        let alertView = SCLAlertView(appearance: appearance)
+        
+        alertView.addButton("Confirm the Log Out", target:self, selector:#selector(self.logOut))
+        alertView.addButton("Cancel") {}
 
-        self.tcpDelegate?.setCancelConnect(request: "Cancel")
-
-//        do {
-//            try FIRAuth.auth()?.signOut()
-//        } catch let logoutError {
-//            print("LogoutError ", logoutError)
-//        }
+        alertView.showTitle(
+            "Sign out of account",
+            subTitle: "\n",
+            style: .warning,
+            colorStyle: 0x708090,
+            colorTextButton: 0xFFFFFF
+        )
+    }
+    
+    func logOut() {
+        userDefaults.set("userIsEmpty", forKey: "myUserName")
+        settingsSocket.disconnect()
         
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "welcomePage")
-        
         self.present(vc!, animated: true, completion: nil)
     }
+    
     
     ///////////////////////////////////
     // PROTOCOL'S METHODS
@@ -179,3 +235,29 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
         super.didReceiveMemoryWarning()
     }
 }
+
+
+// Use Firebase
+//
+//func fetchUserAndSetupNavigationBarTitle() {
+//    guard let uid = FIRAuth.auth()?.currentUser?.uid else {
+//        return
+//    }
+//
+//    FIRDatabase.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: {
+//        (snapshot) in
+//
+//        if let dictionary = snapshot.value as? [String : AnyObject] {
+//            self.profileSettings.userName = (dictionary["username"] as? String)!
+//            self.profileSettings.status = (dictionary["status"] as? String)!
+//            self.profileSettings.phoneNumber = (dictionary["phoneNumber_or_Email"] as? String)!
+//            self.profileSettings.profileImageURL = (dictionary["profileImageURL"] as? String)!
+//
+//            if let profileImageURL = self.profileSettings.profileImageURL {
+//                self.photoImage.loadImageUsingCacheWithUrlString(urlString: profileImageURL)
+//            }
+//
+//            self.updateMyInfo()
+//        }
+//    }, withCancel: nil)
+//}

@@ -191,7 +191,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8cn-K0-IRn" id="NFk-Vm-YHJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bqp-nr-QN7">
@@ -247,7 +247,7 @@
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="addContactToList:" destination="UMr-mJ-3hj" id="g0Y-d1-btA"/>
-                                <segue destination="Qd4-oV-jG5" kind="show" id="hvS-dm-FBl"/>
+                                <segue destination="Qd4-oV-jG5" kind="show" identifier="addContact" id="hvS-dm-FBl"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -461,11 +461,11 @@
                                 <rect key="frame" x="24" y="519" width="327" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zal-Z1-Ae4">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zal-Z1-Ae4">
                                 <rect key="frame" x="36" y="99" width="302" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pTi-Ql-2zV">
@@ -965,7 +965,7 @@
         <!--Settings-->
         <scene sceneID="0QY-hp-cA9">
             <objects>
-                <viewController id="dOR-Tm-zar" customClass="SettingsListViewController" customModule="WaveTalk" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="settingsBoard" id="dOR-Tm-zar" customClass="SettingsListViewController" customModule="WaveTalk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uBD-jE-SW9"/>
                         <viewControllerLayoutGuide type="bottom" id="DDu-ic-Bsn"/>
@@ -1128,8 +1128,8 @@
         <image name="user" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="kf0-dw-qHQ"/>
         <segue reference="qaF-6O-Rok"/>
+        <segue reference="kf0-dw-qHQ"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>
