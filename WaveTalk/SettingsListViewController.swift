@@ -33,6 +33,7 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
         
         let tabBarVC = self.tabBarController  as! MainUserTabViewController
         settingsSocket = tabBarVC.clientSocket
+        profileSettings = tabBarVC.profileSettings
         myProfile = tabBarVC.myProfile
         
         setProfileImage()
@@ -90,12 +91,15 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
                 myProfile.phoneNumber_or_Email = userData[4]
                 myProfile.status = userData[5]
                 
-                profileSettings.firstName = ""
-                profileSettings.lastName = ""
+                profileSettings.gender = userData[0]
+                profileSettings.age = userData[1]
+                profileSettings.city = userData[2]
+                profileSettings.firstName = userData[6]
+                profileSettings.lastName = userData[7]
                 profileSettings.phoneNumber = userData[4]
                 profileSettings.status = userData[5]
                 profileSettings.userName = myProfile.username!
-                
+
                 self.updateMyInfo()
                 break
                 
@@ -165,10 +169,6 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
                 let destinationController = VC as! NotificationSettingsViewController
                 destinationController.delegate = self
                 destinationController.notificationSettings = notificationSettings
-            }
-            else if (cellName == "My Profile") {
-                let destinationController = VC as! ProfileSettingsViewController
-                destinationController.profileSettings = profileSettings
             }
             
             navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)

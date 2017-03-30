@@ -13,6 +13,7 @@ class MainUserTabViewController: UITabBarController {
     
     var myProfile = Contact()
     var clientSocket = TCPSocket()
+    var profileSettings = ProfileSettings()
 
     override func viewDidLoad() {
         super.viewDidLoad()

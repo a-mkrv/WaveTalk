@@ -20,6 +20,7 @@
 		775A97761DD87BB50027C0F5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 775A97741DD87BB50027C0F5 /* Main.storyboard */; };
 		775A977B1DD87BB50027C0F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 775A97791DD87BB50027C0F5 /* LaunchScreen.storyboard */; };
 		7763E5271E34E7DF00F36193 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7763E5261E34E7DF00F36193 /* Protocols.swift */; };
+		776840F31E8D516000C4A83C /* OptionalInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776840F21E8D516000C4A83C /* OptionalInfoViewController.swift */; };
 		7774E2661E29085B00E0C1BA /* ChattingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7774E2651E29085B00E0C1BA /* ChattingViewController.swift */; };
 		77786E171E670FC300A24FF5 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77786E161E670FC300A24FF5 /* Message.swift */; };
 		777E62461DE1A0B200840242 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777E62451DE1A0B200840242 /* LoginViewController.swift */; };
@@ -63,6 +64,7 @@
 		775A977A1DD87BB50027C0F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		775A977C1DD87BB50027C0F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7763E5261E34E7DF00F36193 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		776840F21E8D516000C4A83C /* OptionalInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionalInfoViewController.swift; sourceTree = "<group>"; };
 		776F91B31DFD69A800B6AB1D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		7774E2651E29085B00E0C1BA /* ChattingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChattingViewController.swift; sourceTree = "<group>"; };
 		77786E161E670FC300A24FF5 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 		77310E1A1E2FAF8500F67DDF /* SettingViews */ = {
 			isa = PBXGroup;
 			children = (
+				776840F21E8D516000C4A83C /* OptionalInfoViewController.swift */,
 				77CAC8221E2FBAFD00D5EE11 /* NotificationSettingsViewController.swift */,
 				771E12D91E2502050084417A /* SettingsListViewController.swift */,
 				77310E1B1E2FAFCD00F67DDF /* ProfileSettingsViewController.swift */,
@@ -376,6 +379,7 @@
 				77FA990E1E89218B00612FCA /* Logger.swift in Sources */,
 				77A6C6BF1E82D88E002B66FB /* RSACrypt.swift in Sources */,
 				7705EDC91E21402C008CDF67 /* ContactDetailsViewController.swift in Sources */,
+				776840F31E8D516000C4A83C /* OptionalInfoViewController.swift in Sources */,
 				778590341E66A98700B85DDF /* FloatLabelTextField.swift in Sources */,
 				774113A41E16AE3700DCAC6D /* ContactData.swift in Sources */,
 				77310E1C1E2FAFCD00F67DDF /* ProfileSettingsViewController.swift in Sources */,

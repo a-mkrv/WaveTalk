@@ -11,8 +11,6 @@ import UIKit
 class ProfileSettingsViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate, UITextFieldDelegate,  ProfileSettingsProtocol {
     
     @IBOutlet weak var profilePhotoImage: UIImageView!
-    @IBOutlet weak var firstnameInput: UITextField!
-    @IBOutlet weak var lastnameInput: UITextField!
     
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var phoneLabel: UILabel!
@@ -21,7 +19,8 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
     var delegate: ProfileSettingsProtocol?
     var pickImageController = UIImagePickerController()
     var profileSettings: ProfileSettings!
-    
+    var profileSocket = TCPSocket()
+    var log = Logger()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,8 +28,10 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
         
         initUI()
         
-        firstnameInput.text = profileSettings.firstName
-        lastnameInput.text = profileSettings.lastName
+        let tabBarVC = self.tabBarController  as! MainUserTabViewController
+        profileSettings = tabBarVC.profileSettings
+        profileSocket = tabBarVC.clientSocket
+        
         usernameLabel.text = "@" + profileSettings.userName
         phoneLabel.text = profileSettings.phoneNumber
         statusLabel.text = profileSettings.status
@@ -49,14 +50,8 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
         pickImageController.delegate = self
         pickImageController.allowsEditing = true
         
-        profilePhotoImage.layer.cornerRadius = 52.0
-        profilePhotoImage.clipsToBounds = true
-        
-        firstnameInput.setBorderBottom()
-        firstnameInput.delegate = self
-        
-        lastnameInput.setBorderBottom()
-        lastnameInput.delegate = self
+        //profilePhotoImage.layer.cornerRadius = 52.0
+        //profilePhotoImage.clipsToBounds = true
     }
     
     
@@ -77,13 +72,13 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
                 self.navigationController?.pushViewController(phoneNumberViewController, animated: true)
                 
                 break
-            case 2:
-                // Add status
-                break
             default:
                 break
             }
-            
+        } else if (indexPath.section == 2 && indexPath.row == 0) {
+            let optionalInfoViewController = self.storyboard?.instantiateViewController(withIdentifier: "optionalInfoVC") as! OptionalInfoViewController
+            optionalInfoViewController.delegate = self
+            self.navigationController?.pushViewController(optionalInfoViewController, animated: true)
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
@@ -139,55 +134,57 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
     }
     
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == self.firstnameInput {
-            saveFirstName(textField)
-        }
+    func updateUserInfoInDB() {
         
-        if textField == self.lastnameInput {
-            saveLastName(textField)
-        }
+        var sendUpInfo: String = "UPUI" + profileSettings.userName + " /s "
+        sendUpInfo.append(profileSettings.firstName + " /s " + profileSettings.lastName + " /s ")
+        sendUpInfo.append(profileSettings.phoneNumber + " /s " + profileSettings.gender + " /s ")
+        sendUpInfo.append(profileSettings.age + " /s " + profileSettings.city + " /s ")
+        sendUpInfo.append(profileSettings.status)
         
-        self.view.endEditing(true)
-        return false
-    }
-    
-    
-    @IBAction func saveFirstName(_ sender: UITextField) {
-        setFirstOrLastName(name: "FirstName", newValue: firstnameInput.text!)
-    }
-    
-    @IBAction func saveLastName(_ sender: UITextField) {
-        setFirstOrLastName(name: "LastName", newValue: lastnameInput.text!)
+        switch profileSocket.client.send(string: sendUpInfo) {
+        case .success:
+            log.debug(msg: "Success update" as AnyObject)
+        case .failure(let error):
+            log.error(msg: error as AnyObject)
+        }
     }
     
     
     ///////////////////////////////////
     // PROTOCOL'S METHODS
     
-    func setFirstOrLastName(name: String, newValue: String) {
-        if name == "FirstName" {
-            self.profileSettings.firstName = newValue
-        } else if name == "LastName" {
-            self.profileSettings.lastName = newValue
-        }
+    func setOptionalInformation(firstName: String?, lastName: String?, gender: String?, age: String?, city: String?) {
+        self.profileSettings.firstName = firstName!
+        self.profileSettings.lastName = lastName!
+        self.profileSettings.gender = gender!
+        self.profileSettings.age = age!
+        self.profileSettings.city = city!
+        
+        updateUserInfoInDB()
     }
     
     
     func setUserName(newValue: String) {
         usernameLabel.text = "@" + newValue
         self.profileSettings.userName = newValue
+        
+        updateUserInfoInDB()
     }
     
     
     func setPhoneNumber(newValue: String) {
         phoneLabel.text = newValue
         self.profileSettings.phoneNumber = newValue
+        
+        updateUserInfoInDB()
     }
     
     
     func setStatus(newValue: String) {
         self.profileSettings.status = newValue
+        
+        updateUserInfoInDB()
     }
     
     ///////////////////////////////////

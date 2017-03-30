@@ -93,6 +93,9 @@ class ProfileSettings {
     }
     
     var profileImageURL: String?
+    var age: String = "0"
+    var gender: String = "Unknown"
+    var city: String = "Unknown"
     
     init(firstName: String, lastName: String, userName: String, phoneNumber: String, status: String, profileImageURL: String) {
         self.firstName = firstName

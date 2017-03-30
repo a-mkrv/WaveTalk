@@ -61,7 +61,8 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
                 case "FLST":
                     parseResponseData(response: bodyOfResponse)
                     break
-                    
+                case "NOFL":
+                    log.debug(msg: "Friend List is empty" as AnyObject)
                 default:
                     log.error(msg: "Auth Error - Bad response" as AnyObject)
                 }
