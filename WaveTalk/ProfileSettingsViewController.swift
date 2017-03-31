@@ -72,11 +72,19 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
                 self.navigationController?.pushViewController(phoneNumberViewController, animated: true)
                 
                 break
+            case 2:
+                let statusViewController = self.storyboard?.instantiateViewController(withIdentifier: "statusVC") as! StatusViewController
+                statusViewController.delegate = self
+                statusViewController.curStatus = profileSettings.status
+                self.navigationController?.pushViewController(statusViewController, animated: true)
+                
+                break
             default:
                 break
             }
         } else if (indexPath.section == 2 && indexPath.row == 0) {
             let optionalInfoViewController = self.storyboard?.instantiateViewController(withIdentifier: "optionalInfoVC") as! OptionalInfoViewController
+
             optionalInfoViewController.delegate = self
             self.navigationController?.pushViewController(optionalInfoViewController, animated: true)
         }
@@ -182,6 +190,7 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
     
     
     func setStatus(newValue: String) {
+        statusLabel.text = newValue
         self.profileSettings.status = newValue
         
         updateUserInfoInDB()

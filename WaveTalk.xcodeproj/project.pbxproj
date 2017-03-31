@@ -27,6 +27,7 @@
 		777E62481DE1D13900840242 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777E62471DE1D13900840242 /* RegistrationViewController.swift */; };
 		777E624A1DE1DE6B00840242 /* ForgotPswdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777E62491DE1DE6B00840242 /* ForgotPswdViewController.swift */; };
 		778590341E66A98700B85DDF /* FloatLabelTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778590321E66A98700B85DDF /* FloatLabelTextField.swift */; };
+		7785A4631E8E7397004E894E /* StatusViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7785A4621E8E7397004E894E /* StatusViewCell.swift */; };
 		77A4E3DD1E508DF900F8AD50 /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A4E3DC1E508DF900F8AD50 /* AddContactViewController.swift */; };
 		77A4E3DF1E50EDFA00F8AD50 /* MainUserTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A4E3DE1E50EDFA00F8AD50 /* MainUserTabViewController.swift */; };
 		77A6C6BF1E82D88E002B66FB /* RSACrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A6C6BE1E82D88E002B66FB /* RSACrypt.swift */; };
@@ -72,6 +73,7 @@
 		777E62471DE1D13900840242 /* RegistrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		777E62491DE1DE6B00840242 /* ForgotPswdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPswdViewController.swift; sourceTree = "<group>"; };
 		778590321E66A98700B85DDF /* FloatLabelTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatLabelTextField.swift; sourceTree = "<group>"; };
+		7785A4621E8E7397004E894E /* StatusViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusViewCell.swift; sourceTree = "<group>"; };
 		77A4E3DC1E508DF900F8AD50 /* AddContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
 		77A4E3DE1E50EDFA00F8AD50 /* MainUserTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainUserTabViewController.swift; sourceTree = "<group>"; };
 		77A6C6BE1E82D88E002B66FB /* RSACrypt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSACrypt.swift; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 			isa = PBXGroup;
 			children = (
 				771E12DB1E250A7F0084417A /* SettingsViewCell.swift */,
+				7785A4621E8E7397004E894E /* StatusViewCell.swift */,
 				77B3EBA61E1E61FB0090C6F5 /* ContactViewCell.swift */,
 				77D68F271E22A6C9002FF652 /* DialogViewCell.swift */,
 			);
@@ -385,6 +388,7 @@
 				77310E1C1E2FAFCD00F67DDF /* ProfileSettingsViewController.swift in Sources */,
 				77F8F2311E3E6607001065BC /* StatusViewController.swift in Sources */,
 				77560DEC1E3C8A7700C5BD87 /* Extensions.swift in Sources */,
+				7785A4631E8E7397004E894E /* StatusViewCell.swift in Sources */,
 				77CAC8231E2FBAFD00D5EE11 /* NotificationSettingsViewController.swift in Sources */,
 				77D68F281E22A6C9002FF652 /* DialogViewCell.swift in Sources */,
 				7774E2661E29085B00E0C1BA /* ChattingViewController.swift in Sources */,

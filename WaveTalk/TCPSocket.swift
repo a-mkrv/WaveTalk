@@ -37,8 +37,18 @@ class TCPSocket : AnyObject {
     
     
     func readResponse() -> String? {
-        guard let response = client.read(1024*10) else { return nil }
+        var data = [UInt8]()
         
-        return String(bytes: response, encoding: .utf8)
+        while true {
+            guard let buff = client.read(64) else { return nil }
+            
+            data = data + buff
+            
+            if buff.count < 64 {
+                break
+            }
+        }
+        
+        return String(bytes: data, encoding: .utf8)
     }
 }
