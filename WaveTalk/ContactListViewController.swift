@@ -151,7 +151,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
     func checkUserIsLoggedIn() {
         let signIn = userDefaults.object(forKey: "myUserName") as? String
         
-        if signIn == "userIsEmpty" {
+        if signIn == "userIsEmpty" || signIn == nil {
             perform(#selector(handleLogout), with: nil, afterDelay: 0)
         } else {
             userName = signIn!

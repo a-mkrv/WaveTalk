@@ -67,17 +67,17 @@ class ChattingViewController: JSQMessagesViewController {
                 let message = Message()
                 message.setValuesForKeys(dictionary)
                 
-                if message.chatPartnerId() == self.user.id {
-                    if (uid == message.fromId) {
-                        self.messages.append(JSQMessage(senderId: uid, displayName: self.user.username, text: message.text))
-                    } else {
-                        self.messages.append(JSQMessage(senderId: self.user.id, displayName: self.user.username, text: message.text))
-                    }
-                    
-                    DispatchQueue.main.async {
-                        self.collectionView.reloadData()
-                    }
-                }
+//                if message.chatPartnerId() == self.user.id {
+//                    if (uid == message.fromId) {
+//                        self.messages.append(JSQMessage(senderId: uid, displayName: self.user.username, text: message.text))
+//                    } else {
+//                        self.messages.append(JSQMessage(senderId: self.user.id, displayName: self.user.username, text: message.text))
+//                    }
+//                    
+//                    DispatchQueue.main.async {
+//                        self.collectionView.reloadData()
+//                    }
+//                }
                 
             }, withCancel: nil)
             

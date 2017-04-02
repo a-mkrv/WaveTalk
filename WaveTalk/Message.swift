@@ -10,12 +10,7 @@ import UIKit
 import Firebase
 
 class Message: NSObject {
-    var fromId: String?
-    var toId: String?
+    var from_to: String?
     var text: String?
     var messageTime: String?
-    
-    func chatPartnerId() -> String? {
-        return fromId == FIRAuth.auth()?.currentUser?.uid ? toId : fromId
-    }
 }
