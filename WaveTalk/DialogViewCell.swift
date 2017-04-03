@@ -21,45 +21,70 @@ class DialogViewCell: UITableViewCell {
     var message: Message? {
         didSet {
             self.lastmessageLabel.text = message?.text
-            //self.timemessageLabel.text = timeFormat(date: (message?.messageTime)!)
+            self.timemessageLabel.text = timeFormat(date: (message?.messageTime)!)
             
-            setupNameAndProfileImage()
+            setupProfileImage()
         }
     }
     
-    private func setupNameAndProfileImage() {
-//        if let id = message?.chatPartnerId() {
-//            let ref = FIRDatabase.database().reference().child("users").child(id)
-//            ref.observe(.value, with: {(snapshot) in
-//                if let dictionary = snapshot.value as? [String : Any] {
-//                    
-//                    self.usernameLabel.text = dictionary["username"] as? String
-//                    if let profileImageURL = dictionary["profileImageURL"] {
-//                        self.avatarImage.loadImageUsingCacheWithUrlString(urlString: profileImageURL as! String)
-//                        self.avatarImage.layer.cornerRadius = 30.0
-//                        self.avatarImage.clipsToBounds = true
-//                    }
-//                }
-//            }, withCancel: nil)
-//        }
+    
+    private func setupProfileImage() {
+        //FIXME: Add image cell
+        //if let profileImageURL = dictionary["profileImageURL"] {
+        //self.avatarImage.loadImageUsingCacheWithUrlString(urlString: profileImageURL as! String)
+        //self.avatarImage.layer.cornerRadius = 30.0
+        //self.avatarImage.clipsToBounds = true
     }
     
     
     func timeFormat(date: String) -> String {
-        let myDate = date
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
-        let date = dateFormatter.date(from:myDate)!
-        dateFormatter.dateFormat = "hh:mm:ss a"
-        let dateString = dateFormatter.string(from:date)
+        let currentDate = Date()
+        let myDate = date.components(separatedBy: " ")
+        let formatter = DateFormatter()
         
-        return dateString
+        formatter.dateFormat = "dd.MM.yy"
+        
+        let end = formatter.string(from: currentDate)
+        let start = myDate[0]
+        
+        let diff = diffBetweenTwoDates(start: formatter.date(from: start)!, end: formatter.date(from: end)!)
+        
+        switch diff {
+        case 0:
+            return myDate[1]
+            
+        case 1:
+            let curHour = Calendar.current.component(.hour, from: Date())
+            let msgTime = myDate[1].components(separatedBy: ":")
+            
+            if Int(curHour) < Int(msgTime[0])! {
+                return myDate[1]
+            } else {
+                return myDate[0]
+            }
+            
+        default:
+            return myDate[0]
+        }
+    }
+    
+    
+    func diffBetweenTwoDates(start: Date, end: Date) -> Int {
+        let currentCalendar = Calendar.current
+        guard let start = currentCalendar.ordinality(of: .day, in: .era, for: start) else {
+            return 0
+        }
+        guard let end = currentCalendar.ordinality(of: .day, in: .era, for: end) else {
+            return 0
+        }
+        return end - start
     }
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
     }
+    
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
