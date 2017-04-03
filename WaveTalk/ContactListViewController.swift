@@ -28,6 +28,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
         let tabBarVC = self.tabBarController  as! MainUserTabViewController
         clientSocket = tabBarVC.clientSocket
         myProfile = tabBarVC.myProfile
+        contacts = tabBarVC.contacts
         
         clientSocket.connect()
         searchController = UISearchController(searchResultsController: nil)

@@ -10,21 +10,12 @@ import UIKit
 import Firebase
 
 class DialogListViewController: UITableViewController {
+    
     var messagesDictionary = [String : [Message]] ()
     var dialogSocket = TCPSocket()
     var log = Logger()
     var myUserName: String?
-    
-    
-    
-    let byValue = {
-        (elem1:(key: String, val: String), elem2:(key: String, val: String))->Bool in
-        if elem1.val < elem2.val {
-            return true
-        } else {
-            return false
-        }
-    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,8 +27,8 @@ class DialogListViewController: UITableViewController {
         loadListOfDialogues()
     }
     
+    
     func loadListOfDialogues() {
-        //messages.removeAll()
         messagesDictionary.removeAll()
         tableView.reloadData()
         
@@ -91,29 +82,36 @@ class DialogListViewController: UITableViewController {
         
         for dialog in dialogs {
             if dialog.range(of:" /pm ") != nil {
-                let mess = Message()
                 var userMessages = [Message]()
                 var messages = dialog.components(separatedBy: " /pm ")
                 let userName = messages[0]
-                
                 messages.remove(at: 0)
                 
                 for message in messages {
                     var msg = message.components(separatedBy: " /s ")
+                    let mess = Message()
+                    
                     mess.from_to = msg[0]
                     mess.text = msg[1]
                     mess.messageTime = msg[2]
+                    
+                    userMessages.append(mess)
                 }
                 
-                userMessages.append(mess)
                 messagesDictionary[userName] = userMessages
-                
             } else {
                 messagesDictionary[dialog] = [Message]()
             }
         }
+        
+        //FIXME: Sort dictionary
+        //messagesDictionary.sorted(by: { ($0.value.last?.messageTime!)! < ($1.value.last?.messageTime!)!})
+        //let itemResult = messagesDictionary.sorted { (chat1, chat2) -> Bool in
+        //      return (chat1.value.last?.messageTime!)! > (chat2.value.last?.messageTime)!
+        //}
+        //messagesDictionary = itemResult as Dictionary[String: [Message]]
     }
-
+    
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messagesDictionary.count
@@ -123,65 +121,29 @@ class DialogListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellDialog", for: indexPath) as! DialogViewCell
         
-        let message = Array(messagesDictionary.values)[indexPath.row]
-        cell.message = message.last
+        let dialog = Array(messagesDictionary)[indexPath.row]
+        cell.usernameLabel.text = dialog.key
+        cell.message = dialog.value.last
         
         return cell
     }
     
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        //        if segue.identifier == "openChatView" {
-        //            if let indexPath = tableView.indexPathForSelectedRow {
-        //                let dialog = Array(messagesDictionary.values)[indexPath.row]
-        //                let currentCell = tableView.cellForRow(at: indexPath) as! DialogViewCell
-        //
-        //                guard let chatPartnerId = dialog.chatPartnerId() else {
-        //                    return
-        //                }
-        //
-        //                let destinationController = segue.destination as! ChattingViewController
-        //                destinationController.setUserTitle = currentCell.usernameLabel.text
-        //
-        //
-        //                let ref = FIRDatabase.database().reference().child("users").child(chatPartnerId)
-        //                ref.observeSingleEvent(of: .value, with: { (snapshot) in
-        //
-        //                    guard let dictionary = snapshot.value as? [String : Any] else {
-        //                        return
-        //                    }
-        //
-        //                    let user = Contact()
-        //                    user.id = chatPartnerId
-        //
-        //                    user.setValuesForKeys(dictionary)
-        //                    destinationController.user = user
-        //
-        //                }, withCancel: nil)
-        //            }
-        //
-        //            navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        //        }
-    }
-    
-    
-    func getUserData(chatPartnerId: String) -> Contact {
-        let user = Contact()
-        
-        let ref = FIRDatabase.database().reference().child("users").child(chatPartnerId)
-        ref.observeSingleEvent(of: .value, with: { (snapshot) in
-            guard let dictionary = snapshot.value as? [String : Any] else {
-                return
+        if segue.identifier == "openChatView" {
+            if let indexPath = tableView.indexPathForSelectedRow {
+                let currentCell = tableView.cellForRow(at: indexPath) as! DialogViewCell
+                let dialogName = currentCell.usernameLabel.text!
+                let destinationController = segue.destination as! ChattingViewController
+                
+                destinationController.chatMessages = messagesDictionary[dialogName]!
+                destinationController.myUserName = myUserName
+                destinationController.setUserTitle = dialogName
             }
             
-            user.id = chatPartnerId
-            user.setValuesForKeys(dictionary)
-            
-        }, withCancel: nil)
-        
-        return user
+            navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        }
     }
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -66,6 +66,14 @@ extension String {
         
         return self.substring(with: range)
     }
+    
+    func cutString(length: Int) -> String {
+        let startIndex = self.characters.index(self.startIndex, offsetBy: 0)
+        let endIndex = self.characters.index(self.startIndex, offsetBy: length)
+        let range = startIndex..<endIndex
+        
+        return self.substring(with: range)
+    }
 }
 
 //////////////////////////////////////////////

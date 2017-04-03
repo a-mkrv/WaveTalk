@@ -20,7 +20,37 @@ class DialogViewCell: UITableViewCell {
     
     var message: Message? {
         didSet {
-            self.lastmessageLabel.text = message?.text
+            var youText = ""
+            var myMutableString = NSMutableAttributedString()
+            let myAppColor = UIColor(red: 80/255.0, green: 114/255.0, blue: 153/255.0, alpha: 100.0/100.0)
+            
+            if message?.from_to == "To" {
+                youText = "You: "
+            }
+            //FIXME
+            //Change govnokod =(
+            if (message?.text?.characters.count)! > 23 {
+                let cellText = youText + (message?.text?.cutString(length: 23))! + "..."
+                
+                myMutableString = NSMutableAttributedString(string: cellText, attributes: [NSFontAttributeName:UIFont(name: self.lastmessageLabel.font.fontName, size: 17.0)!])
+                
+                if youText != "" {
+                    myMutableString.addAttribute(NSForegroundColorAttributeName, value: myAppColor, range: NSRange(location:0,length:4))
+                }
+                self.lastmessageLabel.attributedText = myMutableString
+                
+            } else {
+                let cellText = youText + (message?.text)!
+                
+                myMutableString = NSMutableAttributedString(string: cellText, attributes: [NSFontAttributeName:UIFont(name: self.lastmessageLabel.font.fontName, size: 17.0)!])
+                
+                if youText != "" {
+                    myMutableString.addAttribute(NSForegroundColorAttributeName, value: myAppColor, range: NSRange(location:0,length:4))
+                }
+                self.lastmessageLabel.attributedText = myMutableString
+            }
+            
+            
             self.timemessageLabel.text = timeFormat(date: (message?.messageTime)!)
             
             setupProfileImage()
@@ -32,8 +62,8 @@ class DialogViewCell: UITableViewCell {
         //FIXME: Add image cell
         //if let profileImageURL = dictionary["profileImageURL"] {
         //self.avatarImage.loadImageUsingCacheWithUrlString(urlString: profileImageURL as! String)
-        //self.avatarImage.layer.cornerRadius = 30.0
-        //self.avatarImage.clipsToBounds = true
+        self.avatarImage.layer.cornerRadius = 30.0
+        self.avatarImage.clipsToBounds = true
     }
     
     
