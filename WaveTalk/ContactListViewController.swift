@@ -286,6 +286,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
         if segue.identifier == "showContactDetails" {
             if let indexPath = tableView.indexPathForSelectedRow {
                 let destinationController = segue.destination as! ContactDetailsViewController
+                destinationController.myUserName = userName!
                 destinationController.contact = (searchController.isActive) ? searchContacts[indexPath.row] : contacts[indexPath.row]
             }
         } else if segue.identifier == "addContact" {

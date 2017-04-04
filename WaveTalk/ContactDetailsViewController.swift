@@ -36,6 +36,11 @@ class ContactDetailsViewController: UITableViewController {
         chatSocket = tabBarVC.clientSocket
         
         self.navigationItem.title = usernameLabel.text
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         loadChatHistoryPerUser()
     }
@@ -43,7 +48,6 @@ class ContactDetailsViewController: UITableViewController {
     
     func loadChatHistoryPerUser() {
         if let response = sendRequest(using: chatSocket) {
-            
             var bodyOfResponse: String = ""
             let head = response.getHeadOfResponse(with: &bodyOfResponse)
             
@@ -82,12 +86,13 @@ class ContactDetailsViewController: UITableViewController {
     //Recode server side
     func parseResponseData(response: String) {
         let res = response
-        let messages = res.components(separatedBy: " /pm ")
-        
+        var messages = res.components(separatedBy: " /pm ")
+        messages.remove(at: 0) // empty string - [0]
+
         for message in messages {
             var msg = message.components(separatedBy: " /s ")
             let mess = Message()
-            
+
             mess.from_to = msg[0]
             mess.text = msg[1]
             mess.messageTime = msg[2]
@@ -98,7 +103,6 @@ class ContactDetailsViewController: UITableViewController {
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         if segue.identifier == "startChatWithUser" {
                 let destinationController = segue.destination as! ChattingViewController
                 destinationController.chatMessages = userMessages
@@ -107,11 +111,6 @@ class ContactDetailsViewController: UITableViewController {
             
                 navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         }
-    }
-
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
     }
     
     

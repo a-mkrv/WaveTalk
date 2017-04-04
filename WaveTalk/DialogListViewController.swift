@@ -23,6 +23,11 @@ class DialogListViewController: UITableViewController {
         let tabBarVC = self.tabBarController  as! MainUserTabViewController
         dialogSocket = tabBarVC.clientSocket
         myUserName = tabBarVC.myProfile.username
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         loadListOfDialogues()
     }
@@ -102,6 +107,8 @@ class DialogListViewController: UITableViewController {
             } else {
                 messagesDictionary[dialog] = [Message]()
             }
+            
+            tableView.reloadData()
         }
         
         //FIXME: Sort dictionary
