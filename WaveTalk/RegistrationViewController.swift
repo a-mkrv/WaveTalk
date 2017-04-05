@@ -21,6 +21,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
     @IBOutlet weak var passwordField: FloatLabelTextField!
     @IBOutlet weak var userProfilePhoto: UIImageView!
     
+    let userDefaults = UserDefaults.standard
     var pickImageController = UIImagePickerController()
     var regSocket = TCPSocket()
     var rsaCrypt = RSACrypt()
@@ -96,6 +97,9 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
                     break
                     
                 case "WELC":
+                    let rsaPrivateKey = String(rsaCrypt.getD()) + " " + String(rsaCrypt.getModule())
+                    userDefaults.set(rsaPrivateKey, forKey: "PrivateKeyRSA")
+                    
                     regSocket.disconnect()
                     self.registerUserIntoWithUI()
                     break

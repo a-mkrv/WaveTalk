@@ -16,6 +16,7 @@ class Contact: NSObject {
     var notifications: Bool?
     var status: String?
     var pubKey: String?
+    var privateKey: String?
     var id: String?
     
 //    init(userName: String, lastMessage: String, lastPresenceTime: String = "...", phoneNumber: String, photoImage: String) {

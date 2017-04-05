@@ -140,6 +140,10 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
         if signIn == "userIsEmpty" || signIn == nil {
             perform(#selector(handleLogout), with: nil, afterDelay: 0)
         } else {
+            if let myPrivateKey = userDefaults.object(forKey: "PrivateKeyRSA") as? String {
+                myProfile.privateKey = myPrivateKey
+            }
+            
             userName = signIn!
             myProfile.username = userName
             
