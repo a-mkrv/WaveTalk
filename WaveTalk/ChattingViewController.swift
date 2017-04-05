@@ -13,14 +13,17 @@ import FirebaseAuth
 
 class ChattingViewController: JSQMessagesViewController {
     
+    var chatSocket = TCPSocket()
     var chatMessages = [Message] ()
     var messages = [JSQMessage] ()
     var user = Contact()
-    
-    
+    var rsaCrypt = RSACrypt()
+    let userDefaults = UserDefaults.standard
+
     lazy var outgoingBubbleImageView: JSQMessagesBubbleImage = self.setupOutgoingBubble()
     lazy var incomingBubbleImageView: JSQMessagesBubbleImage = self.setupIncomingBubble()
     
+    var myPublicKey: String?
     var setUserTitle: String? {
         didSet {
             self.navigationItem.title = setUserTitle
@@ -28,7 +31,6 @@ class ChattingViewController: JSQMessagesViewController {
             observeMessages()
         }
     }
-    
     
     var myUserName: String? {
         didSet {
@@ -40,20 +42,23 @@ class ChattingViewController: JSQMessagesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let tabBarVC = self.tabBarController  as! MainUserTabViewController
-        for users in tabBarVC.contacts {
-            if users.username == setUserTitle {
-                self.user = users
-                break
-            }
-        }
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        myPublicKey = userDefaults.object(forKey: "myPublicKey") as? String
+        
+        let tabBarVC = self.tabBarController  as! MainUserTabViewController
+        chatSocket = tabBarVC.clientSocket
+        
+        for users in tabBarVC.contacts {
+            if users.username == setUserTitle {
+                self.user = users
+                break
+            }
+        }
         
         let image = UIImage(named: "background.png")
         let imgBackground:UIImageView = UIImageView(frame: self.view.bounds)
@@ -68,10 +73,6 @@ class ChattingViewController: JSQMessagesViewController {
         for msg in chatMessages {
             messages.append(JSQMessage(senderId: msg.from_to, displayName: senderDisplayName, text: msg.text))
         }
-        
-//        DispatchQueue.main.async {
-//            self.collectionView.reloadData()
-//        }
         
         finishReceivingMessage()
     }
@@ -90,12 +91,25 @@ class ChattingViewController: JSQMessagesViewController {
         messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, text: text))
         collectionView.reloadData()
         
+        if text != nil {
+            sendToServer(message: text)
+        }
+        
         finishSendingMessage()
     }
     
     
-    func sendToServer(_ text: String!) {
+    func sendToServer(message: String) {
+            let myPubKey = (myPublicKey?.components(separatedBy: " "))!
+            let userPubKey = (user.pubKey?.components(separatedBy: " "))!
 
+            let encryptMsgForMe = rsaCrypt.encodeText(text: message, _e: Int(myPubKey[0])!, _module: Int(myPubKey[2])!)
+        
+            let encryptMsgForUser = rsaCrypt.encodeText(text: message, _e: Int(userPubKey[0])!, _module: Int(userPubKey[2])!)
+        
+            let request = "MESG" + myUserName + " /s " + setUserTitle + " /s " + encryptMsgForMe + " /s " + encryptMsgForUser
+        
+            chatSocket.client.send(request)
     }
     
     
@@ -128,26 +142,11 @@ class ChattingViewController: JSQMessagesViewController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as! JSQMessagesCollectionViewCell
-        //let message = messages[indexPath.item]
+        cell.textView?.textColor = UIColor.black
         
-        //        FIRDatabase.database().reference().child("users").child(self.senderId).observeSingleEvent(of: .value, with: {
-        //            (snapshot) in
-        //            if let dictionary = snapshot.value as? [String : AnyObject] {
-        //                if let profileURL = (dictionary["profileImageURL"] as? String) {
-        //                    if message.senderId == self.senderId {
-        //                        cell.avatarImageView.loadImageUsingCacheWithUrlString(urlString: profileURL)
-        //
-        //                    } else {
-        //                        cell.avatarImageView.loadImageUsingCacheWithUrlString(urlString: self.user.profileImageURL!)
-        //                    }
-        //
-                            cell.textView?.textColor = UIColor.black
-        //                    cell.avatarImageView.clipsToBounds = true;
-        //                    cell.avatarImageView.layer.cornerRadius = 15;
-        //                    cell.avatarImageView.isHidden = false;
-        //                }
-        //            }
-        //        }, withCancel: nil)
+        //    cell.avatarImageView.clipsToBounds = true;
+        //    cell.avatarImageView.layer.cornerRadius = 15;
+        //    cell.avatarImageView.isHidden = false;
         
         return cell
     }

@@ -29,7 +29,8 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
 
         clientSocket = tabBarVC.clientSocket
         myProfile = tabBarVC.myProfile
-        contacts = tabBarVC.contacts
+        
+        contacts = tabBarVC.contacts // ???
         
         searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
@@ -42,6 +43,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
         checkUserIsLoggedIn()
+        (self.tabBarController  as! MainUserTabViewController).contacts = self.contacts
         tabBarVC.startReadingQueue(for: clientSocket.client)
     }
     
@@ -141,6 +143,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
             perform(#selector(handleLogout), with: nil, afterDelay: 0)
         } else {
             if let myPrivateKey = userDefaults.object(forKey: "PrivateKeyRSA") as? String {
+                //myProfile.pubKey =
                 myProfile.privateKey = myPrivateKey
             }
             
