@@ -386,6 +386,9 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mJg-Xi-LQP">
                                                     <rect key="frame" x="303" y="14" width="51" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <connections>
+                                                        <action selector="notificationSwitch:" destination="zF5-4h-rqt" eventType="valueChanged" id="7t3-3b-un9"/>
+                                                    </connections>
                                                 </switch>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -434,6 +437,7 @@
                         </connections>
                     </tableView>
                     <connections>
+                        <outlet property="notificationStatus" destination="mJg-Xi-LQP" id="P0s-OG-YQj"/>
                         <outlet property="phoneLabel" destination="1sT-l4-dvS" id="2lu-WY-p6p"/>
                         <outlet property="photoImage" destination="A0P-HG-iQj" id="EU3-jf-6Oy"/>
                         <outlet property="presenceLabel" destination="GH8-hN-MsZ" id="qig-Q1-Wpx"/>
@@ -898,7 +902,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0MO-Jg-t8l" id="IIh-MS-Wwm">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="11" translatesAutoresizingMaskIntoConstraints="NO" id="AO0-Bp-g9m" userLabel="Avatar Image">
@@ -1130,7 +1134,7 @@
         <image name="user" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="plo-jb-I3n"/>
+        <segue reference="qaF-6O-Rok"/>
         <segue reference="kf0-dw-qHQ"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

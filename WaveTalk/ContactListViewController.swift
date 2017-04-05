@@ -10,7 +10,7 @@ import UIKit
 //import Firebase
 //import FirebaseDatabase
 
-class ContactListViewController: UITableViewController, UISearchResultsUpdating, FindUsersProtocol {
+class ContactListViewController: UITableViewController, UISearchResultsUpdating, UserListProtocol {
     
     var myProfile = Contact()
     var userName: String?
@@ -77,49 +77,26 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
     /// Parse response from server - Users / Keys / Messages. Adding through Client::AddUserChat(...)
     func parseResponseData(response: String) {
         let res = response
-        let dataList = res.components(separatedBy: " //s ")
-        let keyList = dataList[0].components(separatedBy: " /s ")
-        let userList = dataList[1].components(separatedBy: " /s ")
-        let presenceStatus = dataList[2].components(separatedBy: " /s ")
-        var split: [String]
+        var dataList = res.components(separatedBy: " /s ")
+        dataList.remove(at: dataList.endIndex - 1)
         
-        var userData: [String] = ["", "", "", "", ""]
-        // 0 - userName, 
-        // 1 - email/phone,
-        // 2 - onlineStatus, 
-        // 3 - pubKey, 
-        // 4 - LiveStatus
-        
-        for i in 0 ..< userList.count {
-            split = keyList[i].components(separatedBy: " _ ")
-            userData[0] = split[0] // Set username
-            userData[3] = split[1] // Set public key
+        for i in dataList {
+            let user = Contact()
+            let dataSet = i.components(separatedBy: " _ ")
             
-            split = userList[i].components(separatedBy: " _ ")
-            // split[1] - sex of person
-        
-            split = presenceStatus[i].components(separatedBy: " _ ")
-            userData[2] = split[1] // Set Online presence status
-            userData[1] = split[2] // Set Phone / Email
-            userData[4] = split[0] // Set Live status
+            user.username = dataSet[0]
+            //dataList[1] = //sex of person
+            user.pubKey = dataSet[2]
+            (dataSet[3] == "YES") ? (user.notifications = true) : (user.notifications = false)
+            user.lastPresenceTime = dataSet[4]
+            user.phoneNumber_or_Email = dataSet[5]
+            user.status = dataSet[6]
             
-            addUserToContactList(name: userData[0], emailPhone: userData[1], prTime: userData[2], pubFriendKey: userData[3], liveStatus: userData[4])
-        }
-    }
-    
-    func addUserToContactList(name: String, emailPhone: String, prTime: String, pubFriendKey: String, liveStatus: String) {
-        
-        let user = Contact()
-        user.username = name
-        user.phoneNumber_or_Email = emailPhone
-        user.pubKey = pubFriendKey
-        user.lastPresenceTime = prTime
-        user.status = liveStatus
-        
-        self.contacts.append(user)
-        
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
+            self.contacts.append(user)
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
     }
     
@@ -290,7 +267,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
                 destinationController.contact = (searchController.isActive) ? searchContacts[indexPath.row] : contacts[indexPath.row]
             }
         } else if segue.identifier == "addContact" {
-
+            
             let destinationController = segue.destination as! AddContactViewController
             destinationController.delegate = self
             destinationController.searchSocket = clientSocket
@@ -299,7 +276,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
             for users in contacts {
                 destinationController.existContacts.append(users.username!)
             }
-    }
+        }
     }
     
     
@@ -338,6 +315,16 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
         self.tableView.reloadData()
     }
     
+    
+    func updateNotificationState(username: String, state: Bool) {
+        for user in contacts {
+            if user.username == username {
+                user.notifications = state
+                break
+            }
+        }
+    }
+
     
     @IBAction func addContactToList(_ sender: Any) {
         

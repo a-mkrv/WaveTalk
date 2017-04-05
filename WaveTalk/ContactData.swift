@@ -13,6 +13,7 @@ class Contact: NSObject {
     var phoneNumber_or_Email: String?
     var lastPresenceTime: String?
     var profileImageURL: String?
+    var notifications: Bool?
     var status: String?
     var pubKey: String?
     var id: String?

@@ -14,7 +14,7 @@ class AddContactViewController: UIViewController {
     
     @IBOutlet weak var requestField: UITextField!
     
-    var delegate: FindUsersProtocol?
+    var delegate: UserListProtocol?
     var searchSocket = TCPSocket()
     var existContacts: [String] = []
     var myUserName: String = ""

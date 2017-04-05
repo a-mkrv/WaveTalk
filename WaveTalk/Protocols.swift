@@ -23,6 +23,7 @@ protocol ProfileSettingsProtocol {
     func setStatus(newValue: String)
 }
 
-protocol FindUsersProtocol {
+protocol UserListProtocol {
     func addNewContact(contact: Contact)
+    func updateNotificationState(username: String, state: Bool)
 }
