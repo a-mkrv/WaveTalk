@@ -26,6 +26,8 @@ class AddContactViewController: UIViewController {
     
     
     @IBAction func addContact(_ sender: Any) {
+        (self.tabBarController  as! MainUserTabViewController).finishReadingQueue()
+
         if let existUser = self.requestField.text {
             if existUser == myUserName {
                 SCLAlertView().showTitle( "Error", subTitle: "\nYou can not add yourself\n", duration: 0.0, completeText: "Look for another", style: .error, colorStyle: 0x4196BE)
@@ -49,7 +51,6 @@ class AddContactViewController: UIViewController {
             var bodyOfResponse: String = ""
             let head = response.getHeadOfResponse(with: &bodyOfResponse)
             
-            print("\n\n\n " + bodyOfResponse)
             switch(head) {
             case "FNDN": //Find Negative
                 SCLAlertView().showTitle( "Error", subTitle: "\nUser is not found\n", duration: 0.0, completeText: "Look for another", style: .error, colorStyle: 0x4196BE)
@@ -75,6 +76,8 @@ class AddContactViewController: UIViewController {
         } else {
             print("Auth Error - Bad request")
         }
+        
+        (self.tabBarController  as! MainUserTabViewController).startReadingQueue(for: searchSocket.client)
     }
     
     

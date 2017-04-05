@@ -21,6 +21,7 @@ class DialogListViewController: UITableViewController {
         super.viewDidLoad()
         
         let tabBarVC = self.tabBarController  as! MainUserTabViewController
+
         dialogSocket = tabBarVC.clientSocket
         myUserName = tabBarVC.myProfile.username
     }
@@ -28,8 +29,9 @@ class DialogListViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        (self.tabBarController  as! MainUserTabViewController).finishReadingQueue()
         loadListOfDialogues()
+        (self.tabBarController  as! MainUserTabViewController).startReadingQueue(for: dialogSocket.client)
     }
     
     

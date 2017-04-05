@@ -23,29 +23,31 @@ class MainUserTabViewController: UITabBarController {
         super.viewDidLoad()
         
         clientSocket.connect()
-        //startReadingQueue(for: clientSocket.client)
-        
         for viewController in self.viewControllers! {
             _ = viewController.view
         }
     }
     
-    
+    //Crutches and a bicycle. Use delay
     func startReadingQueue(for client: TCPClient) {
-        self.readingWorkItem = DispatchWorkItem {
-            guard let item = self.readingWorkItem else { return }
-            
-            while !item.isCancelled {
-                guard let response = client.read(128, timeout: 1) else { continue }
-                //print(String(bytes: response, encoding: .utf8) ?? "Error")
-            }
+        return
+        //
+            self.readingWorkItem = DispatchWorkItem {
+                guard let item = self.readingWorkItem else { return }
+                
+                while !item.isCancelled {
+                    guard let response = client.read(128, timeout: 1) else { continue }
+                    print(String(bytes: response, encoding: .utf8) ?? "Error")
+                }
         }
         readingQueue.async(execute: readingWorkItem!)
     }
-
+    
     
     func finishReadingQueue() {
-        readingWorkItem?.cancel()
+        return
+        //
+            (readingWorkItem?.cancel())!
     }
     
     

@@ -46,6 +46,7 @@ class ContactDetailsViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         loadChatHistoryPerUser()
+        (self.tabBarController  as! MainUserTabViewController).startReadingQueue(for: detailsSocket.client)
     }
     
     

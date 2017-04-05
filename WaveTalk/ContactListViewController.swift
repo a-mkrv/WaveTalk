@@ -26,6 +26,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
         super.viewDidLoad()
         
         let tabBarVC = self.tabBarController  as! MainUserTabViewController
+
         clientSocket = tabBarVC.clientSocket
         myProfile = tabBarVC.myProfile
         contacts = tabBarVC.contacts
@@ -41,8 +42,16 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
         checkUserIsLoggedIn()
+        tabBarVC.startReadingQueue(for: clientSocket.client)
     }
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.hidesBarsOnSwipe = false
+    }
     
     
     //FIXME: App will crash if class properties don't exactly match up with the firebase dictionary keys
@@ -261,6 +270,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
         
         if segue.identifier == "showContactDetails" {
             if let indexPath = tableView.indexPathForSelectedRow {
+                (self.tabBarController  as! MainUserTabViewController).finishReadingQueue()
                 let destinationController = segue.destination as! ContactDetailsViewController
                 destinationController.myUserName = userName!
                 destinationController.contact = (searchController.isActive) ? searchContacts[indexPath.row] : contacts[indexPath.row]
@@ -276,14 +286,6 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
                 destinationController.existContacts.append(users.username!)
             }
         }
-    }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.hidesBarsOnSwipe = false
     }
     
     

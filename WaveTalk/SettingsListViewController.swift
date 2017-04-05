@@ -43,7 +43,9 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        (self.tabBarController  as! MainUserTabViewController).finishReadingQueue()
         fetchUserAndSetupNavigationBarTitle()
+        (self.tabBarController  as! MainUserTabViewController).startReadingQueue(for: settingsSocket.client)
     }
     
     
@@ -200,7 +202,8 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
     func logOut() {
         userDefaults.set("userIsEmpty", forKey: "myUserName")
         settingsSocket.disconnect()
-        
+        (self.tabBarController  as! MainUserTabViewController).finishReadingQueue()
+
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "welcomePage")
         self.present(vc!, animated: true, completion: nil)
     }
