@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Firebase
+import SwiftSocket
 
 class MainUserTabViewController: UITabBarController {
     
@@ -16,12 +16,36 @@ class MainUserTabViewController: UITabBarController {
     var clientSocket = TCPSocket()
     var profileSettings = ProfileSettings()
     
+    var readingWorkItem: DispatchWorkItem?
+    let readingQueue = DispatchQueue(label: "mainChatQueue")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        clientSocket.connect()
+        //startReadingQueue(for: clientSocket.client)
         
         for viewController in self.viewControllers! {
             _ = viewController.view
         }
+    }
+    
+    
+    func startReadingQueue(for client: TCPClient) {
+        self.readingWorkItem = DispatchWorkItem {
+            guard let item = self.readingWorkItem else { return }
+            
+            while !item.isCancelled {
+                guard let response = client.read(128, timeout: 1) else { continue }
+                //print(String(bytes: response, encoding: .utf8) ?? "Error")
+            }
+        }
+        readingQueue.async(execute: readingWorkItem!)
+    }
+
+    
+    func finishReadingQueue() {
+        readingWorkItem?.cancel()
     }
     
     

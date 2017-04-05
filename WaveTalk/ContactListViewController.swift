@@ -30,7 +30,6 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
         myProfile = tabBarVC.myProfile
         contacts = tabBarVC.contacts
         
-        clientSocket.connect()
         searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
