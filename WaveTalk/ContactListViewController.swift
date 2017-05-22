@@ -53,6 +53,10 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.hidesBarsOnSwipe = false
+        
+
+        self.tableView.backgroundColor = UIColor(red: 251/255.0, green: 250/255.0, blue: 252/255.0, alpha: 100.0/100.0)
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
     }
     
     
@@ -126,6 +130,10 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
                         let user = Contact()
                         user.setValuesForKeys(dictionary)
                         users.profileImageURL = user.profileImageURL
+                    } else if self.userName == snapshot.key {
+                        let user = Contact()
+                        user.setValuesForKeys(dictionary)
+                        self.myProfile.profileImageURL = user.profileImageURL
                     }
                 }
             }
@@ -230,8 +238,8 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
         cell.avatarImage.clipsToBounds = true
         cell.usernameLabel?.text = contact.username
         cell.phonenumberLabel?.text = contact.phoneNumber_or_Email
-        
-        
+        cell.backgroundColor = UIColor(white: 1, alpha: 0.9)
+
         if let profileImageURL = contact.profileImageURL {
             cell.avatarImage.loadImageUsingCacheWithUrlString(urlString: profileImageURL)
         }

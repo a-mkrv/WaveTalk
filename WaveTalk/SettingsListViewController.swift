@@ -32,8 +32,14 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
         super.viewDidLoad()
         
         let tabBarVC = self.tabBarController  as! MainUserTabViewController
+        
+        // After registration it crashes
+        photoImage.loadImageUsingCacheWithUrlString(urlString: tabBarVC.myProfile.profileImageURL!)
+        //
+        
         settingsSocket = tabBarVC.clientSocket
         profileSettings = tabBarVC.profileSettings
+        profileSettings.profileImageURL = tabBarVC.myProfile.profileImageURL
         myProfile = tabBarVC.myProfile
     }
     
@@ -63,14 +69,14 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
     
     
     func setProfileImage() {
-        FIRDatabase.database().reference().child("users").child(profileSettings.userName).observeSingleEvent(of: .value, with: { (snapshot) in
-            if let dictionary = snapshot.value as? [String : Any] {
-                for each in dictionary {
-                    self.profileSettings.profileImageURL = each.1 as? String
-                    self.photoImage.loadImageUsingCacheWithUrlString(urlString: each.1 as! String)
-                }
-            }
-        })
+//        FIRDatabase.database().reference().child("users").child(profileSettings.userName).observeSingleEvent(of: .value, with: { (snapshot) in
+//            if let dictionary = snapshot.value as? [String : Any] {
+//                for each in dictionary {
+//                    self.profileSettings.profileImageURL = each.1 as? String
+//                    self.photoImage.loadImageUsingCacheWithUrlString(urlString: each.1 as! String)
+//                }
+//            }
+//        })
         
         photoImage.layer.borderWidth = 1
         photoImage.layer.masksToBounds = false

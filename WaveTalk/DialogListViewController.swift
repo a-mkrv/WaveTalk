@@ -15,7 +15,8 @@ class DialogListViewController: UITableViewController {
     var dialogSocket = TCPSocket()
     var log = Logger()
     var myUserName: String?
-
+    var myURLImage: String?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +25,7 @@ class DialogListViewController: UITableViewController {
 
         dialogSocket = tabBarVC.clientSocket
         myUserName = tabBarVC.myProfile.username
+        myURLImage = tabBarVC.myProfile.profileImageURL
     }
     
     
@@ -32,6 +34,9 @@ class DialogListViewController: UITableViewController {
         (self.tabBarController  as! MainUserTabViewController).finishReadingQueue()
         loadListOfDialogues()
         (self.tabBarController  as! MainUserTabViewController).startReadingQueue(for: dialogSocket.client)
+        
+        self.tableView.backgroundColor = UIColor(red: 251/255.0, green: 250/255.0, blue: 252/255.0, alpha: 100.0/100.0)
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
     }
     
     
@@ -133,7 +138,8 @@ class DialogListViewController: UITableViewController {
         let dialog = Array(messagesDictionary)[indexPath.row]
         cell.usernameLabel.text = dialog.key
         cell.message = dialog.value.last
-        
+        cell.backgroundColor = UIColor(white: 1, alpha: 0.9)
+
         return cell
     }
     
@@ -145,6 +151,8 @@ class DialogListViewController: UITableViewController {
                 let dialogName = currentCell.usernameLabel.text!
                 let destinationController = segue.destination as! ChattingViewController
                 
+                destinationController.myURLImage = self.myURLImage
+                destinationController.userImage = currentCell.avatarImage.image
                 destinationController.chatMessages = messagesDictionary[dialogName]!
                 destinationController.myUserName = myUserName
                 destinationController.setUserTitle = dialogName

@@ -893,7 +893,7 @@
         <scene sceneID="hYj-4g-D4P">
             <objects>
                 <tableViewController id="Ltt-31-OqH" customClass="DialogListViewController" customModule="WaveTalk" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" id="zwH-Eu-klQ">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" id="zwH-Eu-klQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1134,8 +1134,8 @@
         <image name="user" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="qaF-6O-Rok"/>
         <segue reference="kf0-dw-qHQ"/>
+        <segue reference="plo-jb-I3n"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>

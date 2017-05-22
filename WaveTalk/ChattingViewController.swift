@@ -23,6 +23,8 @@ class ChattingViewController: JSQMessagesViewController {
     lazy var outgoingBubbleImageView: JSQMessagesBubbleImage = self.setupOutgoingBubble()
     lazy var incomingBubbleImageView: JSQMessagesBubbleImage = self.setupIncomingBubble()
     
+    var myURLImage: String?
+    var userImage: UIImage?
     var myPublicKey: String?
     var setUserTitle: String? {
         didSet {
@@ -151,9 +153,17 @@ class ChattingViewController: JSQMessagesViewController {
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as! JSQMessagesCollectionViewCell
         cell.textView?.textColor = UIColor.black
         
-        //    cell.avatarImageView.clipsToBounds = true;
-        //    cell.avatarImageView.layer.cornerRadius = 15;
-        //    cell.avatarImageView.isHidden = false;
+        let message = messages[indexPath.item]
+        
+        if message.senderId == "To" {
+            cell.avatarImageView.loadImageUsingCacheWithUrlString(urlString: myURLImage!)
+        } else {
+            cell.avatarImageView.image = userImage
+        }
+        
+        cell.avatarImageView.clipsToBounds = true;
+        cell.avatarImageView.layer.cornerRadius = 15;
+        cell.avatarImageView.isHidden = false;
         
         return cell
     }

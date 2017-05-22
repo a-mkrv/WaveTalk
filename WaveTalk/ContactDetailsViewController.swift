@@ -21,6 +21,7 @@ class ContactDetailsViewController: UITableViewController {
     var contact = Contact()
     var detailsSocket = TCPSocket()
     var myUserName: String?
+    var myURL: String?
     var userMessages = [Message]()
     var delegate: UserListProtocol?
     
@@ -39,7 +40,7 @@ class ContactDetailsViewController: UITableViewController {
         
         let tabBarVC = self.tabBarController  as! MainUserTabViewController
         detailsSocket = tabBarVC.clientSocket
-        
+        myURL = tabBarVC.myProfile.profileImageURL
         self.navigationItem.title = usernameLabel.text
     }
     
@@ -134,6 +135,9 @@ class ContactDetailsViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "startChatWithUser" {
             let destinationController = segue.destination as! ChattingViewController
+            
+            destinationController.myURLImage = self.myURL
+            destinationController.userImage = photoImage.image
             destinationController.chatMessages = userMessages
             destinationController.myUserName = myUserName
             destinationController.setUserTitle = contact.username
