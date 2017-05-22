@@ -107,9 +107,10 @@ class ChattingViewController: JSQMessagesViewController {
         
             let encryptMsgForUser = rsaCrypt.encodeText(text: message, _e: Int(userPubKey[0])!, _module: Int(userPubKey[2])!)
         
-            let request = "MESG" + myUserName + " /s " + setUserTitle + " /s " + encryptMsgForMe + " /s " + encryptMsgForUser
+            var request = "MESG" + myUserName! + " /s " + setUserTitle! + " /s "
+            request.append(encryptMsgForMe + " /s " + encryptMsgForUser)
         
-            chatSocket.client.send(request)
+            chatSocket.client.send(string: request)
     }
     
     

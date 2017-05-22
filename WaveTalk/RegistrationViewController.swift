@@ -29,6 +29,10 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.emailField.delegate = self
+        self.usernameField.delegate = self
+        self.passwordField.delegate = self
+        
         //TODO: Add checking of validity in realtime
         //TODO: Add phone field
         
@@ -69,6 +73,20 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
     }
     
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.usernameField.resignFirstResponder()
+        self.passwordField.resignFirstResponder()
+        self.emailField.resignFirstResponder()
+        
+        return true
+    }
+    
+    
     @IBAction func createAccount(_ sender: Any) {
         var login = ""
         var email = ""
@@ -97,11 +115,32 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
                     break
                     
                 case "WELC":
+                   FIRAuth.auth()?.createUser(withEmail: email, password: paswd, completion: { (user: FIRUser?, error) in
+                        
+                        let imageName = NSUUID().uuidString
+                        let storageRef = FIRStorage.storage().reference().child("profile_images").child("\(imageName).png")
+                        
+                        if let profileImage = self.userProfilePhoto.image, let uploadData = UIImageJPEGRepresentation(profileImage, 0.1) {
+                            
+                            storageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
+                                
+                                if error != nil {
+                                    print(error!)
+                                    return
+                                }
+                                
+                                if let profileImageURL = metadata?.downloadURL()?.absoluteString {
+                                    let values = ["profileImageURL" : profileImageURL]
+                                    self.registerUserIntoWithUI(username: login, values: values as [String : AnyObject])
+                                }
+                            })
+                        }
+                    })
+                    
                     let rsaPrivateKey = String(rsaCrypt.getD()) + " " + String(rsaCrypt.getModule())
                     userDefaults.set(rsaPrivateKey, forKey: "PrivateKeyRSA")
                     
                     regSocket.disconnect()
-                    self.registerUserIntoWithUI()
                     break
                     
                 default:
@@ -109,14 +148,39 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
                 }
             } else {
                 print("Registration Error - Bad request")
-                
             }
-            
-            //let values = ["username" : login, "phoneNumber_or_Email" : email, "status" : status, "lastPresenceTime" : String(describing: Date()), "profileImageURL" : profileImageURL]
-            
-            //self.registerUserIntoWithUI(uid: uid, values: values as [String : AnyObject])
-
         }
+    }
+    
+    
+    func registerUserIntoWithUI(username: String, values: [String: AnyObject]) {
+        
+        //Use Firebase
+        
+        let ref = FIRDatabase.database().reference(fromURL: "https://wavetalk-d3236.firebaseio.com/")
+        let userReference = ref.child("users").child(username)
+        
+        userReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
+            
+            if err != nil {
+                print(err!)
+                return
+            } else {
+                print("Saved user info into Firebase DB")
+            }
+        })
+        
+        let appearance = SCLAlertView.SCLAppearance(
+            showCloseButton: false
+        )
+        
+        let alertView = SCLAlertView(appearance: appearance)
+        
+        alertView.addButton("Go to Log In") {
+            self.backToLogin(self)
+        }
+        
+        alertView.showSuccess("Successful registration!", subTitle: "Welcome to Whisper")
     }
     
     
@@ -166,37 +230,6 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
         }
         
         return pass
-    }
-    
-    
-    func registerUserIntoWithUI(/*uid: String, values: [String: AnyObject]*/) {
-        
-        // Use Firebase
-        //
-        //        let ref = FIRDatabase.database().reference(fromURL: "https://wavetalk-d3236.firebaseio.com/")
-        //        let userReference = ref.child("users").child(uid)
-        //
-        //        userReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
-        //
-        //            if err != nil {
-        //                print(err!)
-        //                return
-        //            } else {
-        //                print("Saved user info into Firebase DB")
-        //            }
-        //        })
-        
-        let appearance = SCLAlertView.SCLAppearance(
-            showCloseButton: false
-        )
-        
-        let alertView = SCLAlertView(appearance: appearance)
-        
-        alertView.addButton("Go to Log In") {
-            self.backToLogin(self)
-        }
-        
-        alertView.showSuccess("Successful registration!", subTitle: "Welcome to Whisper")
     }
     
     

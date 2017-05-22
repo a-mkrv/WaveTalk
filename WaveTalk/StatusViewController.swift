@@ -8,7 +8,7 @@
 
 import UIKit
 
-class StatusViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class StatusViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var statusTableView: UITableView!
     @IBOutlet weak var ownStatusInput: UITextField!
@@ -20,6 +20,8 @@ class StatusViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        ownStatusInput.delegate = self
         
         let rightAddBarButtonItem: UIBarButtonItem = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.saveStatus))
         self.navigationItem.setRightBarButton(rightAddBarButtonItem, animated: true)
@@ -88,6 +90,18 @@ class StatusViewController: UIViewController, UITableViewDelegate, UITableViewDa
         ownStatusInput.text = statusList[indexPath.row]
 
         tableView.reloadData()
+    }
+    
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.ownStatusInput.resignFirstResponder()
+        
+        return true
     }
     
     

@@ -10,7 +10,7 @@ import UIKit
 import SCLAlertView
 //import FirebaseDatabase
 
-class AddContactViewController: UIViewController {
+class AddContactViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var requestField: UITextField!
     
@@ -21,6 +21,8 @@ class AddContactViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        requestField.delegate = self
         requestField.setBorderBottom()
     }
     
@@ -97,6 +99,18 @@ class AddContactViewController: UIViewController {
             print(error)
             return nil
         }
+    }
+    
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.requestField.resignFirstResponder()
+        
+        return true
     }
     
     

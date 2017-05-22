@@ -11,7 +11,7 @@ import SCLAlertView
 import Firebase
 import FirebaseAuth
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var loginInput: FloatLabelTextField!
     @IBOutlet weak var passwordInput: FloatLabelTextField!
@@ -32,6 +32,9 @@ class LoginViewController: UIViewController {
         authSocket.connect()
         
         let colorBorder = UIColor(red: 80/255.0, green: 114/255.0, blue: 153/255.0, alpha: 100.0/100.0).cgColor
+        
+        self.loginInput.delegate = self
+        self.passwordInput.delegate = self
         
         loginInput.setBorderBottom(colorBorder)
         passwordInput.setBorderBottom(colorBorder)
@@ -66,6 +69,19 @@ class LoginViewController: UIViewController {
             
             previewAnimated = false
         }
+    }
+    
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.loginInput.resignFirstResponder()
+        self.passwordInput.resignFirstResponder()
+        
+        return true
     }
     
     
