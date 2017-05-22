@@ -7,8 +7,8 @@
 //
 
 import UIKit
-//import Firebase
-//import FirebaseDatabase
+import Firebase
+import FirebaseDatabase
 
 class ContactListViewController: UITableViewController, UISearchResultsUpdating, UserListProtocol {
     
@@ -108,6 +108,32 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
                 self.tableView.reloadData()
             }
         }
+        
+        loadURLProfileImage()
+    }
+    
+    
+    // There is a delay in obtaining images due to the use of two servers ->
+    // QT for text and chat of users, and Firebase for files and media data
+    // =(
+    
+    func loadURLProfileImage() {
+        FIRDatabase.database().reference().child("users").observe(.childAdded, with: { (snapshot) in
+            
+            if let dictionary = snapshot.value as? [String : Any] {
+                for users in self.contacts {
+                    if users.username == snapshot.key {
+                        let user = Contact()
+                        user.setValuesForKeys(dictionary)
+                        users.profileImageURL = user.profileImageURL
+                    }
+                }
+            }
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }, withCancel: nil)
     }
     
     
@@ -199,7 +225,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
         let CellID = "CellContact"
         let cell = tableView.dequeueReusableCell(withIdentifier: CellID, for: indexPath) as! ContactViewCell
         
-        cell.avatarImage?.image = UIImage(named: "55")
+        //cell.avatarImage?.image = UIImage(named: "55")
         cell.avatarImage.layer.cornerRadius = 30.0
         cell.avatarImage.clipsToBounds = true
         cell.usernameLabel?.text = contact.username
@@ -332,7 +358,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
             }
         }
     }
-
+    
     
     @IBAction func addContactToList(_ sender: Any) {
         

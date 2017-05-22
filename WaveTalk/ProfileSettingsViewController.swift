@@ -36,8 +36,7 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
         phoneLabel.text = profileSettings.phoneNumber
         statusLabel.text = profileSettings.status
         
-        //FIXME
-        //profilePhotoImage.loadImageUsingCacheWithUrlString(urlString: profileSettings.profileImageURL!)
+        profilePhotoImage.loadImageUsingCacheWithUrlString(urlString: profileSettings.profileImageURL!)
     }
     
     
@@ -49,9 +48,6 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
         
         pickImageController.delegate = self
         pickImageController.allowsEditing = true
-        
-        //profilePhotoImage.layer.cornerRadius = 52.0
-        //profilePhotoImage.clipsToBounds = true
     }
     
     

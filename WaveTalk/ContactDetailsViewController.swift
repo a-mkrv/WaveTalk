@@ -27,8 +27,10 @@ class ContactDetailsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //FIXME
-        //photoImage.loadImageUsingCacheWithUrlString(urlString: contact.profileImageURL!)
+        if contact.profileImageURL != nil {
+            photoImage.loadImageUsingCacheWithUrlString(urlString: contact.profileImageURL!)
+        }
+        
         usernameLabel.text = contact.username
         presenceLabel.text = contact.lastPresenceTime
         statusLabel.text = contact.status

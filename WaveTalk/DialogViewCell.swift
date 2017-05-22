@@ -59,11 +59,17 @@ class DialogViewCell: UITableViewCell {
     
     
     private func setupProfileImage() {
-        //FIXME: Add image cell
-        //if let profileImageURL = dictionary["profileImageURL"] {
-        //self.avatarImage.loadImageUsingCacheWithUrlString(urlString: profileImageURL as! String)
-        self.avatarImage.layer.cornerRadius = 30.0
-        self.avatarImage.clipsToBounds = true
+        let ref = FIRDatabase.database().reference().child("users").child(usernameLabel.text!)
+        ref.observe(.value, with: {(snapshot) in
+            if let dictionary = snapshot.value as? [String : Any] {
+                
+                if let profileImageURL = dictionary["profileImageURL"] {
+                    self.avatarImage.loadImageUsingCacheWithUrlString(urlString: profileImageURL as! String)
+                    self.avatarImage.layer.cornerRadius = 30.0
+                    self.avatarImage.clipsToBounds = true
+                }
+            }
+        }, withCancel: nil)
     }
     
     

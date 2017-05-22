@@ -35,8 +35,6 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
         settingsSocket = tabBarVC.clientSocket
         profileSettings = tabBarVC.profileSettings
         myProfile = tabBarVC.myProfile
-        
-        setProfileImage()
     }
     
     
@@ -65,6 +63,15 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
     
     
     func setProfileImage() {
+        FIRDatabase.database().reference().child("users").child(profileSettings.userName).observeSingleEvent(of: .value, with: { (snapshot) in
+            if let dictionary = snapshot.value as? [String : Any] {
+                for each in dictionary {
+                    self.profileSettings.profileImageURL = each.1 as? String
+                    self.photoImage.loadImageUsingCacheWithUrlString(urlString: each.1 as! String)
+                }
+            }
+        })
+        
         photoImage.layer.borderWidth = 1
         photoImage.layer.masksToBounds = false
         photoImage.layer.borderColor = UIColor(red:  58/255.0, green: 153/255.0, blue: 217/255.0, alpha: 30.0/100.0).cgColor
@@ -101,8 +108,10 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
                 profileSettings.phoneNumber = userData[4]
                 profileSettings.status = userData[5]
                 profileSettings.userName = myProfile.username!
-
+                
+                self.setProfileImage()
                 self.updateMyInfo()
+                
                 break
                 
             default:
@@ -189,7 +198,7 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
         
         alertView.addButton("Confirm the Log Out", target:self, selector:#selector(self.logOut))
         alertView.addButton("Cancel") {}
-
+        
         alertView.showTitle(
             "Sign out of account",
             subTitle: "\n",
@@ -203,7 +212,7 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
         userDefaults.set("userIsEmpty", forKey: "myUserName")
         settingsSocket.disconnect()
         (self.tabBarController  as! MainUserTabViewController).finishReadingQueue()
-
+        
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "welcomePage")
         self.present(vc!, animated: true, completion: nil)
     }

@@ -100,17 +100,23 @@ class ChattingViewController: JSQMessagesViewController {
     
     
     func sendToServer(message: String) {
-            let myPubKey = (myPublicKey?.components(separatedBy: " "))!
-            let userPubKey = (user.pubKey?.components(separatedBy: " "))!
-
-            let encryptMsgForMe = rsaCrypt.encodeText(text: message, _e: Int(myPubKey[0])!, _module: Int(myPubKey[2])!)
+        let myPubKey = (myPublicKey?.components(separatedBy: " "))!
+        let userPubKey = (user.pubKey?.components(separatedBy: " "))!
         
-            let encryptMsgForUser = rsaCrypt.encodeText(text: message, _e: Int(userPubKey[0])!, _module: Int(userPubKey[2])!)
+        let encryptMsgForMe = rsaCrypt.encodeText(text: message, _e: Int(myPubKey[0])!, _module: Int(myPubKey[1])!)
         
-            var request = "MESG" + myUserName! + " /s " + setUserTitle! + " /s "
-            request.append(encryptMsgForMe + " /s " + encryptMsgForUser)
+        let encryptMsgForUser = rsaCrypt.encodeText(text: message, _e: Int(userPubKey[0])!, _module: Int(userPubKey[1])!)
         
-            chatSocket.client.send(string: request)
+        var request = "MESG" + myUserName! + " /s " + setUserTitle! + " /s "
+        request.append(encryptMsgForMe + " /s " + encryptMsgForUser)
+        
+        switch chatSocket.client.send(string: request) {
+        case .success:
+            print("Sent message.")
+            break
+        case .failure(let error):
+            print(error)
+        }
     }
     
     
