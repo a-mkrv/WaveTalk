@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="XGC-rK-Uwu">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="XGC-rK-Uwu">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -191,7 +191,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8cn-K0-IRn" id="NFk-Vm-YHJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bqp-nr-QN7">
@@ -1124,7 +1124,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="11" width="1280" height="853"/>
+        <image name="11" width="415" height="416"/>
         <image name="55" width="1277" height="850"/>
         <image name="Logo" width="2559" height="2287"/>
         <image name="Waves" width="3333" height="3333"/>

@@ -14,6 +14,7 @@ class Contact: NSObject {
     var lastPresenceTime: String?
     var profileImageURL: String?
     var notifications: Bool?
+    var sex: String?
     var status: String?
     var pubKey: String?
     var privateKey: String?

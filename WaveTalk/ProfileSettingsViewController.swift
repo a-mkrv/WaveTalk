@@ -36,7 +36,11 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
         phoneLabel.text = profileSettings.phoneNumber
         statusLabel.text = profileSettings.status
         
-        profilePhotoImage.loadImageUsingCacheWithUrlString(urlString: profileSettings.profileImageURL!)
+        if (profileSettings.profileImageURL?.characters.count)! > 2 {
+            profilePhotoImage.loadImageUsingCacheWithUrlString(urlString: profileSettings.profileImageURL!)
+        } else {
+            profilePhotoImage.loadImageUsingCacheWithUrlString(urlString: "#" + profileSettings.userName + " " + profileSettings.profileImageURL!)
+        }
     }
     
     

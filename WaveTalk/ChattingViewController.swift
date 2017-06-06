@@ -156,7 +156,11 @@ class ChattingViewController: JSQMessagesViewController {
         let message = messages[indexPath.item]
         
         if message.senderId == "To" {
-            cell.avatarImageView.loadImageUsingCacheWithUrlString(urlString: myURLImage!)
+            if (myURLImage?.characters.count)! > 2 {
+                cell.avatarImageView.loadImageUsingCacheWithUrlString(urlString: myURLImage!)
+            } else {
+                cell.avatarImageView.loadImageUsingCacheWithUrlString(urlString: "#" + myUserName! + " " + myURLImage!)
+            }
         } else {
             cell.avatarImageView.image = userImage
         }

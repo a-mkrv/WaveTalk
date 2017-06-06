@@ -46,18 +46,18 @@ class OptionalInfoViewController: UIViewController {
         cityInput.setBorderBottom()
         cityInput.text = profileSettings.city
         
-        if profileSettings.gender == "Male" {
+        if profileSettings.gender == "Man" {
             self.genderCheckBox.selectedSegmentIndex = 0
-        } else if (profileSettings.gender == "Female") {
+        } else if (profileSettings.gender == "Woman") {
             self.genderCheckBox.selectedSegmentIndex = 1
         }
     }
     
     func saveInformation (sender:UIButton) {
         if genderCheckBox.selectedSegmentIndex == 0 {
-            gender = "Male"
+            gender = "Man"
         } else {
-            gender = "Female"
+            gender = "Woman"
         }
         
         delegate?.setOptionalInformation(firstName: firstNameInput.text, lastName: lastNameInput.text, gender: gender, age: ageInput.text!, city: cityInput.text)

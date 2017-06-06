@@ -191,7 +191,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
         pass = (pass + salt).md5()
         let rsaKeys = String(rsaCrypt.getE()) + " " + String(rsaCrypt.getModule())
         
-        var request: String = "REGI" + dataSet.0 + " /s Empty /s " + pass + " /s Empty /s Empty /s "
+        var request: String = "REGI" + dataSet.0 + " /s Empty /s " + pass + " /s Empty /s Unknown /s "
         request.append(rsaKeys + " /s " + salt)
         
         switch client.client.send(string: request) {

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -70,7 +70,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gzT-Iy-2zc" id="nre-ND-pEC">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -202,11 +202,11 @@ Cg
                                 <nil key="highlightedColor"/>
                             </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="pCh-Cs-OeR">
-                                <rect key="frame" x="128" y="227" width="117" height="29"/>
+                                <rect key="frame" x="126" y="227" width="121" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
-                                    <segment title="Male"/>
-                                    <segment title="Female"/>
+                                    <segment title="Man"/>
+                                    <segment title="Woman"/>
                                 </segments>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Age" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I9a-OR-zgr">
@@ -267,7 +267,7 @@ Cg
                                         <rect key="frame" x="0.0" y="35" width="375" height="178"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nw8-V4-Kqj" id="8fe-Qm-EnY">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="177"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="178"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="22" translatesAutoresizingMaskIntoConstraints="NO" id="SvD-Ze-YzZ">
@@ -286,7 +286,7 @@ Cg
                                         <rect key="frame" x="0.0" y="269" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BWa-X0-2yw" id="nDb-aX-1dl">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PZY-QP-ZTS">
@@ -310,7 +310,7 @@ Cg
                                         <rect key="frame" x="0.0" y="329" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lJG-DT-mhT" id="Qlj-BJ-zlx">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Phone" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3JE-cU-OJ8">
@@ -334,7 +334,7 @@ Cg
                                         <rect key="frame" x="0.0" y="389" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="n3T-47-fbY" id="4w9-mQ-AMj">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rtf-4q-8nU">
@@ -362,7 +362,7 @@ Cg
                                         <rect key="frame" x="0.0" y="505" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yAS-Yh-9lc" id="XaG-uF-IBN">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Optional" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7GU-ha-5F8">
@@ -663,10 +663,10 @@ Cg
                             <tableViewSection headerTitle="Notifications" id="NfU-il-TAx">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="55" id="2BG-Sn-T1d">
-                                        <rect key="frame" x="0.0" y="55" width="375" height="55"/>
+                                        <rect key="frame" x="0.0" y="56" width="375" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2BG-Sn-T1d" id="EuL-t1-JUN">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="55"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="54"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Alert" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vH7-AK-J0n">
@@ -687,10 +687,10 @@ Cg
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="55" id="qeU-be-g7K">
-                                        <rect key="frame" x="0.0" y="110" width="375" height="55"/>
+                                        <rect key="frame" x="0.0" y="111" width="375" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qeU-be-g7K" id="70L-f9-m1q">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="55"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="54"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sound" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eaA-Oc-TdY">
@@ -713,10 +713,10 @@ Cg
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="55" id="15y-t8-FZk">
-                                        <rect key="frame" x="0.0" y="165" width="375" height="55"/>
+                                        <rect key="frame" x="0.0" y="166" width="375" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="15y-t8-FZk" id="hPj-jH-R4l">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="55"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="54"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Vibrate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EcU-EZ-xm5">
@@ -739,10 +739,10 @@ Cg
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="55" id="lnQ-UG-nkX">
-                                        <rect key="frame" x="0.0" y="220" width="375" height="55"/>
+                                        <rect key="frame" x="0.0" y="221" width="375" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lnQ-UG-nkX" id="UK8-Cf-nfl">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="55"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="54"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Pop-up Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iqW-h2-XIf">
@@ -765,18 +765,18 @@ Cg
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="55" id="8nc-H0-Y2Q">
-                                        <rect key="frame" x="0.0" y="275" width="375" height="55"/>
+                                        <rect key="frame" x="0.0" y="276" width="375" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8nc-H0-Y2Q" id="2pI-IQ-9uY">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="55"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="54"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="55" id="fud-fo-Thv">
-                                        <rect key="frame" x="0.0" y="330" width="375" height="55"/>
+                                        <rect key="frame" x="0.0" y="331" width="375" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fud-fo-Thv" id="Ibd-Qc-PNc">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="55"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="54"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Repeat Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v3x-eE-bwf">
@@ -801,10 +801,10 @@ Cg
                             <tableViewSection headerTitle="Reset" id="9iL-u4-F8j">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="69" id="nG4-aO-ytp">
-                                        <rect key="frame" x="0.0" y="441" width="375" height="69"/>
+                                        <rect key="frame" x="0.0" y="442" width="375" height="69"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nG4-aO-ytp" id="fyp-LB-oyK">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="69"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="68"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Reset All Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecG-rz-jwg">
@@ -874,7 +874,7 @@ Cg
         </scene>
     </scenes>
     <resources>
-        <image name="22" width="604" height="402"/>
+        <image name="22" width="413" height="413"/>
         <image name="Logo" width="2559" height="2287"/>
     </resources>
 </document>

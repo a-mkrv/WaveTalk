@@ -34,7 +34,7 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
         let tabBarVC = self.tabBarController  as! MainUserTabViewController
         
         // After registration it crashes
-        photoImage.loadImageUsingCacheWithUrlString(urlString: tabBarVC.myProfile.profileImageURL!)
+        //photoImage.loadImageUsingCacheWithUrlString(urlString: tabBarVC.myProfile.profileImageURL!)
         //
         
         settingsSocket = tabBarVC.clientSocket
@@ -77,6 +77,12 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
 //                }
 //            }
 //        })
+        
+        if (myProfile.profileImageURL?.characters.count)! > 2 {
+            photoImage.loadImageUsingCacheWithUrlString(urlString: myProfile.profileImageURL!)
+        } else {
+            photoImage.loadImageUsingCacheWithUrlString(urlString: "#" + myProfile.username! + " " + myProfile.profileImageURL!)
+        }
         
         photoImage.layer.borderWidth = 1
         photoImage.layer.masksToBounds = false

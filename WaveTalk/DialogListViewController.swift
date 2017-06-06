@@ -20,7 +20,8 @@ class DialogListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //(self.tabBarController  as! MainUserTabViewController).finishReadingQueue()
+
         let tabBarVC = self.tabBarController  as! MainUserTabViewController
 
         dialogSocket = tabBarVC.clientSocket
@@ -31,9 +32,12 @@ class DialogListViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print((self.tabBarController  as! MainUserTabViewController).isCancelQueue())
+        
         (self.tabBarController  as! MainUserTabViewController).finishReadingQueue()
+        print((self.tabBarController  as! MainUserTabViewController).isCancelQueue())
+
         loadListOfDialogues()
-        (self.tabBarController  as! MainUserTabViewController).startReadingQueue(for: dialogSocket.client)
         
         self.tableView.backgroundColor = UIColor(red: 251/255.0, green: 250/255.0, blue: 252/255.0, alpha: 100.0/100.0)
         tableView.tableFooterView = UIView(frame: CGRect.zero)
@@ -138,6 +142,7 @@ class DialogListViewController: UITableViewController {
         let dialog = Array(messagesDictionary)[indexPath.row]
         cell.usernameLabel.text = dialog.key
         cell.message = dialog.value.last
+        
         cell.backgroundColor = UIColor(white: 1, alpha: 0.9)
 
         return cell

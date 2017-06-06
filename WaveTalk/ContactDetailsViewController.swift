@@ -29,7 +29,11 @@ class ContactDetailsViewController: UITableViewController {
         super.viewDidLoad()
         
         if contact.profileImageURL != nil {
-            photoImage.loadImageUsingCacheWithUrlString(urlString: contact.profileImageURL!)
+            if (contact.profileImageURL?.characters.count)! > 2 {
+                photoImage.loadImageUsingCacheWithUrlString(urlString: contact.profileImageURL!)
+            } else {
+                photoImage.loadImageUsingCacheWithUrlString(urlString: "#" + contact.username! + " " + contact.profileImageURL!)
+            }
         }
         
         usernameLabel.text = contact.username

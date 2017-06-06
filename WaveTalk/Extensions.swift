@@ -110,9 +110,23 @@ extension UIImageView {
         
         // check cache for image
         
-        if let cacheImage = imageCache.object(forKey: urlString as AnyObject) as? UIImage {
-            self.image = cacheImage
-            return
+        if urlString.characters.first == "#" {
+            //urlStr.characters.removeFirst()
+            let imageName = urlString.components(separatedBy: " ")
+            
+            for i in 1..<52 {
+                let key = imageName.first! + " " + String(i)
+                print(key)
+                if let cacheImage = imageCache.object(forKey: key as AnyObject) as? UIImage {
+                    self.image = cacheImage
+                    return
+                }
+            }
+        } else {
+            if let cacheImage = imageCache.object(forKey: urlString as AnyObject) as? UIImage {
+                self.image = cacheImage
+                return
+            }
         }
         
         // otherwise

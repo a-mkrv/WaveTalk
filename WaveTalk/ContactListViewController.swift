@@ -91,21 +91,29 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
     /// Parse response from server - Users / Keys / Messages. Adding through Client::AddUserChat(...)
     func parseResponseData(response: String) {
         let res = response
+        var user_avatar: String
         var dataList = res.components(separatedBy: " /s ")
         dataList.remove(at: dataList.endIndex - 1)
         
         for i in dataList {
             let user = Contact()
             let dataSet = i.components(separatedBy: " _ ")
-            
             user.username = dataSet[0]
-            //dataList[1] = //sex of person
+            user.sex = dataSet[1]
             user.pubKey = dataSet[2]
             (dataSet[3] == "YES") ? (user.notifications = true) : (user.notifications = false)
             user.lastPresenceTime = dataSet[4]
             user.phoneNumber_or_Email = dataSet[5]
             user.status = dataSet[6]
             
+            user_avatar = loadRandomProfileImage(sexOfPerson: dataSet[1])
+            
+            user.profileImageURL = user_avatar
+            let downloadedImage = UIImage(named: user_avatar)
+
+            let key = "#" + dataSet[0] + " " + user_avatar
+            imageCache.setObject(downloadedImage!, forKey: String(key) as AnyObject)
+
             self.contacts.append(user)
             
             DispatchQueue.main.async {
@@ -142,6 +150,21 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
                 self.tableView.reloadData()
             }
         }, withCancel: nil)
+    }
+    
+    
+    func loadRandomProfileImage(sexOfPerson: String) -> String {
+        var rand_avatar = 0
+        
+        if (sexOfPerson == "Man") {
+            rand_avatar = Int(arc4random_uniform(18)) + 1
+        } else if (sexOfPerson == "Woman") {
+            rand_avatar = Int(arc4random_uniform(13)) + 19
+        } else {
+            rand_avatar = Int(arc4random_uniform(20)) + 32;
+        }
+        
+        return String(rand_avatar)
     }
     
     
@@ -183,6 +206,11 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
             
             userName = signIn!
             myProfile.username = userName
+            
+            let imageName = loadRandomProfileImage(sexOfPerson: "Man")
+            myProfile.profileImageURL = imageName
+            let downloadedImage = UIImage(named: imageName)
+            imageCache.setObject(downloadedImage!, forKey: String(describing: "#" + userName! + " " + imageName) as AnyObject)
             
             fetchUser(personDates: true)
         }
@@ -233,15 +261,16 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
         let CellID = "CellContact"
         let cell = tableView.dequeueReusableCell(withIdentifier: CellID, for: indexPath) as! ContactViewCell
         
-        //cell.avatarImage?.image = UIImage(named: "55")
         cell.avatarImage.layer.cornerRadius = 30.0
         cell.avatarImage.clipsToBounds = true
         cell.usernameLabel?.text = contact.username
         cell.phonenumberLabel?.text = contact.phoneNumber_or_Email
         cell.backgroundColor = UIColor(white: 1, alpha: 0.9)
-
-        if let profileImageURL = contact.profileImageURL {
-            cell.avatarImage.loadImageUsingCacheWithUrlString(urlString: profileImageURL)
+        
+        if (contact.profileImageURL?.characters.count)! > 2 {
+            cell.avatarImage.loadImageUsingCacheWithUrlString(urlString: contact.profileImageURL!)
+        } else {
+            cell.avatarImage?.image = UIImage(named: contact.profileImageURL!)
         }
         
         return cell
@@ -353,6 +382,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
     
     
     func addNewContact(contact: Contact) {
+        contact.profileImageURL = loadRandomProfileImage(sexOfPerson: "Man") //TODO: Change, use really
         contacts.append(contact)
         self.tableView.reloadData()
     }

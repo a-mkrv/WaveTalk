@@ -68,6 +68,9 @@ class DialogViewCell: UITableViewCell {
                     self.avatarImage.layer.cornerRadius = 30.0
                     self.avatarImage.clipsToBounds = true
                 }
+            } else {
+                self.avatarImage.loadImageUsingCacheWithUrlString(urlString: "#" + self.usernameLabel.text! + " " + "1")
+                //print("NO PHOTO " +  self.usernameLabel.text!)
             }
         }, withCancel: nil)
     }
