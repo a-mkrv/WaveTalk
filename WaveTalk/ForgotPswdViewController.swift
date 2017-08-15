@@ -24,6 +24,18 @@ class ForgotPswdViewController: UIViewController {
     }
     
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.resetPasswordField.resignFirstResponder()
+        
+        return true
+    }
+    
+    
     @IBAction func resetPassword(_ sender: Any) {
         performSegue(withIdentifier: "resetToLogin", sender: self)
         

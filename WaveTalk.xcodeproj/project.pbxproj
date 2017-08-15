@@ -28,6 +28,7 @@
 		777E624A1DE1DE6B00840242 /* ForgotPswdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777E62491DE1DE6B00840242 /* ForgotPswdViewController.swift */; };
 		778590341E66A98700B85DDF /* FloatLabelTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778590321E66A98700B85DDF /* FloatLabelTextField.swift */; };
 		7785A4631E8E7397004E894E /* StatusViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7785A4621E8E7397004E894E /* StatusViewCell.swift */; };
+		77A37BF91F433A2800866445 /* ConnectNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A37BF81F433A2800866445 /* ConnectNetwork.swift */; };
 		77A4E3DD1E508DF900F8AD50 /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A4E3DC1E508DF900F8AD50 /* AddContactViewController.swift */; };
 		77A4E3DF1E50EDFA00F8AD50 /* MainUserTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A4E3DE1E50EDFA00F8AD50 /* MainUserTabViewController.swift */; };
 		77A6C6BF1E82D88E002B66FB /* RSACrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A6C6BE1E82D88E002B66FB /* RSACrypt.swift */; };
@@ -74,6 +75,7 @@
 		777E62491DE1DE6B00840242 /* ForgotPswdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPswdViewController.swift; sourceTree = "<group>"; };
 		778590321E66A98700B85DDF /* FloatLabelTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatLabelTextField.swift; sourceTree = "<group>"; };
 		7785A4621E8E7397004E894E /* StatusViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusViewCell.swift; sourceTree = "<group>"; };
+		77A37BF81F433A2800866445 /* ConnectNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectNetwork.swift; sourceTree = "<group>"; };
 		77A4E3DC1E508DF900F8AD50 /* AddContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
 		77A4E3DE1E50EDFA00F8AD50 /* MainUserTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainUserTabViewController.swift; sourceTree = "<group>"; };
 		77A6C6BE1E82D88E002B66FB /* RSACrypt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSACrypt.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 				77560DEB1E3C8A7700C5BD87 /* Extensions.swift */,
 				7763E5261E34E7DF00F36193 /* Protocols.swift */,
 				778590321E66A98700B85DDF /* FloatLabelTextField.swift */,
+				77A37BF81F433A2800866445 /* ConnectNetwork.swift */,
 				77A6C6BE1E82D88E002B66FB /* RSACrypt.swift */,
 				77B63B2B1DE0826400127E96 /* PageContentViewController.swift */,
 				77A4E3DE1E50EDFA00F8AD50 /* MainUserTabViewController.swift */,
@@ -282,6 +285,7 @@
 				TargetAttributes = {
 					775A976C1DD87BB40027C0F5 = {
 						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = RA8RP8Z7ML;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -401,6 +405,7 @@
 				77F31F4C1E3C98720090FED7 /* UserNameViewController.swift in Sources */,
 				77F31F4E1E3D10F90090FED7 /* PhoneNumberViewController.swift in Sources */,
 				777E62481DE1D13900840242 /* RegistrationViewController.swift in Sources */,
+				77A37BF91F433A2800866445 /* ConnectNetwork.swift in Sources */,
 				77A4E3DD1E508DF900F8AD50 /* AddContactViewController.swift in Sources */,
 				77CAC8281E30CCE900D5EE11 /* ProfileSettings.swift in Sources */,
 				77A4E3DF1E50EDFA00F8AD50 /* MainUserTabViewController.swift in Sources */,
@@ -530,6 +535,7 @@
 			baseConfigurationReference = 78B7104A990097914FDF0D3C /* Pods-WaveTalk.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = RA8RP8Z7ML;
 				INFOPLIST_FILE = WaveTalk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ITMak.WaveTalk;
@@ -543,6 +549,7 @@
 			baseConfigurationReference = E927018FDA4701A2DA7D6628 /* Pods-WaveTalk.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = RA8RP8Z7ML;
 				INFOPLIST_FILE = WaveTalk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ITMak.WaveTalk;

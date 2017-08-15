@@ -88,6 +88,12 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
     
     
     @IBAction func createAccount(_ sender: Any) {
+        if !NetworkConnect.isConnectedToNetwork() {
+            SCLAlertView().showTitle( "Connection error", subTitle: "\nCheck the 3G, LTE, Wi-Fi\n", duration: 3.0, completeText: "Try again", style: .error, colorStyle: 0xFF9999)
+            
+            return
+        }
+        
         var login = ""
         var email = ""
         var paswd = ""
@@ -180,7 +186,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
             self.backToLogin(self)
         }
         
-        alertView.showSuccess("Successful registration!", subTitle: "Welcome to Whisper")
+        alertView.showSuccess("Successful registration!", subTitle: "Welcome to WaveTalk")
     }
     
     
