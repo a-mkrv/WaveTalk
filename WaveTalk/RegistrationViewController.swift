@@ -12,7 +12,7 @@ import FirebaseDatabase
 import SCLAlertView
 import SkyFloatingLabelTextField
 import CryptoSwift
-
+import BigInt
 
 class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
     
@@ -24,7 +24,6 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
     let userDefaults = UserDefaults.standard
     var pickImageController = UIImagePickerController()
     var regSocket = TCPSocket()
-    var rsaCrypt = RSACrypt()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,10 +35,11 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
         //TODO: Add checking of validity in realtime
         //TODO: Add phone field
         
+        DispatchQueue.global(qos: .userInitiated).async {
+            RSACrypt.generationKeys()
+        }
+        
         regSocket.connect()
-        
-        rsaCrypt.generationKeys()
-        
         initUI()
     }
     
@@ -143,8 +143,8 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
                         }
                     })
                     
-                    let rsaPrivateKey = String(rsaCrypt.getD()) + " " + String(rsaCrypt.getModule())
-                    userDefaults.set(rsaPrivateKey, forKey: "PrivateKeyRSA")
+                    let rsaPrivateKey = RSACrypt.privateKey // D + Module
+                    //FIXME: userDefaults.set(rsaPrivateKey, forKey: "PrivateKeyRSA")
                     
                     regSocket.disconnect()
                     break
@@ -195,8 +195,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
         var pass = dataSet.2.md5()
         let salt = saltGeneration();
         pass = (pass + salt).md5()
-        let rsaKeys = String(rsaCrypt.getE()) + " " + String(rsaCrypt.getModule())
-        
+        let rsaKeys = String(RSACrypt.publicKey.0) + " " + String(RSACrypt.publicKey.1) // E + Module
         var request: String = "REGI" + dataSet.0 + " /s Empty /s " + pass + " /s Empty /s Unknown /s "
         request.append(rsaKeys + " /s " + salt)
         

@@ -7,159 +7,70 @@
 //
 
 import Foundation
+import BigInt
 
-extension Character {
-    var asciiValue: UInt32? {
-        return String(self).unicodeScalars.filter{$0.isASCII}.first?.value
-    }
-}
+typealias Key = (modulus: BigUInt, exponent: BigUInt)
 
 class RSACrypt {
     
-    var pSimple = 0
-    var qSimple = 0
-    var d = 0, e = 0, f = 0
-    var module = 0
+    static var publicKey: Key!
+    static var privateKey: Key!
+
+    static let sharedRSA = RSACrypt()
+    static var isGenerate = false
     
-    func generationKeys() {
-        d = 0
-        
-        repeat {
-            SimpleNumber(n: &pSimple, t: 0)
-            SimpleNumber(n: &qSimple, t: 1)
+    static func generatePrime(kSize: Int) -> BigUInt {
+        while true {
+            var random = BigUInt.randomInteger(withExactWidth: kSize)
+            random |= BigUInt(1)
             
-            module = pSimple * qSimple
-        } while (module < 1500)
-        
-        f = (pSimple - 1) * (qSimple - 1)
-        
-        repeat {
-            e = Int(arc4random_uniform(150)) + 2
-            if (SimpleNumber(n: &e, t: 2) && e < f && (NOD(_p: e, _q: f) == 1)) {
-                break
-            }
-        } while true
-        
-        while ((d * e) % f != 1  ) {
-            d += 1
-        }
-    }
-    
-    func SimpleNumber(n: inout Int, t: Int) -> Bool {
-        
-        if (t==0) {
-            n = Int(arc4random_uniform(75))
-        } else if (t==1) {
-            n = Int(arc4random_uniform(75)) + 75
-        } else {
-            n = Int(arc4random_uniform(150))
-        }
-        
-        if (n < 2) {
-            SimpleNumber(n: &n, t: t)
-        }
-        
-        for i in 2...n {
-            if (i * i > n) {
-                break
-            }
-            
-            if (n % i == 0) {
-                SimpleNumber(n: &n, t: t)
+            if random.isPrime() {
+                return random
             }
         }
-        
-        return true
     }
     
     
-    func NOD(_p: Int, _q: Int) -> Int {
-        var p = _p
-        var q = _q
+    static func generationKeys() {
+        if isGenerate {
+            return
+        }
         
-        while (p > 0 && q > 0) {
-            if (p >= q) {
-                p = p % q
-            } else {
-                q = q % p
+        let p = self.generatePrime(kSize: 256)
+        let q = self.generatePrime(kSize: 256)
+        
+        let n = p * q
+        
+        let e: BigUInt = 65537
+        let phi = (p - 1) * (q - 1)
+        let d = e.inverse(phi)!
+        
+        self.publicKey = (n, e)
+        self.privateKey = (n, d)
+        
+        isGenerate = true
+    }
+    
+    
+    static func encrypt(_ message: BigUInt, key: Key) -> BigUInt {
+        return modularExponentRToLBinary(base: message, exponent: key.exponent, modulus: key.modulus)
+    }
+    
+    
+    static func modularExponentRToLBinary(base: BigUInt, exponent: BigUInt, modulus: BigUInt) -> BigUInt {
+        if modulus == 1 { return 0 }
+        
+        var result = BigUInt(1)
+        var b = base % modulus
+        var e = exponent
+        
+        while e > 0 {
+            if e[0] & 1 == 1 {
+                result = (result * b) % modulus
             }
+            e >>= 1
+            b = (b * b) % modulus
         }
-        
-        return (p | q)
+        return result
     }
-    
-    func unicodeScalarCodePoint() -> UInt32
-    {
-        let characterString = String(describing: self)
-        let scalars = characterString.unicodeScalars
-        
-        return scalars[scalars.startIndex].value
-    }
-    
-    func encodeText(text: String, _e: Int, _module: Int) -> String {
-        
-        var tmpText: String = ""
-        var encodeText: String = text
-        let enterTextSize = text.characters.count
-        var encodeInt = Array(repeating: 0, count: enterTextSize)
-        var j = 0
-        
-        for i in encodeText.characters {
-            let charUnicode: Int32 = Int32(i.asciiValue!)
-            encodeInt[j] = modExp(base: charUnicode, exp: Int32(_e), module: Int32(_module))
-            tmpText.append(String((encodeInt[j])) + " ")
-            j = j + 1
-        }
-        
-        return tmpText
-    }
-    
-    
-    
-    func decodeText(text: String, _d: Int, _module: Int) -> String {
-        let decryptText = text.components(separatedBy: " ")
-        
-        let decTextSize = decryptText.count - 1
-        var decryptInt = Array(repeating: 0, count: decTextSize)
-        var normalText: String = ""
-        
-        for i in 0..<decTextSize {
-            decryptInt[i] = Int(decryptText[i])!
-            decryptInt[i] = modExp(base: Int32(decryptInt[i]), exp: Int32(_d), module: Int32(_module))
-            normalText.append(String(decryptInt[i]))
-        }
-        
-        return normalText
-    }
-    
-    
-    func modExp(base: Int32, exp: Int32, module: Int32) -> Int {
-        
-        if exp == 0 {
-            return 1
-        }
-        
-        var res: Int32 = 0
-        
-        if (exp % 2 == 0) {
-            res = Int32(modExp(base: base, exp: exp/2, module: module))
-            return Int((res * res) % module)
-        } else {
-            res = Int32(modExp(base: base, exp: exp-1, module: module))
-            return Int(((base % module) * res) % module)
-        }
-    }
-    
-    func getE() -> Int {
-        return e
-    }
-    
-    func getModule() -> Int {
-        return module
-    }
-    
-    func getD() -> Int {
-        return d
-    }
-    
 }
