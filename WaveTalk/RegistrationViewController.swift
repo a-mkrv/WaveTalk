@@ -16,10 +16,19 @@ import BigInt
 
 class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
     
+    @IBOutlet weak var emailValidIcon: UIButton!
+    @IBOutlet weak var loginValidIcon: UIButton!
+    @IBOutlet weak var passValidIcon: UIButton!
+    
     @IBOutlet weak var emailField: FloatLabelTextField!
     @IBOutlet weak var usernameField: FloatLabelTextField!
     @IBOutlet weak var passwordField: FloatLabelTextField!
     @IBOutlet weak var userProfilePhoto: UIImageView!
+    
+    var validLoginFlag: Bool = false
+    var validEmailFlag: Bool = false
+    var validPassFlag: Bool = false
+
     
     let userDefaults = UserDefaults.standard
     var pickImageController = UIImagePickerController()
@@ -31,9 +40,6 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
         self.emailField.delegate = self
         self.usernameField.delegate = self
         self.passwordField.delegate = self
-        
-        //TODO: Add checking of validity in realtime
-        //TODO: Add phone field
         
         DispatchQueue.global(qos: .userInitiated).async {
             RSACrypt.generationKeys()
@@ -51,8 +57,13 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
         )
         let colorBorder = UIColor(red: 80/255.0, green: 114/255.0, blue: 153/255.0, alpha: 100.0/100.0).cgColor
         
+        
         pickImageController.delegate = self
         pickImageController.allowsEditing = true
+        
+        loginValidIcon.alpha = 0
+        emailValidIcon.alpha = 0
+        passValidIcon.alpha = 0
         
         usernameField.setBorderBottom()
         emailField.setBorderBottom()
@@ -64,12 +75,6 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
         userProfilePhoto.layer.borderWidth = 1.5
         userProfilePhoto.layer.borderColor = colorBorder
         userProfilePhoto.layer.backgroundColor = UIColor.white.cgColor
-        
-        
-        //usernameField.setRegistrationFieldStyleWith(title: "Username")
-        //usernameField.delegate = self
-        //passwordField.setRegistrationFieldStyleWith(title: "Password")
-        //emailField.setRegistrationFieldStyleWith(title: "Email")
     }
     
     
@@ -87,6 +92,80 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
     }
     
     
+    @IBAction func checkLoginField(_ sender: Any) {
+        var duration = 0
+        (self.usernameField.text?.isEmpty)! ? (duration = 0) : (duration = 1)
+        
+        UIView.animate(withDuration: 1, animations: {
+            self.loginValidIcon.alpha = CGFloat(duration)
+        })
+     
+        if usernameField.text!.characters.count > 4 {
+            if !validLoginFlag {
+                setFlipAnimation(icon: self.loginValidIcon, imageName: "valid-ok")
+                self.validLoginFlag = true
+            }
+        } else {
+            if validLoginFlag {
+                setFlipAnimation(icon: self.loginValidIcon, imageName: "valid-error")
+                self.validLoginFlag = false
+            }
+        }
+    }
+    
+    
+    @IBAction func checkEmailAddress(_ sender: Any) {
+        var duration = 0
+        (self.emailField.text?.isEmpty)! ? (duration = 0) : (duration = 1)
+        
+        UIView.animate(withDuration: 1, animations: {
+            self.emailValidIcon.alpha = CGFloat(duration)
+        })
+        
+        if isValidEmail(emailStr: emailField.text!) {
+            if !validEmailFlag {
+                setFlipAnimation(icon: self.emailValidIcon, imageName: "valid-ok")
+                self.validEmailFlag = true
+            }
+        } else {
+            if validEmailFlag {
+                setFlipAnimation(icon: self.emailValidIcon, imageName: "valid-error")
+                self.validEmailFlag = false
+            }
+        }
+    }
+    
+    
+    @IBAction func checkPasswordField(_ sender: Any) {
+        var duration = 0
+        (self.passwordField.text?.isEmpty)! ? (duration = 0) : (duration = 1)
+        
+        UIView.animate(withDuration: 1, animations: {
+            self.passValidIcon.alpha = CGFloat(duration)
+        })
+        
+        if passwordField.text!.characters.count > 5 {
+            if !validPassFlag {
+                setFlipAnimation(icon: self.passValidIcon, imageName: "valid-ok")
+                self.validPassFlag = true
+            }
+        } else {
+            if validPassFlag {
+                setFlipAnimation(icon: self.passValidIcon, imageName: "valid-error")
+                self.validPassFlag = false
+            }
+        }
+    }
+    
+    
+    func setFlipAnimation(icon: UIButton, imageName: String) {
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationTransition(UIViewAnimationTransition.flipFromLeft, for: icon, cache: true)
+        icon.setImage(UIImage(named: imageName), for: .normal)
+        UIView.commitAnimations()
+    }
+    
+    
     @IBAction func createAccount(_ sender: Any) {
         if !NetworkConnect.isConnectedToNetwork() {
             SCLAlertView().showTitle( "Connection error", subTitle: "\nCheck the 3G, LTE, Wi-Fi\n", duration: 3.0, completeText: "Try again", style: .error, colorStyle: 0xFF9999)
@@ -94,10 +173,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
             return
         }
         
-        var login = ""
-        var email = ""
-        var paswd = ""
-        _ = "Hello! Now I'm here, too!"
+        var login = "", email = "", paswd = ""
         
         login = validData(inputField: usernameField, subTitle: "\nUsername must be greater\n than 5 characters", minLength: 5)
         
@@ -117,11 +193,11 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
                 
                 switch(response) {
                 case "ALRD":
-                    SCLAlertView().showTitle( "Registration Error", subTitle: "\n\nUser with the same data already exists", duration: 0.0, completeText: "Ok", style: .error, colorStyle: 0x4196BE)
+                    SCLAlertView().showTitle( "Registration Error", subTitle: "\n\nUser with the same data already exists", duration: 5.0, completeText: "Ok", style: .error, colorStyle: 0x4196BE)
                     break
                     
                 case "WELC":
-                   FIRAuth.auth()?.createUser(withEmail: email, password: paswd, completion: { (user: FIRUser?, error) in
+                    FIRAuth.auth()?.createUser(withEmail: email, password: paswd, completion: { (user: FIRUser?, error) in
                         
                         let imageName = NSUUID().uuidString
                         let storageRef = FIRStorage.storage().reference().child("profile_images").child("\(imageName).png")
@@ -142,7 +218,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
                             })
                         }
                     })
-                    
+                    showSuccessAlert()
                     let rsaPrivateKey = RSACrypt.privateKey // D + Module
                     //FIXME: userDefaults.set(rsaPrivateKey, forKey: "PrivateKeyRSA")
                     
@@ -162,40 +238,26 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
     func registerUserIntoWithUI(username: String, values: [String: AnyObject]) {
         
         //Use Firebase
-        
         let ref = FIRDatabase.database().reference(fromURL: "https://wavetalk-d3236.firebaseio.com/")
         let userReference = ref.child("users").child(username)
         
         userReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
-            
             if err != nil {
-                print(err!)
+                print("Error here: ", err!)
                 return
             } else {
                 print("Saved user info into Firebase DB")
             }
         })
-        
-        let appearance = SCLAlertView.SCLAppearance(
-            showCloseButton: false
-        )
-        
-        let alertView = SCLAlertView(appearance: appearance)
-        
-        alertView.addButton("Go to Log In") {
-            self.backToLogin(self)
-        }
-        
-        alertView.showSuccess("Successful registration!", subTitle: "Welcome to WaveTalk")
     }
     
     
     private func sendRequest(using client: TCPSocket, with dataSet : (String, String, String)) -> String? {
-        
         var pass = dataSet.2.md5()
         let salt = saltGeneration();
         pass = (pass + salt).md5()
         let rsaKeys = String(RSACrypt.publicKey.0) + " " + String(RSACrypt.publicKey.1) // E + Module
+        
         var request: String = "REGI" + dataSet.0 + " /s Empty /s " + pass + " /s Empty /s Unknown /s "
         request.append(rsaKeys + " /s " + salt)
         
@@ -245,12 +307,12 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
             if inputField == emailField && !isValidEmail(emailStr: field){
                 SCLAlertView().showTitle(
                     "Invalid", subTitle: subTitle,
-                    duration: 0.0, completeText: "OK", style: .error, colorStyle: 0x4196BE
+                    duration: 3.0, completeText: "OK", style: .error, colorStyle: 0x4196BE
                 )
             } else {
                 SCLAlertView().showTitle(
                     "Invalid", subTitle: subTitle,
-                    duration: 0.0, completeText: "OK", style: .error, colorStyle: 0x4196BE
+                    duration: 3.0, completeText: "OK", style: .error, colorStyle: 0x4196BE
                 )
             }
             field = ""
@@ -287,6 +349,21 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
         alertController.addAction(buttonCancel)
         
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    
+    func showSuccessAlert() {
+        let appearance = SCLAlertView.SCLAppearance(
+            showCloseButton: false
+        )
+        
+        let alertView = SCLAlertView(appearance: appearance)
+        
+        alertView.addButton("Go to Log In") {
+            self.backToLogin(self)
+        }
+        
+        alertView.showSuccess("Successful registration!", subTitle: "Welcome to WaveTalk")
     }
     
     

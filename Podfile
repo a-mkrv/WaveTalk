@@ -15,5 +15,6 @@ target 'WaveTalk' do
   pod 'SkyFloatingLabelTextField', '~> 2.0.0'
   pod 'SwiftSocket'
   pod 'CryptoSwift'
+  pod 'BigInt', '~> 2.1'
   
 end

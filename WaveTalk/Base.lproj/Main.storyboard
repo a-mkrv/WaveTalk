@@ -595,6 +595,9 @@
                                         <color key="value" red="0.21254032849999999" green="0.57346832749999999" blue="0.73436790699999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="checkEmailAddress:" destination="KoU-ec-JZ5" eventType="editingChanged" id="QAa-YI-AFv"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B3b-W9-m8J">
                                 <rect key="frame" x="150" y="505" width="71" height="35"/>
@@ -639,6 +642,9 @@
                                         <real key="value" value="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="checkLoginField:" destination="KoU-ec-JZ5" eventType="editingChanged" id="AmE-pJ-rhL"/>
+                                </connections>
                             </textField>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zT5-t1-NKW">
                                 <rect key="frame" x="121" y="94" width="128" height="128"/>
@@ -663,12 +669,33 @@
                                         <color key="value" red="0.21254032849999999" green="0.57346832749999999" blue="0.73436790699999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="checkPasswordField:" destination="KoU-ec-JZ5" eventType="editingChanged" id="chs-cm-qT5"/>
+                                </connections>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZcZ-Uc-oHh">
+                                <rect key="frame" x="314" y="310" width="32" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button" image="valid-error"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="du6-5B-8nE">
+                                <rect key="frame" x="314" y="242" width="32" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button" image="valid-error"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FZJ-6C-5O0">
+                                <rect key="frame" x="314" y="385" width="32" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button" image="valid-error"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="emailField" destination="d0V-TY-JuP" id="hXB-xX-yrg"/>
+                        <outlet property="emailValidIcon" destination="ZcZ-Uc-oHh" id="4F0-oc-CT8"/>
+                        <outlet property="loginValidIcon" destination="du6-5B-8nE" id="RBB-t4-sLu"/>
+                        <outlet property="passValidIcon" destination="FZJ-6C-5O0" id="2ff-hR-ILr"/>
                         <outlet property="passwordField" destination="8jW-d3-Jur" id="vqK-ZA-LXt"/>
                         <outlet property="userProfilePhoto" destination="zT5-t1-NKW" id="0Pe-1v-06f"/>
                         <outlet property="usernameField" destination="G3C-gd-HZB" id="hA7-nd-4L6"/>
@@ -1132,6 +1159,7 @@
         <image name="contact-us-icon" width="4253" height="2058"/>
         <image name="settings" width="40" height="40"/>
         <image name="user" width="40" height="40"/>
+        <image name="valid-error" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="qaF-6O-Rok"/>
