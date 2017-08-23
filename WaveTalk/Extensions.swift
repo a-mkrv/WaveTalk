@@ -122,12 +122,12 @@ extension UIImageView {
                     return
                 }
             }
-        } else {
-            if let cacheImage = imageCache.object(forKey: urlString as AnyObject) as? UIImage {
-                self.image = cacheImage
-                return
-            }
-        }
+        } //else {
+            //if let cacheImage = imageCache.object(forKey: urlString as AnyObject) as? UIImage {
+            ///    self.image = cacheImage
+            //    return
+           // }
+        //}
         
         // otherwise
         

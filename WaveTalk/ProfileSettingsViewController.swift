@@ -39,7 +39,7 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
         if (profileSettings.profileImageURL?.characters.count)! > 2 {
             profilePhotoImage.loadImageUsingCacheWithUrlString(urlString: profileSettings.profileImageURL!)
         } else {
-            profilePhotoImage.loadImageUsingCacheWithUrlString(urlString: "#" + profileSettings.userName + " " + profileSettings.profileImageURL!)
+            //profilePhotoImage.loadImageUsingCacheWithUrlString(urlString: "#" + profileSettings.userName + " " + profileSettings.profileImageURL!)
         }
     }
     

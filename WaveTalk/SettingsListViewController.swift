@@ -34,8 +34,14 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
         let tabBarVC = self.tabBarController  as! MainUserTabViewController
         
         // After registration it crashes
-        //photoImage.loadImageUsingCacheWithUrlString(urlString: tabBarVC.myProfile.profileImageURL!)
+        photoImage.loadImageUsingCacheWithUrlString(urlString: tabBarVC.myProfile.profileImageURL!)
         //
+        photoImage.layer.borderWidth = 1
+        photoImage.layer.masksToBounds = false
+        photoImage.layer.borderColor = UIColor(red:  58/255.0, green: 153/255.0, blue: 217/255.0, alpha: 30.0/100.0).cgColor
+        
+        photoImage.layer.cornerRadius = photoImage.frame.height/2
+        photoImage.clipsToBounds = true
         
         settingsSocket = tabBarVC.clientSocket
         profileSettings = tabBarVC.profileSettings
@@ -47,9 +53,9 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        (self.tabBarController  as! MainUserTabViewController).finishReadingQueue()
-        fetchUserAndSetupNavigationBarTitle()
-        (self.tabBarController  as! MainUserTabViewController).startReadingQueue(for: settingsSocket.client)
+        //(self.tabBarController  as! MainUserTabViewController).finishReadingQueue()
+        //fetchUserAndSetupNavigationBarTitle()
+        //(self.tabBarController  as! MainUserTabViewController).startReadingQueue(for: settingsSocket.client)
     }
     
     
@@ -182,7 +188,6 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
         let cell = tableView.cellForRow(at: indexPath) as! SettingsViewCell
         let cellName: String = cell.nameOfSetting!.text!
         let storyboard = UIStoryboard(name: "Setting", bundle: nil)
-        
         if cellName != "" && cellName != "Log Out" {
             let VC = storyboard.instantiateViewController(withIdentifier: parameters[indexPath.row])
             VC.navigationItem.title = parameters[indexPath.row]
@@ -193,7 +198,6 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
                 destinationController.delegate = self
                 destinationController.notificationSettings = notificationSettings
             }
-            
             navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
             self.navigationController?.pushViewController(VC, animated: true)
         } else if cellName == "Log Out" {

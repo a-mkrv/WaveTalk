@@ -191,7 +191,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8cn-K0-IRn" id="NFk-Vm-YHJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bqp-nr-QN7">
@@ -283,6 +283,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <rect key="contentStretch" x="0.0" y="0.10000000000000001" width="1" height="1"/>
                         <sections>
                             <tableViewSection id="ag2-KF-ccd">
                                 <cells>
@@ -308,18 +309,25 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IXU-f3-mSg">
-                                                    <rect key="frame" x="20" y="1" width="174" height="31"/>
+                                                    <rect key="frame" x="60" y="0.0" width="174" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="presenceTime" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GH8-hN-MsZ">
-                                                    <rect key="frame" x="20" y="28" width="250" height="29"/>
+                                                    <rect key="frame" x="60" y="31" width="250" height="29"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NXV-iI-zw0">
+                                                    <rect key="frame" x="16" y="14" width="32" height="32"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" image="last_presence">
+                                                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    </state>
+                                                </button>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -331,18 +339,25 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DQO-lr-9Dc">
-                                                    <rect key="frame" x="20" y="35" width="75" height="21"/>
+                                                    <rect key="frame" x="60" y="35" width="75" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H5p-Te-RGF">
-                                                    <rect key="frame" x="20" y="8" width="295" height="21"/>
+                                                    <rect key="frame" x="60" y="8" width="295" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFk-nj-bmN">
+                                                    <rect key="frame" x="16" y="14" width="32" height="32"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" image="quote">
+                                                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    </state>
+                                                </button>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -354,18 +369,25 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Phone number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dcY-SC-n2x">
-                                                    <rect key="frame" x="20" y="35" width="101" height="21"/>
+                                                    <rect key="frame" x="60" y="35" width="101" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mobile phone" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1sT-l4-dvS">
-                                                    <rect key="frame" x="20" y="8" width="306" height="21"/>
+                                                    <rect key="frame" x="60" y="8" width="306" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lvM-P8-VCr">
+                                                    <rect key="frame" x="16" y="14" width="32" height="32"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" image="ph-number">
+                                                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    </state>
+                                                </button>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -377,7 +399,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Notification" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HPp-q1-di5">
-                                                    <rect key="frame" x="20" y="19" width="88" height="21"/>
+                                                    <rect key="frame" x="60" y="19" width="88" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -390,6 +412,13 @@
                                                         <action selector="notificationSwitch:" destination="zF5-4h-rqt" eventType="valueChanged" id="7t3-3b-un9"/>
                                                     </connections>
                                                 </switch>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="heH-fc-mdr">
+                                                    <rect key="frame" x="18" y="13" width="32" height="32"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" image="notification">
+                                                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    </state>
+                                                </button>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -408,22 +437,24 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eqb-Kv-kOl">
-                                                    <rect key="frame" x="79" y="14" width="53" height="37"/>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mod-0T-IW4">
+                                                    <rect key="frame" x="224" y="0.0" width="106" height="46"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <state key="normal" title="Call">
-                                                        <color key="titleColor" red="0.154971788" green="0.8241584528" blue="0.35450607519999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    </state>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mod-0T-IW4">
-                                                    <rect key="frame" x="257" y="14" width="73" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <state key="normal" title="Chat">
-                                                        <color key="titleColor" red="0.8241584528" green="0.64955874979999995" blue="0.40203609150000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                                                    <state key="normal" title="   C h a t" image="go_chat">
+                                                        <color key="titleColor" red="0.79520934457101189" green="0.42508644473962964" blue="0.27121788139405451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
                                                     <connections>
                                                         <segue destination="CfH-RM-i6l" kind="show" identifier="startChatWithUser" id="qaF-6O-Rok"/>
                                                     </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eqb-Kv-kOl">
+                                                    <rect key="frame" x="48" y="8" width="115" height="29"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                                                    <state key="normal" title="   C a l l" image="go_call">
+                                                        <color key="titleColor" red="0.154971788" green="0.8241584528" blue="0.35450607519999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </state>
                                                 </button>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -879,9 +910,7 @@
         <scene sceneID="hA0-1t-7ef">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cQz-6D-I4z" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Contacts" image="user" id="V47-2K-Kzo">
-                        <inset key="imageInsets" minX="0.0" minY="1" maxX="0.0" maxY="-1"/>
-                    </tabBarItem>
+                    <tabBarItem key="tabBarItem" title="Contacts" image="user" id="V47-2K-Kzo"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="NdN-sr-JuQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1095,9 +1124,7 @@
         <scene sceneID="LA5-PF-RCV">
             <objects>
                 <navigationController id="R0A-xE-jO8" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Dialogues" image="chat" id="IdE-8w-Wez">
-                        <inset key="imageInsets" minX="0.0" minY="1" maxX="0.0" maxY="-1"/>
-                    </tabBarItem>
+                    <tabBarItem key="tabBarItem" title="Dialogues" image="chat" id="IdE-8w-Wez"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="DXm-XQ-56v">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1114,9 +1141,7 @@
         <scene sceneID="vzh-t4-f7U">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="CFs-aa-RYn" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Settings" image="settings" id="1ZS-29-zhG">
-                        <inset key="imageInsets" minX="0.0" minY="1" maxX="0.0" maxY="-1"/>
-                    </tabBarItem>
+                    <tabBarItem key="tabBarItem" title="Settings" image="settings" id="1ZS-29-zhG"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="TIZ-Oo-C59">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1157,8 +1182,14 @@
         <image name="background" width="640" height="1002"/>
         <image name="chat" width="30" height="30"/>
         <image name="contact-us-icon" width="4253" height="2058"/>
-        <image name="settings" width="40" height="40"/>
-        <image name="user" width="40" height="40"/>
+        <image name="go_call" width="32" height="32"/>
+        <image name="go_chat" width="32" height="32"/>
+        <image name="last_presence" width="32" height="32"/>
+        <image name="notification" width="32" height="32"/>
+        <image name="ph-number" width="32" height="32"/>
+        <image name="quote" width="32" height="32"/>
+        <image name="settings" width="30" height="30"/>
+        <image name="user" width="30" height="30"/>
         <image name="valid-error" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>

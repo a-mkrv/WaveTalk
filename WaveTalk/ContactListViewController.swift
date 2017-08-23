@@ -26,6 +26,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
         super.viewDidLoad()
         
         let tabBarVC = self.tabBarController  as! MainUserTabViewController
+        UIApplication.shared.statusBarStyle = .lightContent
 
         clientSocket = tabBarVC.clientSocket
         myProfile = tabBarVC.myProfile
@@ -198,6 +199,47 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
         
         if signIn == "userIsEmpty" || signIn == nil {
             perform(#selector(handleLogout), with: nil, afterDelay: 0)
+        } else if signIn == "Admin" {
+            print("ADMIN")
+            myProfile.username = signIn
+            myProfile.profileImageURL = "88"
+            
+            let user = Contact()
+            user.username = "Alex"
+            user.sex = "Man"
+            user.pubKey = "333 111"
+            user.notifications = false
+            user.lastPresenceTime = "Online"
+            user.phoneNumber_or_Email = "+79103330099"
+            user.status = "All right!"
+            var user_avatar = "33"
+            user.profileImageURL = user_avatar
+            let downloadedImage = UIImage(named: user_avatar)
+            
+            let key = "#" + "Alex" + " " + user_avatar
+            imageCache.setObject(downloadedImage!, forKey: String(key) as AnyObject)
+            
+            self.contacts.append(user)
+            
+            
+            let user1 = Contact()
+            user1.username = "Diana"
+            user1.sex = "Woman"
+            user1.pubKey = "333 111"
+            user1.notifications = true
+            user1.lastPresenceTime = "20.06.2017 21:22"
+            user1.phoneNumber_or_Email = "+79106501500"
+            user1.status = "Всем привет!"
+            var user_avatar1 = "44"
+            user1.profileImageURL = user_avatar1
+            let downloadedImage1 = UIImage(named: user_avatar1)
+            
+            let key1 = "#" + "Diana" + " " + user_avatar1
+            imageCache.setObject(downloadedImage1!, forKey: String(key1) as AnyObject)
+            
+            self.contacts.append(user1)
+
+
         } else {
             if let myPrivateKey = userDefaults.object(forKey: "PrivateKeyRSA") as? String {
                 //myProfile.pubKey =
@@ -342,7 +384,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
             if let indexPath = tableView.indexPathForSelectedRow {
                 (self.tabBarController  as! MainUserTabViewController).finishReadingQueue()
                 let destinationController = segue.destination as! ContactDetailsViewController
-                destinationController.myUserName = userName!
+                destinationController.myUserName = "Admin"
                 destinationController.contact = (searchController.isActive) ? searchContacts[indexPath.row] : contacts[indexPath.row]
             }
         } else if segue.identifier == "addContact" {
@@ -350,10 +392,10 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
             let destinationController = segue.destination as! AddContactViewController
             destinationController.delegate = self
             destinationController.searchSocket = clientSocket
-            destinationController.myUserName = userName!
+            //destinationController.myUserName = userName!
             
             for users in contacts {
-                destinationController.existContacts.append(users.username!)
+              //  destinationController.existContacts.append(users.username!)
             }
         }
     }

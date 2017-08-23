@@ -40,9 +40,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         loginInput.setBorderBottom(colorBorder)
         passwordInput.setBorderBottom(colorBorder)
-        
-        //TODO: Show animation only at the first start / relogin
-        
+                
         if previewAnimated {
             self.logoImage.frame.origin.y -= 200
             self.wavesImage.frame.origin.y += 200
@@ -117,12 +115,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBAction func loginPress(_ sender: Any) {
-        if !NetworkConnect.isConnectedToNetwork() {
-            SCLAlertView().showTitle( "Connection error", subTitle: "\nCheck the 3G, LTE, Wi-Fi\n", duration: 3.0, completeText: "Try again", style: .error, colorStyle: 0xFF9999)
-        
-            return
-        }
-        
         if self.loginInput.text == "Admin" {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "tabBarBoard")
             self.present(vc!, animated: true, completion: nil)
@@ -130,7 +122,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-
+        if !NetworkConnect.isConnectedToNetwork() {
+            SCLAlertView().showTitle( "Connection error", subTitle: "\nCheck the 3G, LTE, Wi-Fi\n", duration: 3.0, completeText: "Try again", style: .error, colorStyle: 0xFF9999)
+            
+            return
+        }
+        
         if let response = sendRequest(using: authSocket) {
             
             var bodyOfResponse: String = ""
