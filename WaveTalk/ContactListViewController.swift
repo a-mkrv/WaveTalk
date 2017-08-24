@@ -55,6 +55,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
         navigationController?.hidesBarsOnSwipe = false
         
 
+        //fetchUser(personDates: true)
         self.tableView.backgroundColor = UIColor(red: 251/255.0, green: 250/255.0, blue: 252/255.0, alpha: 100.0/100.0)
         tableView.tableFooterView = UIView(frame: CGRect.zero)
     }
@@ -85,6 +86,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
                 Logger.error(msg: "Auth Error - Bad request" as AnyObject)
             }
         }
+        loadURLProfileImage()
     }
     
     
@@ -133,15 +135,18 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
         FIRDatabase.database().reference().child("users").observe(.childAdded, with: { (snapshot) in
             
             if let dictionary = snapshot.value as? [String : Any] {
+                
+                if self.userName == snapshot.key {
+                    let user = Contact()
+                    user.setValuesForKeys(dictionary)
+                    self.myProfile.profileImageURL = user.profileImageURL
+                }
+                
                 for users in self.contacts {
                     if users.username == snapshot.key {
                         let user = Contact()
                         user.setValuesForKeys(dictionary)
                         users.profileImageURL = user.profileImageURL
-                    } else if self.userName == snapshot.key {
-                        let user = Contact()
-                        user.setValuesForKeys(dictionary)
-                        self.myProfile.profileImageURL = user.profileImageURL
                     }
                 }
             }
@@ -308,11 +313,11 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
         cell.phonenumberLabel?.text = contact.phoneNumber_or_Email
         cell.backgroundColor = UIColor(white: 1, alpha: 0.9)
         
-        if (contact.profileImageURL?.characters.count)! > 2 {
-            cell.avatarImage.loadImageUsingCacheWithUrlString(urlString: contact.profileImageURL!)
-        } else {
-            cell.avatarImage?.image = UIImage(named: contact.profileImageURL!)
+        guard (contact.profileImageURL != nil) else {
+            return cell
         }
+        
+        cell.avatarImage.loadImageUsingCacheWithUrlString(urlString: contact.profileImageURL!)
         
         return cell
     }
@@ -391,10 +396,10 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
             let destinationController = segue.destination as! AddContactViewController
             destinationController.delegate = self
             destinationController.searchSocket = clientSocket
-            //destinationController.myUserName = userName!
+            destinationController.myUserName = userName!
             
             for users in contacts {
-              //  destinationController.existContacts.append(users.username!)
+                destinationController.existContacts.append(users.username!)
             }
         }
     }
@@ -423,7 +428,17 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
     
     
     func addNewContact(contact: Contact) {
-        contact.profileImageURL = loadRandomProfileImage(sexOfPerson: "Man") //TODO: Change, use really
+        
+        FIRDatabase.database().reference().child("users").child(contact.username!).observe(.value, with: { (snapshot) in
+            if let dictionary = snapshot.value as? [String : Any] {
+                if let urlImage = dictionary["profileImageURL"] as? String {
+                    contact.profileImageURL = urlImage
+                } else {
+                    contact.profileImageURL = self.loadRandomProfileImage(sexOfPerson: "Man")
+                }
+            }}
+        )
+        
         contacts.append(contact)
         self.tableView.reloadData()
     }

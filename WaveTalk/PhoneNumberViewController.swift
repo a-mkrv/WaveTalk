@@ -13,12 +13,14 @@ import Foundation
 class PhoneNumberViewController: UIViewController {
     
     @IBOutlet weak var numberTextField: UITextField!
+    var phoneNumber: String = ""
     var delegate: ProfileSettingsProtocol?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        numberTextField.text = phoneNumber
         let rightAddBarButtonItem: UIBarButtonItem = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.savePhoneNumber))
         self.navigationItem.setRightBarButton(rightAddBarButtonItem, animated: true)        
     }

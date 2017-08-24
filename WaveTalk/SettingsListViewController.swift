@@ -34,9 +34,10 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
         let tabBarVC = self.tabBarController  as! MainUserTabViewController
         
         // After registration it crashes
+        print(tabBarVC.myProfile.profileImageURL!)
         photoImage.loadImageUsingCacheWithUrlString(urlString: tabBarVC.myProfile.profileImageURL!)
         
-        photoImage.customImageSettings(borderWidth: 1, cornerRadius: photoImage.frame.height/2, color: UIColor(red:  58/255.0, green: 153/255.0, blue: 217/255.0, alpha: 30.0/100.0).cgColor)
+        photoImage.customImageSettings(borderWidth: 1, cornerRadius: photoImage.frame.height/2)
         
         settingsSocket = tabBarVC.clientSocket
         profileSettings = tabBarVC.profileSettings
@@ -184,7 +185,7 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
             cell.selectionStyle = UITableViewCellSelectionStyle.none;
             cell.isUserInteractionEnabled = false
         } else if cell.nameOfSetting!.text == "Log Out" {
-            cell.nameOfSetting!.textColor = UIColor(red:  229/255.0, green: 77/255.0, blue: 66/255.0, alpha: 80.0/100.0)
+            cell.nameOfSetting!.textColor = UIColor(red:  150/255.0, green: 75/255.0, blue: 75/255.0, alpha: 100.0/100.0)
             
         }
         return cell

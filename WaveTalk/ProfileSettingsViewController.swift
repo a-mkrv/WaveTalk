@@ -68,6 +68,7 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
             case 1:
                 let phoneNumberViewController = self.storyboard?.instantiateViewController(withIdentifier: "phonenumberVC") as! PhoneNumberViewController
                 phoneNumberViewController.delegate = self
+                phoneNumberViewController.phoneNumber = profileSettings.phoneNumber
                 self.navigationController?.pushViewController(phoneNumberViewController, animated: true)
                 
                 break
@@ -181,7 +182,7 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
     
     
     func setPhoneNumber(newValue: String) {
-        phoneLabel.text = newValue
+        phoneLabel.text = "+" + newValue
         self.profileSettings.phoneNumber = newValue
         
         updateUserInfoInDB()

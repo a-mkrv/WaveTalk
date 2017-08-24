@@ -33,7 +33,7 @@ class StatusViewController: UIViewController, UITextFieldDelegate, UITableViewDe
             }
         }
         
-        if selectedIndex == nil {
+        if selectedIndex != nil {
             ownStatusInput.text = curStatus
         }
         

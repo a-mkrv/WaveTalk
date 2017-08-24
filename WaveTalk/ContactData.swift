@@ -12,12 +12,12 @@ class Contact: NSObject {
     var username: String?
     var phoneNumber_or_Email: String?
     var lastPresenceTime: String?
+    var privateKey: String?
     var profileImageURL: String?
     var notifications: Bool?
     var sex: String?
     var status: String?
     var pubKey: String?
-    var privateKey: String?
     var id: String?
     
 //    init(userName: String, lastMessage: String, lastPresenceTime: String = "...", phoneNumber: String, photoImage: String) {

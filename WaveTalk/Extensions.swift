@@ -106,7 +106,6 @@ extension UIImageView {
     
     func loadImageUsingCacheWithUrlString(urlString : String) {
         
-        return
         self.image = nil
         
         // check cache for image
@@ -123,17 +122,17 @@ extension UIImageView {
                     return
                 }
             }
-        } //else {
-            //if let cacheImage = imageCache.object(forKey: urlString as AnyObject) as? UIImage {
-            ///    self.image = cacheImage
-            //    return
-           // }
-        //}
+        } else {
+            if let cacheImage = imageCache.object(forKey: urlString as AnyObject) as? UIImage {
+                self.image = cacheImage
+                return
+            }
+        }
         
         // otherwise
         
         let url = NSURL(string: urlString)
-        let request = NSMutableURLRequest(url: url as! URL)
+        let request = NSMutableURLRequest(url: url! as URL)
         
         URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
             
