@@ -23,7 +23,6 @@ class UserNameViewController: UIViewController, UITextFieldDelegate {
         
         usernameTextField.delegate = self
         usernameTextField.text = userName
-        usernameTextField.setBorderBottom()
     }
     
     

@@ -13,10 +13,10 @@ import SkyFloatingLabelTextField
 // Text Field
 
 extension UITextField {
-    func setBorderBottom(_ colorBorder: CGColor = UIColor(red: 80/255.0, green: 114/255.0, blue: 153/255.0, alpha: 100.0/100.0).cgColor, widthBorder : CGFloat = 1.0) {
+    func setBorderBottom(_ colorBorder: CGColor = UIColor.getColorBorder(), widthBorder : CGFloat = 1.0, backColor : UIColor = UIColor.clear) {
         
         self.borderStyle = UITextBorderStyle.none
-        self.backgroundColor = UIColor.clear
+        self.backgroundColor = backColor
         
         let borderBottom = CALayer()
         let width = widthBorder
@@ -106,6 +106,7 @@ extension UIImageView {
     
     func loadImageUsingCacheWithUrlString(urlString : String) {
         
+        return
         self.image = nil
         
         // check cache for image
@@ -153,4 +154,26 @@ extension UIImageView {
         }).resume()
         
     }
+    
+    
+    func customImageSettings(borderWidth: CGFloat = 1.5, cornerRadius: CGFloat, color: CGColor = UIColor.getColorBorder()) {
+        
+        self.clipsToBounds = true
+        self.layer.borderColor = color
+        self.layer.borderWidth = borderWidth
+        self.layer.backgroundColor = UIColor.white.cgColor
+        self.layer.cornerRadius = cornerRadius
+        self.layer.masksToBounds = true
+    }
+}
+
+
+//////////////////////////////////////////////
+// UI Color
+extension UIColor {
+    
+    class func getColorBorder() -> CGColor {
+        return UIColor(red: 80/255.0, green: 114/255.0, blue: 153/255.0, alpha: 100.0/100.0).cgColor
+    }
+    
 }

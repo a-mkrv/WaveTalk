@@ -52,11 +52,8 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
     
     func initUI() {
         self.userProfilePhoto.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action:
-            #selector(loadProfilePhotos(_:))
-            )
+            #selector(loadProfilePhotos(_:)))
         )
-        let colorBorder = UIColor(red: 80/255.0, green: 114/255.0, blue: 153/255.0, alpha: 100.0/100.0).cgColor
-        
         
         pickImageController.delegate = self
         pickImageController.allowsEditing = true
@@ -70,11 +67,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
         passwordField.setBorderBottom()
         
         userProfilePhoto.isUserInteractionEnabled = true
-        userProfilePhoto.layer.cornerRadius = userProfilePhoto.frame.size.width/2.0
-        userProfilePhoto.clipsToBounds = true
-        userProfilePhoto.layer.borderWidth = 1.5
-        userProfilePhoto.layer.borderColor = colorBorder
-        userProfilePhoto.layer.backgroundColor = UIColor.white.cgColor
+        userProfilePhoto.customImageSettings(cornerRadius: userProfilePhoto.frame.size.width/2.0)
     }
     
     
@@ -185,7 +178,6 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
             paswd = validData(inputField: passwordField, subTitle: "\nPassword must be greater\n than 6 characters", minLength: 6)
         }
         
-        //TODO: Change the registration process - to make sure the phone number (add a field) and change emeyl binding (optional)
         if (login != "" && email != "" && paswd != "") {
             let dataSet = (login, email, paswd)
             

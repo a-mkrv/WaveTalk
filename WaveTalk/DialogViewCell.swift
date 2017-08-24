@@ -22,7 +22,7 @@ class DialogViewCell: UITableViewCell {
         didSet {
             var youText = ""
             var myMutableString = NSMutableAttributedString()
-            let myAppColor = UIColor(red: 80/255.0, green: 114/255.0, blue: 153/255.0, alpha: 100.0/100.0)
+            let myAppColor = UIColor.getColorBorder()
             
             if message?.from_to == "To" {
                 youText = "You: "

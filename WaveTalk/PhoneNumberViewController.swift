@@ -12,7 +12,6 @@ import Foundation
 
 class PhoneNumberViewController: UIViewController {
     
-    @IBOutlet weak var codeTextField: UITextField!
     @IBOutlet weak var numberTextField: UITextField!
     var delegate: ProfileSettingsProtocol?
     
@@ -21,34 +20,18 @@ class PhoneNumberViewController: UIViewController {
         super.viewDidLoad()
         
         let rightAddBarButtonItem: UIBarButtonItem = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.savePhoneNumber))
-        self.navigationItem.setRightBarButton(rightAddBarButtonItem, animated: true)
-        
-        codeTextField.setBorderBottom()
-        numberTextField.setBorderBottom()
+        self.navigationItem.setRightBarButton(rightAddBarButtonItem, animated: true)        
     }
     
     
     func savePhoneNumber(sender:UIButton) {
-        delegate?.setPhoneNumber(newValue: codeTextField.text! + numberTextField.text!)
+        delegate?.setPhoneNumber(newValue: numberTextField.text!)
         _ = navigationController?.popViewController(animated: true)
     }
     
+    
     @IBAction func setCodeBrackets(_ sender: UITextField) {
         
-        // FIXME:  Correct input code and number
-        
-        if ((codeTextField.text?.characters.count)! > 1) {
-            //var str: String = codeTextField.text!
-            //let lastCharacter = str[str.index(before: str.endIndex)]
-            
-            //str.remove(at: str.index(before: (str.endIndex)))
-            //str.remove(at: str.index(before: (str.endIndex)))
-            //str.append(lastCharacter)
-            
-            //codeTextField.text = str + ")"
-        } else {
-            //codeTextField.text = "(" + codeTextField.text! + ")"
-        }
     }
     
     override func didReceiveMemoryWarning() {

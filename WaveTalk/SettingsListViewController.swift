@@ -23,6 +23,7 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
     var settingsSocket = TCPSocket()
     var notificationSettings = NotificationSettings()
     var profileSettings = ProfileSettings()
+    var isUpp = false
     
     let userDefaults = UserDefaults.standard
     let parameters = ["My Profile",  "Notifications", "Calls & Messages", "Privacy", "Media", "", "About", "Log Out"]
@@ -34,13 +35,8 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
         
         // After registration it crashes
         photoImage.loadImageUsingCacheWithUrlString(urlString: tabBarVC.myProfile.profileImageURL!)
-        //
-        photoImage.layer.borderWidth = 1
-        photoImage.layer.masksToBounds = false
-        photoImage.layer.borderColor = UIColor(red:  58/255.0, green: 153/255.0, blue: 217/255.0, alpha: 30.0/100.0).cgColor
         
-        photoImage.layer.cornerRadius = photoImage.frame.height/2
-        photoImage.clipsToBounds = true
+        photoImage.customImageSettings(borderWidth: 1, cornerRadius: photoImage.frame.height/2, color: UIColor(red:  58/255.0, green: 153/255.0, blue: 217/255.0, alpha: 30.0/100.0).cgColor)
         
         settingsSocket = tabBarVC.clientSocket
         profileSettings = tabBarVC.profileSettings
@@ -53,7 +49,7 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
         super.viewWillAppear(animated)
         
         //(self.tabBarController  as! MainUserTabViewController).finishReadingQueue()
-        //fetchUserAndSetupNavigationBarTitle()
+        fetchUserAndSetupNavigationBarTitle()
         //(self.tabBarController  as! MainUserTabViewController).startReadingQueue(for: settingsSocket.client)
     }
     
@@ -61,27 +57,40 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
     func updateMyInfo() {
         firstLastName.text = profileSettings.firstName + " " + profileSettings.lastName
         
-        if (firstLastName.text == " ") {
-            firstLastName.text = "First / Last Name"
+        if (firstLastName.text == " ") && (!isUpp) {
             firstLastName.textColor = UIColor.lightGray
-        } else {
+            firstLastName.isHidden = true
+            userName.frame.origin.y -= 30
+            firstLastName.isHidden = true
+            isUpp = true
+        } else if (firstLastName.text != " ") && isUpp {
             firstLastName.textColor = .black
+            userName.frame.origin.y += 30
+            firstLastName.isHidden = false
+            isUpp = false
         }
         
         userName.text = "@" + profileSettings.userName
-        phoneNumber.text = "+" + profileSettings.phoneNumber
+        
+        if (profileSettings.phoneNumber == "-") || (profileSettings.phoneNumber == "") {
+            phoneNumber.isHidden = true
+            phoneNumber.text = ""
+        } else {
+            phoneNumber.isHidden = false
+            phoneNumber.text = "+" + profileSettings.phoneNumber
+        }
     }
     
     
     func setProfileImage() {
-//        FIRDatabase.database().reference().child("users").child(profileSettings.userName).observeSingleEvent(of: .value, with: { (snapshot) in
-//            if let dictionary = snapshot.value as? [String : Any] {
-//                for each in dictionary {
-//                    self.profileSettings.profileImageURL = each.1 as? String
-//                    self.photoImage.loadImageUsingCacheWithUrlString(urlString: each.1 as! String)
-//                }
-//            }
-//        })
+        //        FIRDatabase.database().reference().child("users").child(profileSettings.userName).observeSingleEvent(of: .value, with: { (snapshot) in
+        //            if let dictionary = snapshot.value as? [String : Any] {
+        //                for each in dictionary {
+        //                    self.profileSettings.profileImageURL = each.1 as? String
+        //                    self.photoImage.loadImageUsingCacheWithUrlString(urlString: each.1 as! String)
+        //                }
+        //            }
+        //        })
         
         if (myProfile.profileImageURL?.characters.count)! > 2 {
             photoImage.loadImageUsingCacheWithUrlString(urlString: myProfile.profileImageURL!)

@@ -29,18 +29,21 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        UIApplication.shared.statusBarStyle = .default
-
         authSocket.connect()
-        
-        let colorBorder = UIColor(red: 80/255.0, green: 114/255.0, blue: 153/255.0, alpha: 100.0/100.0).cgColor
         
         self.loginInput.delegate = self
         self.passwordInput.delegate = self
         
-        loginInput.setBorderBottom(colorBorder)
-        passwordInput.setBorderBottom(colorBorder)
-                
+        initUI()
+    }
+    
+    
+    func initUI() {
+        UIApplication.shared.statusBarStyle = .default
+        
+        loginInput.setBorderBottom(UIColor.getColorBorder())
+        passwordInput.setBorderBottom(UIColor.getColorBorder())
+        
         if previewAnimated {
             self.logoImage.frame.origin.y -= 200
             self.wavesImage.frame.origin.y += 200
@@ -51,11 +54,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-//    override var preferredStatusBarStyle: UIStatusBarStyle {
-//        navigationController?.navigationBar.barStyle = .black
-//    }
-
-        
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -105,7 +104,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             case .success:
                 return client.readResponse()
             case .failure(let error):
-                print(error)
+                Logger.error(msg: error as AnyObject)
                 return nil
             }
         } else {
@@ -142,17 +141,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 authSocket.disconnect()
                 
                 userDefaults.set(self.loginInput.text, forKey: "myUserName")
-                userDefaults.set(bodyOfResponse, forKey: "myPublicKey")
                 
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "tabBarBoard")
                 self.present(vc!, animated: true, completion: nil)
                 break
                 
             default:
-                print("Auth Error - Bad response")
+                Logger.error(msg: "Auth Error - Bad response" as AnyObject)
             }
         } else {
-            print("Auth Error - Bad request")
+            Logger.error(msg: "Auth Error - Bad request" as AnyObject)
         }
     }
     

@@ -33,18 +33,41 @@ class OptionalInfoViewController: UIViewController {
     }
 
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.firstNameInput.resignFirstResponder()
+        self.lastNameInput.resignFirstResponder()
+        self.ageInput.resignFirstResponder()
+        self.cityInput.resignFirstResponder()
+
+        return true
+    }
+    
+    
     func initUI() {
-        firstNameInput.setBorderBottom()
-        firstNameInput.text = profileSettings.firstName
+        firstNameInput.setBorderBottom(backColor: UIColor.white)
+        if profileSettings.firstName != "-" {
+            firstNameInput.text = profileSettings.firstName
+        }
         
-        lastNameInput.setBorderBottom()
-        lastNameInput.text = profileSettings.lastName
+        lastNameInput.setBorderBottom(backColor: UIColor.white)
+        if profileSettings.lastName != "-" {
+            lastNameInput.text = profileSettings.lastName
+        }
         
-        ageInput.setBorderBottom()
-        ageInput.text = profileSettings.age
+        ageInput.setBorderBottom(backColor: UIColor.white)
+        if profileSettings.age != "0" {
+            ageInput.text = profileSettings.age
+        }
         
-        cityInput.setBorderBottom()
-        cityInput.text = profileSettings.city
+        cityInput.setBorderBottom(backColor: UIColor.white)
+        if profileSettings.city != "Empty" {
+            cityInput.text = profileSettings.city
+        }
         
         if profileSettings.gender == "Man" {
             self.genderCheckBox.selectedSegmentIndex = 0

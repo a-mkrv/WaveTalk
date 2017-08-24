@@ -37,7 +37,6 @@ class StatusViewController: UIViewController, UITextFieldDelegate, UITableViewDe
             ownStatusInput.text = curStatus
         }
         
-        ownStatusInput.setBorderBottom()
         statusTableView.delegate = self
         statusTableView.dataSource = self
     }
