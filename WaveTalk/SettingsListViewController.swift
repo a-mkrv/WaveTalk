@@ -19,7 +19,6 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var settingsList: UITableView!
     @IBOutlet weak var photoImage: UIImageView!
     
-    var log = Logger()
     var myProfile = Contact()
     var settingsSocket = TCPSocket()
     var notificationSettings = NotificationSettings()
@@ -133,10 +132,10 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
                 break
                 
             default:
-                log.error(msg: "Auth Error - Bad response" as AnyObject)
+                Logger.error(msg: "Auth Error - Bad response" as AnyObject)
             }
         } else {
-            log.error(msg: "Auth Error - Bad request" as AnyObject)
+            Logger.error(msg: "Auth Error - Bad request" as AnyObject)
         }
     }
     
@@ -144,7 +143,7 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
         var request = "GETI"
         
         guard let myUserName = myProfile.username else {
-            log.error(msg: "UserName is Empty" as AnyObject)
+            Logger.error(msg: "UserName is Empty" as AnyObject)
             return nil
         }
         
@@ -154,7 +153,7 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
         case .success:
             return client.readResponse()
         case .failure(let error):
-            log.error(msg: error as AnyObject)
+            Logger.error(msg: error as AnyObject)
             return nil
         }
     }

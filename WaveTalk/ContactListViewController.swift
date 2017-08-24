@@ -17,7 +17,6 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
     var searchController: UISearchController!
     var searchContacts = [Contact]()
     var contacts = [Contact]()
-    var log = Logger()
     
     var clientSocket = TCPSocket()
     let userDefaults = UserDefaults.standard
@@ -78,12 +77,12 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
                     parseResponseData(response: bodyOfResponse)
                     break
                 case "NOFL":
-                    log.debug(msg: "Friend List is empty" as AnyObject)
+                    Logger.debug(msg: "Friend List is empty" as AnyObject)
                 default:
-                    log.error(msg: "Auth Error - Bad response" as AnyObject)
+                    Logger.error(msg: "Auth Error - Bad response" as AnyObject)
                 }
             } else {
-                log.error(msg: "Auth Error - Bad request" as AnyObject)
+                Logger.error(msg: "Auth Error - Bad request" as AnyObject)
             }
         }
     }
@@ -176,7 +175,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
             case .success:
                 return client.readResponse()
             case .failure(let error):
-                log.error(msg: error as AnyObject)
+                Logger.error(msg: error as AnyObject)
                 return nil
             }
         } else {

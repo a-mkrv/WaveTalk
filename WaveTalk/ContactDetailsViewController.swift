@@ -17,7 +17,6 @@ class ContactDetailsViewController: UITableViewController {
     @IBOutlet weak var phoneLabel: UILabel!
     @IBOutlet weak var notificationStatus: UISwitch!
     
-    var log = Logger()
     var contact = Contact()
     var detailsSocket = TCPSocket()
     var myUserName: String?
@@ -67,12 +66,12 @@ class ContactDetailsViewController: UITableViewController {
                 parseResponseData(response: bodyOfResponse)
                 break
             case "EMPT":
-                log.debug(msg: "Chat List is empty" as AnyObject)
+                Logger.debug(msg: "Chat List is empty" as AnyObject)
             default:
-                log.error(msg: "Auth Error - Bad response" as AnyObject)
+                Logger.error(msg: "Auth Error - Bad response" as AnyObject)
             }
         } else {
-            log.error(msg: "Auth Error - Bad request" as AnyObject)
+            Logger.error(msg: "Auth Error - Bad request" as AnyObject)
         }
     }
     
@@ -84,7 +83,7 @@ class ContactDetailsViewController: UITableViewController {
             case .success:
                 return client.readResponse()
             case .failure(let error):
-                log.error(msg: error as AnyObject)
+                Logger.error(msg: error as AnyObject)
                 return nil
             }
         } else {

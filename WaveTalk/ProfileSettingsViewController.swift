@@ -20,7 +20,6 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
     var pickImageController = UIImagePickerController()
     var profileSettings: ProfileSettings!
     var profileSocket = TCPSocket()
-    var log = Logger()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -152,9 +151,9 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
         
         switch profileSocket.client.send(string: sendUpInfo) {
         case .success:
-            log.debug(msg: "Success update" as AnyObject)
+            Logger.debug(msg: "Success update" as AnyObject)
         case .failure(let error):
-            log.error(msg: error as AnyObject)
+            Logger.error(msg: error as AnyObject)
         }
     }
     

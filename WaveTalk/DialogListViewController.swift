@@ -13,7 +13,6 @@ class DialogListViewController: UITableViewController {
     
     var messagesDictionary = [String : [Message]] ()
     var dialogSocket = TCPSocket()
-    var log = Logger()
     var myUserName: String?
     var myURLImage: String?
     
@@ -64,12 +63,12 @@ class DialogListViewController: UITableViewController {
                 parseResponseData(response: bodyOfResponse)
                 break
             case "EMPT":
-                log.debug(msg: "Dialog List is empty" as AnyObject)
+                Logger.debug(msg: "Dialog List is empty" as AnyObject)
             default:
-                log.error(msg: "Auth Error - Bad response" as AnyObject)
+                Logger.error(msg: "Auth Error - Bad response" as AnyObject)
             }
         } else {
-            log.error(msg: "Auth Error - Bad request" as AnyObject)
+            Logger.error(msg: "Auth Error - Bad request" as AnyObject)
         }
     }
     
@@ -81,7 +80,7 @@ class DialogListViewController: UITableViewController {
             case .success:
                 return client.readResponse()
             case .failure(let error):
-                log.error(msg: error as AnyObject)
+                Logger.error(msg: error as AnyObject)
                 return nil
             }
         } else {

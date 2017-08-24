@@ -207,46 +207,45 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
                             storageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
                                 
                                 if error != nil {
-                                    print(error!)
+                                    Logger.error(msg: error! as AnyObject)
                                     return
                                 }
                                 
                                 if let profileImageURL = metadata?.downloadURL()?.absoluteString {
-                                    let values = ["profileImageURL" : profileImageURL]
-                                    self.registerUserIntoWithUI(username: login, values: values as [String : AnyObject])
+                                    let rsaPrivateKey = String(RSACrypt.privateKey.0) + " " + String(RSACrypt.privateKey.1)
+                                    let values = ["profileImageURL" : profileImageURL, "privateKey" : rsaPrivateKey]
+                                    
+                                    self.registerUserInFirebase(username: login, values: values as [String : NSString])
                                 }
                             })
                         }
                     })
-                    showSuccessAlert()
-                    let rsaPrivateKey = RSACrypt.privateKey // D + Module
-                    //FIXME: userDefaults.set(rsaPrivateKey, forKey: "PrivateKeyRSA")
                     
+                    showSuccessAlert()
                     regSocket.disconnect()
                     break
                     
                 default:
-                    print("Registration Error - Bad response")
+                    Logger.error(msg: "Registration Error - Bad response" as AnyObject)
                 }
             } else {
-                print("Registration Error - Bad request")
+                Logger.error(msg: "Registration Error - Bad request" as AnyObject)
             }
         }
     }
     
     
-    func registerUserIntoWithUI(username: String, values: [String: AnyObject]) {
-        
-        //Use Firebase
+    func registerUserInFirebase(username: String, values: [String: NSString]) {
         let ref = FIRDatabase.database().reference(fromURL: "https://wavetalk-d3236.firebaseio.com/")
         let userReference = ref.child("users").child(username)
         
         userReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
             if err != nil {
-                print("Error here: ", err!)
+                Logger.error(msg: "Firebase Registration Error" as AnyObject)
+                Logger.error(msg: err as AnyObject)
                 return
             } else {
-                print("Saved user info into Firebase DB")
+                Logger.debug(msg: "Saved user info into Firebase DB" as AnyObject)
             }
         })
     }
@@ -265,7 +264,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
         case .success:
             return client.readResponse()
         case .failure(let error):
-            print(error)
+            Logger.error(msg: error as AnyObject)
             return nil
         }
     }
