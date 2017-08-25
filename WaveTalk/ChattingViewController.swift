@@ -10,6 +10,7 @@ import UIKit
 import JSQMessagesViewController
 import FirebaseDatabase
 import FirebaseAuth
+import BigInt
 
 class ChattingViewController: JSQMessagesViewController {
     
@@ -18,19 +19,18 @@ class ChattingViewController: JSQMessagesViewController {
     var messages = [JSQMessage] ()
     var user = Contact()
     var rsaCrypt = RSACrypt()
-    let userDefaults = UserDefaults.standard
+    private var pubKey = Key(0, 0)
+    private var myPublicKey = Key(0, 0)
+    private var myPrivateKey = Key(0, 0)
 
     lazy var outgoingBubbleImageView: JSQMessagesBubbleImage = self.setupOutgoingBubble()
     lazy var incomingBubbleImageView: JSQMessagesBubbleImage = self.setupIncomingBubble()
     
     var myURLImage: String?
     var userImage: UIImage?
-    var myPublicKey: String?
     var setUserTitle: String? {
         didSet {
             self.navigationItem.title = setUserTitle
-            
-            observeMessages()
         }
     }
     
@@ -44,15 +44,20 @@ class ChattingViewController: JSQMessagesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let tabBarVC = self.tabBarController as! MainUserTabViewController
+
+        var separateKey = (tabBarVC.myProfile.pubKey?.components(separatedBy: " "))!
+        myPublicKey = (modulus: BigUInt(separateKey[0])!, exponent: BigUInt(separateKey[1])!)
+        
+        separateKey = (tabBarVC.myProfile.privateKey?.components(separatedBy: " "))!
+        myPrivateKey = (modulus: BigUInt(separateKey[0])!, exponent: BigUInt(separateKey[1])!)
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        myPublicKey = userDefaults.object(forKey: "myPublicKey") as? String
-        
-        let tabBarVC = self.tabBarController  as! MainUserTabViewController
+        let tabBarVC = self.tabBarController as! MainUserTabViewController
         chatSocket = tabBarVC.clientSocket
         
         for users in tabBarVC.contacts {
@@ -62,6 +67,10 @@ class ChattingViewController: JSQMessagesViewController {
             }
         }
         
+        var separateKey = (user.pubKey?.components(separatedBy: " "))!
+        pubKey = (modulus: BigUInt(separateKey[0])!, exponent: BigUInt(separateKey[1])!)
+        observeMessages()
+        
         let image = UIImage(named: "background.png")
         let imgBackground:UIImageView = UIImageView(frame: self.view.bounds)
         imgBackground.image = image
@@ -69,10 +78,13 @@ class ChattingViewController: JSQMessagesViewController {
         imgBackground.clipsToBounds = true
         self.collectionView?.backgroundView = imgBackground
     }
-    
+
     
     func observeMessages() {
         for msg in chatMessages {
+            let cryptMsg = RSACrypt.encrypt(BigUInt(msg.text!)!, key: myPrivateKey)
+            msg.text = String(data: cryptMsg.serialize(), encoding: String.Encoding.utf8)
+            
             messages.append(JSQMessage(senderId: msg.from_to, displayName: senderDisplayName, text: msg.text))
         }
         
@@ -102,22 +114,18 @@ class ChattingViewController: JSQMessagesViewController {
     
     
     func sendToServer(message: String) {
-        let myPubKey = (myPublicKey?.components(separatedBy: " "))!
-        let userPubKey = (user.pubKey?.components(separatedBy: " "))!
-        
-        let encryptMsgForMe = rsaCrypt.encodeText(text: message, _e: Int(myPubKey[0])!, _module: Int(myPubKey[1])!)
-        
-        let encryptMsgForUser = rsaCrypt.encodeText(text: message, _e: Int(userPubKey[0])!, _module: Int(userPubKey[1])!)
+        let encryptMsgForMe = RSACrypt.encrypt(BigUInt(message.data(using: String.Encoding.utf8)!), key: myPublicKey)
+        let encryptMsgForUser = RSACrypt.encrypt(BigUInt(message.data(using: String.Encoding.utf8)!), key: pubKey)
         
         var request = "MESG" + myUserName! + " /s " + setUserTitle! + " /s "
-        request.append(encryptMsgForMe + " /s " + encryptMsgForUser)
+        request.append(String(encryptMsgForMe) + " /s " + String(encryptMsgForUser))
         
         switch chatSocket.client.send(string: request) {
         case .success:
-            print("Sent message.")
+            Logger.debug(msg: "Sent message." as AnyObject)
             break
         case .failure(let error):
-            print(error)
+            Logger.error(msg: error as AnyObject)
         }
     }
     

@@ -57,6 +57,8 @@ class ContactDetailsViewController: UITableViewController {
     
     
     func loadChatHistoryPerUser() {
+        Logger.mark()
+        
         if let response = sendRequest(using: detailsSocket) {
             var bodyOfResponse: String = ""
             let head = response.getHeadOfResponse(with: &bodyOfResponse)
@@ -77,6 +79,8 @@ class ContactDetailsViewController: UITableViewController {
     
     
     private func sendRequest(using client: TCPSocket) -> String? {
+        Logger.mark()
+        
         if myUserName != nil {
             
             switch client.client.send(string: "LCPU" + myUserName! + " /s " + contact.username!) {
@@ -93,6 +97,8 @@ class ContactDetailsViewController: UITableViewController {
     
     
     func parseResponseData(response: String) {
+        Logger.mark()
+        
         let res = response
         var messages = res.components(separatedBy: " /pm ")
         messages.remove(at: 0) // empty string - [0]
@@ -131,7 +137,7 @@ class ContactDetailsViewController: UITableViewController {
         }
         
         delegate?.updateNotificationState(username: contact.username!, state: contact.notifications!)
-        detailsSocket.client.send(string: "UPNU" + myUserName! + " /s " + contact.username! + " /s " + state)
+        _ = detailsSocket.client.send(string: "UPNU" + myUserName! + " /s " + contact.username! + " /s " + state)
     }
     
     
@@ -145,6 +151,7 @@ class ContactDetailsViewController: UITableViewController {
             destinationController.myUserName = myUserName
             destinationController.setUserTitle = contact.username
             
+            self.userMessages.removeAll()
             navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         }
     }
