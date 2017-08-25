@@ -12,7 +12,10 @@ import SwiftSocket
 class TCPSocket : AnyObject {
     var client: TCPClient!
     
-    func connect(host: String = "127.0.0.1", port: String = "55155") {
+    static let localhost: String = "127.0.0.1"
+    static let remote: String = ""
+    
+    func connect(host: String = localhost, port: String = "55155") {
         client = TCPClient(address: host, port: Int32(port)!)
         
         if (client.connect(timeout: 1).isSuccess) {

@@ -44,7 +44,46 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
         
         checkUserIsLoggedIn()
         (self.tabBarController  as! MainUserTabViewController).contacts = self.contacts
+        
+        
+        DispatchQueue.global(qos: .default).async {
+            self.getMyKeys()
+        }
+        
         tabBarVC.startReadingQueue(for: clientSocket.client)
+    }
+    
+    
+    func getMyKeys() {
+        let request = "GETK".appending(userName!)
+        var response: String!
+        var bodyOfResponse: String = ""
+        
+        switch clientSocket.client.send(string: request) {
+        case .success:
+            response = clientSocket.readResponse()
+        case .failure(let error):
+            Logger.error(msg: error as AnyObject)
+        }
+        
+        guard response != nil else {
+            return
+        }
+        
+        switch(response.getHeadOfResponse(with: &bodyOfResponse)) {
+        case "KEYN":
+            Logger.error(msg: "Public key was not received" as AnyObject)
+        case "KEYP":
+            myProfile.pubKey = bodyOfResponse
+        default: break
+        }
+        
+        FIRDatabase.database().reference().child("users").child(userName!).observe(.value, with: { (snapshot) in
+            if let dictionary = snapshot.value as? [String : Any] {
+                if let privateKey = dictionary["privateKey"] as? String {
+                    self.myProfile.privateKey = privateKey
+                }
+            }})
     }
     
     
@@ -203,53 +242,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
         
         if signIn == "userIsEmpty" || signIn == nil {
             perform(#selector(handleLogout), with: nil, afterDelay: 0)
-        } else if signIn == "Admin" {
-            print("ADMIN")
-            myProfile.username = signIn
-            myProfile.profileImageURL = "88"
-            
-            let user = Contact()
-            user.username = "Alex"
-            user.sex = "Man"
-            user.pubKey = "333 111"
-            user.notifications = false
-            user.lastPresenceTime = "Online"
-            user.phoneNumber_or_Email = "+79103330099"
-            user.status = "All right!"
-            var user_avatar = "33"
-            user.profileImageURL = user_avatar
-            let downloadedImage = UIImage(named: user_avatar)
-            
-            let key = "#" + "Alex" + " " + user_avatar
-            imageCache.setObject(downloadedImage!, forKey: String(key) as AnyObject)
-            
-            self.contacts.append(user)
-            
-            
-            let user1 = Contact()
-            user1.username = "Diana"
-            user1.sex = "Woman"
-            user1.pubKey = "333 111"
-            user1.notifications = true
-            user1.lastPresenceTime = "20.06.2017 21:22"
-            user1.phoneNumber_or_Email = "+79106501500"
-            user1.status = "Всем привет!"
-            var user_avatar1 = "44"
-            user1.profileImageURL = user_avatar1
-            let downloadedImage1 = UIImage(named: user_avatar1)
-            
-            let key1 = "#" + "Diana" + " " + user_avatar1
-            imageCache.setObject(downloadedImage1!, forKey: String(key1) as AnyObject)
-            
-            self.contacts.append(user1)
-
-
         } else {
-            if let myPrivateKey = userDefaults.object(forKey: "PrivateKeyRSA") as? String {
-                //myProfile.pubKey =
-                myProfile.privateKey = myPrivateKey
-            }
-            
             userName = signIn!
             myProfile.username = userName
             
@@ -427,6 +420,12 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
     }
     
     
+    func delay(_ delay:Double, closure:@escaping ()->()) {
+        let when = DispatchTime.now() + delay
+        DispatchQueue.main.asyncAfter(deadline: when, execute: closure)
+    }
+    
+    
     func addNewContact(contact: Contact) {
         
         FIRDatabase.database().reference().child("users").child(contact.username!).observe(.value, with: { (snapshot) in
@@ -439,8 +438,10 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
             }}
         )
         
-        contacts.append(contact)
-        self.tableView.reloadData()
+        delay(0.5) {
+            self.contacts.append(contact)
+            self.tableView.reloadData()
+        }
     }
     
     
