@@ -66,4 +66,4 @@ Currently implemented all the basic functionality of the messenger. Views: Welco
 <img src="https://user-images.githubusercontent.com/12527666/29726435-610d27ba-89d8-11e7-9963-9658dd4ed0ee.png" width="750">
 
 ##### Details of user from userlist (Contacts), Dialogues
-<img src="https://user-images.githubusercontent.com/12527666/29726561-e138a45a-89d8-11e7-8954-d085be262d7f.png" width="750">
+<img src="https://user-images.githubusercontent.com/12527666/29728884-81ad0102-89e2-11e7-87dc-6e72775d4455.png" width="750">
