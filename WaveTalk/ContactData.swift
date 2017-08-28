@@ -12,19 +12,17 @@ class Contact: NSObject {
     var username: String?
     var phoneNumber_or_Email: String?
     var lastPresenceTime: String?
-    var privateKey: String?
     var profileImageURL: String?
     var notifications: Bool?
     var sex: String?
     var status: String?
-    var pubKey: String?
+    var pubKey: Key?
+    var privateKey: Key?
     var id: String?
-    
-//    init(userName: String, lastMessage: String, lastPresenceTime: String = "...", phoneNumber: String, photoImage: String) {
-//        self.userName = userName
-//        self.lastMessage = lastMessage
-//        self.lastPresenceTime = lastPresenceTime
-//        self.phoneNumber = phoneNumber
-//        self.photoImage = photoImage
-//    }
 }
+
+class FirebaseData: NSObject {
+    var privateKey: String?
+    var profileImageURL: String?
+}
+

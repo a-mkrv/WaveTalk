@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import BigInt
 
 class DialogViewCell: UITableViewCell {
     
@@ -17,39 +18,37 @@ class DialogViewCell: UITableViewCell {
     @IBOutlet weak var timemessageLabel: UILabel!
     
     var dialogUsers = [Contact]()
+    var key: Key!
     
     var message: Message? {
         didSet {
             var youText = ""
+            var cellText = ""
             var myMutableString = NSMutableAttributedString()
-            let myAppColor = UIColor.getColorBorder()
+            let youColor = UIColor(red: 80/255.0, green: 114/255.0, blue: 153/255.0, alpha: 100.0/100.0)
             
             if message?.from_to == "To" {
                 youText = "You: "
             }
-            //FIXME
-            //Change govnokod =(
-            if (message?.text?.characters.count)! > 23 {
-                let cellText = youText + (message?.text?.cutString(length: 23))! + "..."
-                
-                myMutableString = NSMutableAttributedString(string: cellText, attributes: [NSFontAttributeName:UIFont(name: self.lastmessageLabel.font.fontName, size: 17.0)!])
-                
-                if youText != "" {
-                    myMutableString.addAttribute(NSForegroundColorAttributeName, value: myAppColor, range: NSRange(location:0,length:4))
-                }
-                self.lastmessageLabel.attributedText = myMutableString
-                
+            
+            // Remove encryption in the DialogListVC. Fix the link
+            
+            let cryptMsg = RSACrypt.encrypt(BigUInt((message?.text)!)!, key: key)
+            let decryptMsg = String(data: cryptMsg.serialize(), encoding: String.Encoding.utf8)
+            
+            if (decryptMsg?.characters.count)! > 23 {
+                cellText = youText + (decryptMsg?.cutString(length: 23))! + "..."
             } else {
-                let cellText = youText + (message?.text)!
-                
-                myMutableString = NSMutableAttributedString(string: cellText, attributes: [NSFontAttributeName:UIFont(name: self.lastmessageLabel.font.fontName, size: 17.0)!])
-                
-                if youText != "" {
-                    myMutableString.addAttribute(NSForegroundColorAttributeName, value: myAppColor, range: NSRange(location:0,length:4))
-                }
-                self.lastmessageLabel.attributedText = myMutableString
+                cellText = youText + (decryptMsg)!
             }
             
+            myMutableString = NSMutableAttributedString(string: cellText, attributes: [NSFontAttributeName:UIFont(name: self.lastmessageLabel.font.fontName, size: 17.0)!])
+            
+            if youText != "" {
+                myMutableString.addAttribute(NSForegroundColorAttributeName, value: youColor, range: NSRange(location:0,length:4))
+            }
+            
+            self.lastmessageLabel.attributedText = myMutableString
             
             self.timemessageLabel.text = timeFormat(date: (message?.messageTime)!)
             

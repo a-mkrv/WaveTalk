@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseDatabase
+import BigInt
 
 class ContactListViewController: UITableViewController, UISearchResultsUpdating, UserListProtocol {
     
@@ -74,14 +75,14 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
         case "KEYN":
             Logger.error(msg: "Public key was not received" as AnyObject)
         case "KEYP":
-            myProfile.pubKey = bodyOfResponse
+            myProfile.pubKey = bodyOfResponse.toKey()
         default: break
         }
         
         FIRDatabase.database().reference().child("users").child(userName!).observe(.value, with: { (snapshot) in
             if let dictionary = snapshot.value as? [String : Any] {
                 if let privateKey = dictionary["privateKey"] as? String {
-                    self.myProfile.privateKey = privateKey
+                    self.myProfile.privateKey = privateKey.toKey()
                 }
             }})
     }
@@ -141,7 +142,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
             let dataSet = i.components(separatedBy: " _ ")
             user.username = dataSet[0]
             user.sex = dataSet[1]
-            user.pubKey = dataSet[2]
+            user.pubKey = dataSet[2].toKey()
             (dataSet[3] == "YES") ? (user.notifications = true) : (user.notifications = false)
             user.lastPresenceTime = dataSet[4]
             user.phoneNumber_or_Email = dataSet[5]
@@ -176,14 +177,14 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
             if let dictionary = snapshot.value as? [String : Any] {
                 
                 if self.userName == snapshot.key {
-                    let user = Contact()
+                    let user = FirebaseData()
                     user.setValuesForKeys(dictionary)
                     self.myProfile.profileImageURL = user.profileImageURL
                 }
                 
                 for users in self.contacts {
                     if users.username == snapshot.key {
-                        let user = Contact()
+                        let user = FirebaseData()
                         user.setValuesForKeys(dictionary)
                         users.profileImageURL = user.profileImageURL
                     }

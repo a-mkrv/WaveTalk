@@ -63,7 +63,7 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
                 let user = Contact()
                 
                 user.username = self.requestField.text
-                user.pubKey = userData[1]
+                user.pubKey = userData[1].toKey()
                 user.lastPresenceTime = userData[2]
                 user.phoneNumber_or_Email = userData[3]
                 user.status = userData[4]

@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import BigInt
 
 class DialogListViewController: UITableViewController {
     
@@ -15,14 +16,17 @@ class DialogListViewController: UITableViewController {
     var dialogSocket = TCPSocket()
     var myUserName: String?
     var myURLImage: String?
-    
+    var myKeys = (Key(0,0), Key(0,0)) // Public, Private
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //(self.tabBarController  as! MainUserTabViewController).finishReadingQueue()
-
+        
         let tabBarVC = self.tabBarController  as! MainUserTabViewController
-
+        
+        myKeys.0 = tabBarVC.myProfile.pubKey!
+        myKeys.1 = tabBarVC.myProfile.privateKey!
+        
         dialogSocket = tabBarVC.clientSocket
         myUserName = tabBarVC.myProfile.username
         myURLImage = tabBarVC.myProfile.profileImageURL
@@ -31,11 +35,11 @@ class DialogListViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print((self.tabBarController  as! MainUserTabViewController).isCancelQueue())
+        //print((self.tabBarController  as! MainUserTabViewController).isCancelQueue())
         
-        (self.tabBarController  as! MainUserTabViewController).finishReadingQueue()
-        print((self.tabBarController  as! MainUserTabViewController).isCancelQueue())
-
+        //(self.tabBarController  as! MainUserTabViewController).finishReadingQueue()
+        //print((self.tabBarController  as! MainUserTabViewController).isCancelQueue())
+        
         loadListOfDialogues()
         
         self.tableView.backgroundColor = UIColor(red: 251/255.0, green: 250/255.0, blue: 252/255.0, alpha: 100.0/100.0)
@@ -140,10 +144,10 @@ class DialogListViewController: UITableViewController {
         
         let dialog = Array(messagesDictionary)[indexPath.row]
         cell.usernameLabel.text = dialog.key
+        cell.key = myKeys.1
         cell.message = dialog.value.last
-        
         cell.backgroundColor = UIColor(white: 1, alpha: 0.9)
-
+        
         return cell
     }
     

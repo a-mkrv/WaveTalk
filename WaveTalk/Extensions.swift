@@ -8,6 +8,7 @@
 
 import UIKit
 import SkyFloatingLabelTextField
+import BigInt
 
 //////////////////////////////////////////////
 // Text Field
@@ -73,6 +74,11 @@ extension String {
         let range = startIndex..<endIndex
         
         return self.substring(with: range)
+    }
+    
+    func toKey() -> Key {
+        var separateKey = self.components(separatedBy: " ")
+        return (modulus: BigUInt(separateKey[0])!, exponent: BigUInt(separateKey[1])!)
     }
 }
 

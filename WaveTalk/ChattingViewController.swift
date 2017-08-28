@@ -21,11 +21,11 @@ class ChattingViewController: JSQMessagesViewController {
     var rsaCrypt = RSACrypt()
     private var pubKey = Key(0, 0)
     private var myPublicKey = Key(0, 0)
-    private var myPrivateKey = Key(0, 0)
+    var myPrivateKey = Key(0, 0)
 
     lazy var outgoingBubbleImageView: JSQMessagesBubbleImage = self.setupOutgoingBubble()
     lazy var incomingBubbleImageView: JSQMessagesBubbleImage = self.setupIncomingBubble()
-    
+    var flag = false
     var myURLImage: String?
     var userImage: UIImage?
     var setUserTitle: String? {
@@ -45,18 +45,15 @@ class ChattingViewController: JSQMessagesViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let tabBarVC = self.tabBarController as! MainUserTabViewController
-
-        var separateKey = (tabBarVC.myProfile.pubKey?.components(separatedBy: " "))!
-        myPublicKey = (modulus: BigUInt(separateKey[0])!, exponent: BigUInt(separateKey[1])!)
         
-        separateKey = (tabBarVC.myProfile.privateKey?.components(separatedBy: " "))!
-        myPrivateKey = (modulus: BigUInt(separateKey[0])!, exponent: BigUInt(separateKey[1])!)
+        myPublicKey = tabBarVC.myProfile.pubKey!
+        myPrivateKey = tabBarVC.myProfile.privateKey!
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         let tabBarVC = self.tabBarController as! MainUserTabViewController
         chatSocket = tabBarVC.clientSocket
         
@@ -67,8 +64,11 @@ class ChattingViewController: JSQMessagesViewController {
             }
         }
         
-        var separateKey = (user.pubKey?.components(separatedBy: " "))!
-        pubKey = (modulus: BigUInt(separateKey[0])!, exponent: BigUInt(separateKey[1])!)
+        // FIXME
+        if flag {
+            return
+        }
+        
         observeMessages()
         
         let image = UIImage(named: "background.png")
@@ -77,6 +77,7 @@ class ChattingViewController: JSQMessagesViewController {
         imgBackground.contentMode = UIViewContentMode.scaleAspectFill
         imgBackground.clipsToBounds = true
         self.collectionView?.backgroundView = imgBackground
+        flag = true
     }
 
     
