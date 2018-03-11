@@ -30,6 +30,13 @@ class RSACrypt {
         }
     }
     
+    static func getPrivateKeys() -> String {
+        return String(privateKey.0) + " " + String(privateKey.1)
+    }
+    
+    static func getPublicKeys() -> String {
+        return String(publicKey.0) + " " + String(publicKey.1)
+    }
     
     static func generationKeys() {
         if isGenerate {

@@ -43,7 +43,7 @@
                                     <color key="titleColor" red="0.181191504" green="0.5190034509" blue="0.7032617927" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="getStarted:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Agt-J0-uqN"/>
+                                    <segue destination="qb5-oz-0dR" kind="show" id="H8Q-J9-Ddu"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -51,7 +51,6 @@
                     </view>
                     <connections>
                         <outlet property="pageDotsControl" destination="xAn-Wd-uht" id="52C-uT-ny4"/>
-                        <segue destination="qb5-oz-0dR" kind="show" identifier="ShowLogin" id="ljM-Jn-q8V"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -104,17 +103,6 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="igZ-lK-34X">
-                                <rect key="frame" x="125" y="516" width="125" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Optima-Regular" family="Optima" pointSize="30"/>
-                                <state key="normal" title="Sign Up">
-                                    <color key="titleColor" red="0.1915335953" green="0.53724908829999996" blue="0.71491414310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="signupPress:" destination="qb5-oz-0dR" eventType="touchUpInside" id="slT-rO-nvW"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" alpha="0.59999999999999998" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XrF-wA-BGR">
                                 <rect key="frame" x="86" y="356" width="203" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -123,7 +111,7 @@
                                     <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="forgotpassPress:" destination="qb5-oz-0dR" eventType="touchUpInside" id="Yts-uQ-D4c"/>
+                                    <segue destination="qj8-99-0LE" kind="show" id="E0U-Sk-HyL"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NZQ-lE-TyL">
@@ -159,6 +147,17 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="igZ-lK-34X">
+                                <rect key="frame" x="105" y="496" width="164" height="68"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Optima-Regular" family="Optima" pointSize="30"/>
+                                <state key="normal" title="Sign Up">
+                                    <color key="titleColor" red="0.1915335953" green="0.53724908829999996" blue="0.71491414310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="KoU-ec-JZ5" kind="show" id="12V-GH-rcD"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -170,8 +169,6 @@
                         <outlet property="passwordInput" destination="uUn-Ib-NNq" id="Qdt-ym-Bux"/>
                         <outlet property="signupButton" destination="igZ-lK-34X" id="nSS-gj-fr4"/>
                         <outlet property="wavesImage" destination="mtT-cz-lDH" id="oDD-NS-L5Y"/>
-                        <segue destination="KoU-ec-JZ5" kind="show" identifier="SignUp" id="URj-ev-aMl"/>
-                        <segue destination="qj8-99-0LE" kind="show" identifier="ForgotPassword" id="jas-Ed-Zuo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3qG-2c-NDy" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1196,7 +1193,7 @@
         <image name="valid-error" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="jas-Ed-Zuo"/>
+        <segue reference="E0U-Sk-HyL"/>
         <segue reference="qaF-6O-Rok"/>
         <segue reference="kf0-dw-qHQ"/>
     </inferredMetricsTieBreakers>

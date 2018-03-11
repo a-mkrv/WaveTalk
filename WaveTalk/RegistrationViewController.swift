@@ -28,11 +28,9 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
     var validLoginFlag: Bool = false
     var validEmailFlag: Bool = false
     var validPassFlag: Bool = false
-
     
     let userDefaults = UserDefaults.standard
     var pickImageController = UIImagePickerController()
-    var regSocket = TCPSocket()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +43,6 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
             RSACrypt.generationKeys()
         }
         
-        regSocket.connect()
         initUI()
     }
     
@@ -92,7 +89,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
         UIView.animate(withDuration: 1, animations: {
             self.loginValidIcon.alpha = CGFloat(duration)
         })
-     
+        
         if usernameField.text!.count > 4 {
             if !validLoginFlag {
                 setFlipAnimation(icon: self.loginValidIcon, imageName: "valid-ok")
@@ -166,69 +163,53 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
             return
         }
         
-        var login = "", email = "", paswd = ""
-        
-        login = validData(inputField: usernameField, subTitle: "\nUsername must be greater\n than 5 characters", minLength: 5)
-        
-        if login != "" {
-            email = validData(inputField: emailField, subTitle: "\nPlease enter a valid email address", minLength: 6)
+        guard let login = validData(inputField: usernameField, subTitle: "\nUsername must be greater\n than 5 characters", minLength: 5) else {
+            return
         }
         
-        if email != "" && login != "" {
-            paswd = validData(inputField: passwordField, subTitle: "\nPassword must be greater\n than 6 characters", minLength: 6)
+        guard let email = validData(inputField: emailField, subTitle: "\nPlease enter a valid email address", minLength: 6) else {
+            return
         }
         
-        if (login != "" && email != "" && paswd != "") {
-            let dataSet = (login, email, paswd)
+        guard let paswd = validData(inputField: passwordField, subTitle: "\nPassword must be greater\n than 6 characters", minLength: 6) else {
+            return
+        }
+        
+        let pass = (paswd.md5() + email).md5()
+        
+        Auth.auth().createUser(withEmail: email, password: pass, completion: { (user: User?, error) in
             
-            if let response = sendRequest(using: regSocket, with: dataSet) {
+            if error == nil {
+                let imageName = NSUUID().uuidString
+                let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).png")
                 
-                switch(response) {
-                case "ALRD":
-                    SCLAlertView().showTitle( "Registration Error", subTitle: "\n\nUser with the same data already exists", duration: 5.0, completeText: "Ok", style: .error, colorStyle: 0x4196BE)
-                    break
+                if let profileImage = self.userProfilePhoto.image, let uploadData = UIImageJPEGRepresentation(profileImage, 0.1) {
                     
-                case "WELC":
-                  Auth.auth().createUser(withEmail: email, password: paswd, completion: { (user: User?, error) in
+                    storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
                         
-                        let imageName = NSUUID().uuidString
-                    let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).png")
-                        
-                        if let profileImage = self.userProfilePhoto.image, let uploadData = UIImageJPEGRepresentation(profileImage, 0.1) {
-                            
-                            storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
-                                
-                                if error != nil {
-                                    Logger.error(msg: error! as AnyObject)
-                                    return
-                                }
-                                
-                                if let profileImageURL = metadata?.downloadURL()?.absoluteString {
-                                    let rsaPrivateKey = String(RSACrypt.privateKey.0) + " " + String(RSACrypt.privateKey.1)
-                                    let values = ["profileImageURL" : profileImageURL, "privateKey" : rsaPrivateKey]
-                                    
-                                    self.registerUserInFirebase(username: login, values: values as [String : NSString])
-                                }
-                            })
+                        if error != nil {
+                            Logger.error(msg: error! as AnyObject)
+                            return
                         }
+                        
+                        //TODO: Add "Please wait..." dialog.
+                        
+                        if let profileImageURL = metadata?.downloadURL()?.absoluteString {
+                            let values = ["profileImageURL" : profileImageURL, "privateKey" : RSACrypt.getPrivateKeys(), "publicKey" : RSACrypt.getPublicKeys()]
+                            
+                            self.registerUserInFirebase(username: login, values: values as [String : NSString])
+                        }
+                        
+                        self.showSuccessAlert()
                     })
-                    
-                    showSuccessAlert()
-                    regSocket.disconnect()
-                    break
-                    
-                default:
-                    Logger.error(msg: "Registration Error - Bad response" as AnyObject)
                 }
-            } else {
-                Logger.error(msg: "Registration Error - Bad request" as AnyObject)
             }
-        }
+        })
     }
     
     
     func registerUserInFirebase(username: String, values: [String: NSString]) {
-      let ref = Database.database().reference(fromURL: "https://wavetalk-d3236.firebaseio.com/")
+        let ref = Database.database().reference(fromURL: "https://wavetalk-d3236.firebaseio.com/")
         let userReference = ref.child("users").child(username)
         
         userReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
@@ -240,25 +221,6 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
                 Logger.debug(msg: "Saved user info into Firebase DB" as AnyObject)
             }
         })
-    }
-    
-    
-    private func sendRequest(using client: TCPSocket, with dataSet : (String, String, String)) -> String? {
-        var pass = dataSet.2.md5()
-        let salt = saltGeneration();
-        pass = (pass + salt).md5()
-        let rsaKeys = String(RSACrypt.publicKey.0) + " " + String(RSACrypt.publicKey.1) // E + Module
-        
-        var request: String = "REGI" + dataSet.0 + " /s Empty /s " + pass + " /s Empty /s Unknown /s "
-        request.append(rsaKeys + " /s " + salt)
-        
-        switch client.client.send(string: request) {
-        case .success:
-            return client.readResponse()
-        case .failure(let error):
-            Logger.error(msg: error as AnyObject)
-            return nil
-        }
     }
     
     
@@ -291,11 +253,11 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
     }
     
     
-    func validData(inputField: FloatLabelTextField, subTitle: String, minLength: Int) -> String {
-        var field: String = inputField.text!
+    func validData(inputField: FloatLabelTextField, subTitle: String, minLength: Int) -> String? {
+        let field: String = (inputField.text)!
         
         if (field.count) < minLength {
-            if inputField == emailField && !isValidEmail(emailStr: field){
+            if inputField == emailField && !isValidEmail(emailStr: field) {
                 SCLAlertView().showTitle(
                     "Invalid", subTitle: subTitle,
                     duration: 3.0, completeText: "OK", style: .error, colorStyle: 0x4196BE
@@ -306,8 +268,10 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
                     duration: 3.0, completeText: "OK", style: .error, colorStyle: 0x4196BE
                 )
             }
-            field = ""
+            
+            return nil
         }
+        
         return field
     }
     
@@ -393,7 +357,6 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
     
     
     @IBAction func backToLogin(_ sender: Any) {
-        regSocket.disconnect()
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "loginBoard")
         self.present(vc!, animated: true, completion: nil)
     }
@@ -403,44 +366,3 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
         super.didReceiveMemoryWarning()
     }
 }
-
-
-// Use Firebase
-//
-//if (login != "" && email != "" && paswd != "") {
-//    FIRAuth.auth()?.createUser(withEmail: email, password: paswd, completion: { (user: FIRUser?, error) in
-//
-//        if error == nil {
-//
-//            guard let uid = user?.uid else {
-//                return
-//            }
-//
-//            let imageName = NSUUID().uuidString
-//            let storageRef = FIRStorage.storage().reference().child("profile_images").child("\(imageName).png")
-//
-//            if let profileImage = self.userProfilePhoto.image, let uploadData = UIImageJPEGRepresentation(profileImage, 0.1) {
-//
-//                storageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
-//
-//                    if error != nil {
-//                        print(error!)
-//                        return
-//                    }
-//
-//
-//                    //TODO: Add "Please wait..." dialog.
-//
-//                    if let profileImageURL = metadata?.downloadURL()?.absoluteString {
-//
-//                        let values = ["username" : login, "phoneNumber_or_Email" : email, "status" : status, "lastPresenceTime" : String(describing: Date()), "profileImageURL" : profileImageURL]
-//
-//                        self.registerUserIntoWithUI(uid: uid, values: values as [String : AnyObject])
-//                    }
-//                })
-//            }
-//        } else {
-//            SCLAlertView().showTitle( "Registration Error", subTitle: "\n\nUser with the same data already exists", duration: 0.0, completeText: "Ok", style: .error, colorStyle: 0x4196BE)
-//        }
-//    })
-//}

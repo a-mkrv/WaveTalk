@@ -22,14 +22,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var wavesImage: UIImageView!
     
     var previewAnimated = true
-    var authSocket = TCPSocket()
-    
     let userDefaults = UserDefaults.standard
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        authSocket.connect()
         
         self.loginInput.delegate = self
         self.passwordInput.delegate = self
@@ -97,29 +93,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    private func sendRequest(using client: TCPSocket) -> String? {
-        if let login = self.loginInput.text, let pass = self.passwordInput.text {
-
-            switch client.client.send(string: "AUTH" + login + " /s " + pass.md5()) {
-            case .success:
-                return client.readResponse()
-            case .failure(let error):
-                Logger.error(msg: error as AnyObject)
-                return nil
-            }
-        } else {
-            return nil
-        }
-    }
-    
-    
     @IBAction func loginPress(_ sender: Any) {
-        if self.loginInput.text == "Admin" {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "tabBarBoard")
-            self.present(vc!, animated: true, completion: nil)
-            userDefaults.set(self.loginInput.text, forKey: "myUserName")
-            return
-        }
         
         if !NetworkConnect.isConnectedToNetwork() {
             SCLAlertView().showTitle( "Connection error", subTitle: "\nCheck the 3G, LTE, Wi-Fi\n", duration: 3.0, completeText: "Try again", style: .error, colorStyle: 0xFF9999)
@@ -127,67 +101,25 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        if let response = sendRequest(using: authSocket) {
+        let pass = (self.passwordInput.text!.md5() + self.loginInput.text!).md5()
+        
+        Auth.auth().signIn(withEmail: self.loginInput.text!, password: pass) { (user, error) in
             
-            var bodyOfResponse: String = ""
-            let head = response.getHeadOfResponse(with: &bodyOfResponse)
-            
-            switch(head) {
-            case "ERRA":
-                SCLAlertView().showTitle( "Error", subTitle: "\nInvalid Login or Password\n", duration: 0.0, completeText: "Try again", style: .error, colorStyle: 0x4196BE)
-                break
-                
-            case "OKEY":
-                authSocket.disconnect()
-                
-                userDefaults.set(self.loginInput.text, forKey: "myUserName")
-                
+            if error == nil {
+                // Go to the HomeViewController (TabBar) if the login is sucessful
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "tabBarBoard")
                 self.present(vc!, animated: true, completion: nil)
-                break
                 
-            default:
-                Logger.error(msg: "Auth Error - Bad response" as AnyObject)
+            } else {
+                // Error
+                SCLAlertView().showTitle( "Error", subTitle: "\nInvalid Login or Password\n",
+                                          duration: 0.0, completeText: "Try again", style: .error, colorStyle: 0x4196BE
+                )
             }
-        } else {
-            Logger.error(msg: "Auth Error - Bad request" as AnyObject)
         }
     }
-    
-    
-    @IBAction func signupPress(_ sender: Any) {
-        authSocket.disconnect()
-        performSegue(withIdentifier: "SignUp", sender: self)
-    }
-    
-    
-    @IBAction func forgotpassPress(_ sender: Any) {
-        performSegue(withIdentifier: "ForgotPassword", sender: self)
-    }
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 }
-
-// Use Firebase
-//
-//@IBAction func loginPress(_ sender: Any) {
-//
-//    FIRAuth.auth()?.signIn(withEmail: self.loginInput.text!, password: self.passwordInput.text!) { (user, error) in
-//
-//        if error == nil {
-//            // Go to the HomeViewController (TabBar) if the login is sucessful
-//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "tabBarBoard")
-//            self.present(vc!, animated: true, completion: nil)
-//
-//        } else {
-//            // Error
-//            SCLAlertView().showTitle( "Error", subTitle: "\nInvalid Login or Password\n",
-//                                      duration: 0.0, completeText: "Try again", style: .error, colorStyle: 0x4196BE
-//            )
-//        }
-//    }
-//
-//}

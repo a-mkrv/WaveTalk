@@ -109,11 +109,6 @@ class ViewController: UIViewController, UIPageViewControllerDataSource, UIPageVi
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    @IBAction func getStarted(_ sender: Any) {
-        performSegue(withIdentifier: "ShowLogin", sender: self)
-    }
-
     
 }
 
