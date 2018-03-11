@@ -26,7 +26,7 @@ class PhoneNumberViewController: UIViewController {
     }
     
     
-    func savePhoneNumber(sender:UIButton) {
+    @objc func savePhoneNumber(sender:UIButton) {
         delegate?.setPhoneNumber(newValue: numberTextField.text!)
         _ = navigationController?.popViewController(animated: true)
     }

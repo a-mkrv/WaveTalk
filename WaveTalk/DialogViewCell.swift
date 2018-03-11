@@ -36,16 +36,16 @@ class DialogViewCell: UITableViewCell {
             let cryptMsg = RSACrypt.encrypt(BigUInt((message?.text)!)!, key: key)
             let decryptMsg = String(data: cryptMsg.serialize(), encoding: String.Encoding.utf8)
             
-            if (decryptMsg?.characters.count)! > 23 {
+            if (decryptMsg?.count)! > 23 {
                 cellText = youText + (decryptMsg?.cutString(length: 23))! + "..."
             } else {
                 cellText = youText + (decryptMsg)!
             }
             
-            myMutableString = NSMutableAttributedString(string: cellText, attributes: [NSFontAttributeName:UIFont(name: self.lastmessageLabel.font.fontName, size: 17.0)!])
+            myMutableString = NSMutableAttributedString(string: cellText, attributes: [NSAttributedStringKey.font:UIFont(name: self.lastmessageLabel.font.fontName, size: 17.0)!])
             
             if youText != "" {
-                myMutableString.addAttribute(NSForegroundColorAttributeName, value: youColor, range: NSRange(location:0,length:4))
+                myMutableString.addAttribute(NSAttributedStringKey.foregroundColor, value: youColor, range: NSRange(location:0,length:4))
             }
             
             self.lastmessageLabel.attributedText = myMutableString
@@ -58,7 +58,7 @@ class DialogViewCell: UITableViewCell {
     
     
     private func setupProfileImage() {
-        let ref = FIRDatabase.database().reference().child("users").child(usernameLabel.text!)
+      let ref = Database.database().reference().child("users").child(usernameLabel.text!)
         ref.observe(.value, with: {(snapshot) in
             if let dictionary = snapshot.value as? [String : Any] {
                 

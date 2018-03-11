@@ -42,7 +42,7 @@ class StatusViewController: UIViewController, UITextFieldDelegate, UITableViewDe
     }
     
     
-    func saveStatus(sender:UIButton) {
+    @objc func saveStatus(sender:UIButton) {
         delegate?.setStatus(newValue: ownStatusInput.text!)
         _ = navigationController?.popViewController(animated: true)
     }

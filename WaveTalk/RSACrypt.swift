@@ -63,14 +63,15 @@ class RSACrypt {
         var result = BigUInt(1)
         var b = base % modulus
         var e = exponent
-        
-        while e > 0 {
-            if e[0] & 1 == 1 {
-                result = (result * b) % modulus
-            }
-            e >>= 1
-            b = (b * b) % modulus
-        }
+     
+      // TODO: Deal with bitAt??
+//        while e > 0 {
+//            if e[0] & 1 == 1 {
+//                result = (result * b) % modulus
+//            }
+//            e >>= 1
+//            b = (b * b) % modulus
+//        }
         return result
     }
 }

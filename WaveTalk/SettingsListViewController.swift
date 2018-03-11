@@ -93,7 +93,7 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
         //            }
         //        })
         
-        if (myProfile.profileImageURL?.characters.count)! > 2 {
+        if (myProfile.profileImageURL?.count)! > 2 {
             photoImage.loadImageUsingCacheWithUrlString(urlString: myProfile.profileImageURL!)
         } else {
             photoImage.loadImageUsingCacheWithUrlString(urlString: "#" + myProfile.username! + " " + myProfile.profileImageURL!)
@@ -233,7 +233,7 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
         )
     }
     
-    func logOut() {
+    @objc func logOut() {
         userDefaults.set("userIsEmpty", forKey: "myUserName")
         settingsSocket.disconnect()
         (self.tabBarController  as! MainUserTabViewController).finishReadingQueue()

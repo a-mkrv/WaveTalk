@@ -9,13 +9,13 @@
 import Foundation
 import SwiftSocket
 
-class TCPSocket : AnyObject {
+class TCPSocket {
     var client: TCPClient!
     
     static let localhost: String = "127.0.0.1"
-    static let remote: String = ""
+    static let remote: String = "176.112.101.173"
     
-    func connect(host: String = localhost, port: String = "55155") {
+    func connect(host: String = remote, port: String = "55155") {
         client = TCPClient(address: host, port: Int32(port)!)
         
         if (client.connect(timeout: 1).isSuccess) {

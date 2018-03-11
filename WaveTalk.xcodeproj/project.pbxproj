@@ -13,7 +13,9 @@
 		771E12DC1E250A7F0084417A /* SettingsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771E12DB1E250A7F0084417A /* SettingsViewCell.swift */; };
 		77310E1C1E2FAFCD00F67DDF /* ProfileSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77310E1B1E2FAFCD00F67DDF /* ProfileSettingsViewController.swift */; };
 		7739A6B41E8664070081BECB /* TCPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7739A6B31E8664070081BECB /* TCPSocket.swift */; };
+		773FAF2720399B6900F4C827 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773FAF2620399B6900F4C827 /* Coordinator.swift */; };
 		774113A41E16AE3700DCAC6D /* ContactData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774113A31E16AE3700DCAC6D /* ContactData.swift */; };
+		774E8DDE1F5073FE008C87BE /* WaveTalkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774E8DDD1F5073FE008C87BE /* WaveTalkTests.swift */; };
 		77560DEC1E3C8A7700C5BD87 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77560DEB1E3C8A7700C5BD87 /* Extensions.swift */; };
 		775A97711DD87BB50027C0F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775A97701DD87BB50027C0F5 /* AppDelegate.swift */; };
 		775A97731DD87BB50027C0F5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775A97721DD87BB50027C0F5 /* ViewController.swift */; };
@@ -50,6 +52,16 @@
 		E1F19E49C8BC6DE8E3E1A989 /* Pods_WaveTalk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7F2C47FD70473EEFCD69DD6 /* Pods_WaveTalk.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		774E8DE01F5073FE008C87BE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 775A97651DD87BB40027C0F5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 775A976C1DD87BB40027C0F5;
+			remoteInfo = WaveTalk;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		7705EDC81E21402C008CDF67 /* ContactDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailsViewController.swift; sourceTree = "<group>"; };
 		771E12D11E23A9450084417A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -57,7 +69,11 @@
 		771E12DB1E250A7F0084417A /* SettingsViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewCell.swift; sourceTree = "<group>"; };
 		77310E1B1E2FAFCD00F67DDF /* ProfileSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSettingsViewController.swift; sourceTree = "<group>"; };
 		7739A6B31E8664070081BECB /* TCPSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCPSocket.swift; sourceTree = "<group>"; };
+		773FAF2620399B6900F4C827 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		774113A31E16AE3700DCAC6D /* ContactData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactData.swift; sourceTree = "<group>"; };
+		774E8DDB1F5073FE008C87BE /* WaveTalkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WaveTalkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		774E8DDD1F5073FE008C87BE /* WaveTalkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveTalkTests.swift; sourceTree = "<group>"; };
+		774E8DDF1F5073FE008C87BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		77560DEB1E3C8A7700C5BD87 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		775A976D1DD87BB50027C0F5 /* WaveTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WaveTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		775A97701DD87BB50027C0F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -100,6 +116,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		774E8DD81F5073FD008C87BE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		775A976A1DD87BB40027C0F5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -134,10 +157,20 @@
 			name = SettingViews;
 			sourceTree = "<group>";
 		};
+		774E8DDC1F5073FE008C87BE /* WaveTalkTests */ = {
+			isa = PBXGroup;
+			children = (
+				774E8DDD1F5073FE008C87BE /* WaveTalkTests.swift */,
+				774E8DDF1F5073FE008C87BE /* Info.plist */,
+			);
+			path = WaveTalkTests;
+			sourceTree = "<group>";
+		};
 		775A97641DD87BB40027C0F5 = {
 			isa = PBXGroup;
 			children = (
 				775A976F1DD87BB50027C0F5 /* WaveTalk */,
+				774E8DDC1F5073FE008C87BE /* WaveTalkTests */,
 				775A976E1DD87BB50027C0F5 /* Products */,
 				A720C2EF894AF642BDD14ECF /* Pods */,
 				406695A505591B055634ABF9 /* Frameworks */,
@@ -148,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				775A976D1DD87BB50027C0F5 /* WaveTalk.app */,
+				774E8DDB1F5073FE008C87BE /* WaveTalkTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -165,6 +199,7 @@
 				77A6C6BE1E82D88E002B66FB /* RSACrypt.swift */,
 				77B63B2B1DE0826400127E96 /* PageContentViewController.swift */,
 				77A4E3DE1E50EDFA00F8AD50 /* MainUserTabViewController.swift */,
+				773FAF2620399B6900F4C827 /* Coordinator.swift */,
 				77D68F2C1E22BB58002FF652 /* Start/Login */,
 				7774E2681E29099900E0C1BA /* Storyboards */,
 				7774E2671E29098600E0C1BA /* Chatting */,
@@ -253,6 +288,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		774E8DDA1F5073FD008C87BE /* WaveTalkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 774E8DE41F5073FE008C87BE /* Build configuration list for PBXNativeTarget "WaveTalkTests" */;
+			buildPhases = (
+				774E8DD71F5073FD008C87BE /* Sources */,
+				774E8DD81F5073FD008C87BE /* Frameworks */,
+				774E8DD91F5073FD008C87BE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				774E8DE11F5073FE008C87BE /* PBXTargetDependency */,
+			);
+			name = WaveTalkTests;
+			productName = WaveTalkTests;
+			productReference = 774E8DDB1F5073FE008C87BE /* WaveTalkTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		775A976C1DD87BB40027C0F5 /* WaveTalk */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 775A977F1DD87BB50027C0F5 /* Build configuration list for PBXNativeTarget "WaveTalk" */;
@@ -279,13 +332,20 @@
 		775A97651DD87BB40027C0F5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 0820;
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "Anton Makarov";
 				TargetAttributes = {
+					774E8DDA1F5073FD008C87BE = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = RA8RP8Z7ML;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 775A976C1DD87BB40027C0F5;
+					};
 					775A976C1DD87BB40027C0F5 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = RA8RP8Z7ML;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -304,11 +364,19 @@
 			projectRoot = "";
 			targets = (
 				775A976C1DD87BB40027C0F5 /* WaveTalk */,
+				774E8DDA1F5073FD008C87BE /* WaveTalkTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		774E8DD91F5073FD008C87BE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		775A976B1DD87BB40027C0F5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -372,6 +440,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		774E8DD71F5073FD008C87BE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				774E8DDE1F5073FE008C87BE /* WaveTalkTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		775A97691DD87BB40027C0F5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -384,6 +460,7 @@
 				777E624A1DE1DE6B00840242 /* ForgotPswdViewController.swift in Sources */,
 				77B63B2C1DE0826400127E96 /* PageContentViewController.swift in Sources */,
 				77FA990E1E89218B00612FCA /* Logger.swift in Sources */,
+				773FAF2720399B6900F4C827 /* Coordinator.swift in Sources */,
 				77A6C6BF1E82D88E002B66FB /* RSACrypt.swift in Sources */,
 				7705EDC91E21402C008CDF67 /* ContactDetailsViewController.swift in Sources */,
 				776840F31E8D516000C4A83C /* OptionalInfoViewController.swift in Sources */,
@@ -416,6 +493,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		774E8DE11F5073FE008C87BE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 775A976C1DD87BB40027C0F5 /* WaveTalk */;
+			targetProxy = 774E8DE01F5073FE008C87BE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		775A97741DD87BB50027C0F5 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -437,6 +522,38 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		774E8DE21F5073FE008C87BE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				DEVELOPMENT_TEAM = RA8RP8Z7ML;
+				INFOPLIST_FILE = WaveTalkTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = ITMak.WaveTalkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WaveTalk.app/WaveTalk";
+			};
+			name = Debug;
+		};
+		774E8DE31F5073FE008C87BE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				DEVELOPMENT_TEAM = RA8RP8Z7ML;
+				INFOPLIST_FILE = WaveTalkTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = ITMak.WaveTalkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WaveTalk.app/WaveTalk";
+			};
+			name = Release;
+		};
 		775A977D1DD87BB50027C0F5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -446,7 +563,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -454,7 +573,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -496,7 +619,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -504,7 +629,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -540,7 +669,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ITMak.WaveTalk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -554,13 +684,23 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ITMak.WaveTalk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		774E8DE41F5073FE008C87BE /* Build configuration list for PBXNativeTarget "WaveTalkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				774E8DE21F5073FE008C87BE /* Debug */,
+				774E8DE31F5073FE008C87BE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		775A97681DD87BB40027C0F5 /* Build configuration list for PBXProject "WaveTalk" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

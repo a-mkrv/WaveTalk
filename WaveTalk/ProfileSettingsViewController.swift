@@ -35,7 +35,7 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
         phoneLabel.text = profileSettings.phoneNumber
         statusLabel.text = profileSettings.status
         
-        if (profileSettings.profileImageURL?.characters.count)! > 2 {
+        if (profileSettings.profileImageURL?.count)! > 2 {
             profilePhotoImage.loadImageUsingCacheWithUrlString(urlString: profileSettings.profileImageURL!)
         } else {
             //profilePhotoImage.loadImageUsingCacheWithUrlString(urlString: "#" + profileSettings.userName + " " + profileSettings.profileImageURL!)
@@ -93,7 +93,7 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
     }
     
     
-    func loadProfilePhoto(_ recognizer: UIPanGestureRecognizer) {
+    @objc func loadProfilePhoto(_ recognizer: UIPanGestureRecognizer) {
         let alertController = UIAlertController(title: "Update Profile Photo", message: "Choose from", preferredStyle: .actionSheet)
         
         let cameraAction = UIAlertAction(title: "Camera", style: .default) {

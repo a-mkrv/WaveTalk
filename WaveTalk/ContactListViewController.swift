@@ -43,8 +43,11 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
         
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
-        checkUserIsLoggedIn()
-        (self.tabBarController  as! MainUserTabViewController).contacts = self.contacts
+      if !checkUserIsLoggedIn() {
+        return
+      }
+      
+        (self.tabBarController as! MainUserTabViewController).contacts = self.contacts
         
         
         DispatchQueue.global(qos: .default).async {
@@ -79,7 +82,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
         default: break
         }
         
-        FIRDatabase.database().reference().child("users").child(userName!).observe(.value, with: { (snapshot) in
+      Database.database().reference().child("users").child(userName!).observe(.value, with: { (snapshot) in
             if let dictionary = snapshot.value as? [String : Any] {
                 if let privateKey = dictionary["privateKey"] as? String {
                     self.myProfile.privateKey = privateKey.toKey()
@@ -172,7 +175,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
     // =(
     
     func loadURLProfileImage() {
-        FIRDatabase.database().reference().child("users").observe(.childAdded, with: { (snapshot) in
+      Database.database().reference().child("users").observe(.childAdded, with: { (snapshot) in
             
             if let dictionary = snapshot.value as? [String : Any] {
                 
@@ -238,11 +241,12 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
     }
     
     
-    func checkUserIsLoggedIn() {
+    func checkUserIsLoggedIn() -> Bool {
         let signIn = userDefaults.object(forKey: "myUserName") as? String
         
         if signIn == "userIsEmpty" || signIn == nil {
-            perform(#selector(handleLogout), with: nil, afterDelay: 0)
+            handleLogout()
+            return false
         } else {
             userName = signIn!
             myProfile.username = userName
@@ -253,6 +257,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
             imageCache.setObject(downloadedImage!, forKey: String(describing: "#" + userName! + " " + imageName) as AnyObject)
             
             fetchUser(personDates: true)
+            return true
         }
         
         //        if  FIRAuth.auth()?.currentUser?.uid == nil {
@@ -429,7 +434,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
     
     func addNewContact(contact: Contact) {
         
-        FIRDatabase.database().reference().child("users").child(contact.username!).observe(.value, with: { (snapshot) in
+      Database.database().reference().child("users").child(contact.username!).observe(.value, with: { (snapshot) in
             if let dictionary = snapshot.value as? [String : Any] {
                 if let urlImage = dictionary["profileImageURL"] as? String {
                     contact.profileImageURL = urlImage

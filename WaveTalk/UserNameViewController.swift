@@ -26,7 +26,7 @@ class UserNameViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    func saveUserName (sender:UIButton) {
+    @objc func saveUserName (sender:UIButton) {
         delegate?.setUserName(newValue: usernameTextField.text!)
         _ = navigationController?.popViewController(animated: true)
     }

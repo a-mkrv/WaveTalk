@@ -11,10 +11,10 @@ target 'WaveTalk' do
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
   pod 'JSQMessagesViewController'
-  pod 'SCLAlertView'
   pod 'SkyFloatingLabelTextField', '~> 2.0.0'
   pod 'SwiftSocket'
-  pod 'CryptoSwift'
-  pod 'BigInt', '~> 2.1'
-  
+  pod 'BigInt', '~> 3.0'
+  pod 'SCLAlertView'
+  pod 'CryptoSwift', '~> 0.7.1'
+
 end

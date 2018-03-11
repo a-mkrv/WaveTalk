@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="XGC-rK-Uwu">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="XGC-rK-Uwu">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Optima.ttc">
+            <string>Optima-Regular</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -191,21 +196,21 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8cn-K0-IRn" id="NFk-Vm-YHJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bqp-nr-QN7">
-                                            <rect key="frame" x="14" y="10" width="60" height="60"/>
+                                            <rect key="frame" x="22" y="13" width="60" height="60"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="60" id="3gp-kh-pRD"/>
                                                 <constraint firstAttribute="width" constant="60" id="h3p-Cn-hX0"/>
                                             </constraints>
                                         </imageView>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="XOs-CU-lur">
-                                            <rect key="frame" x="82" y="10" width="95" height="56"/>
+                                            <rect key="frame" x="90" y="13" width="93" height="56"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UserName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i6a-Gy-VEr">
-                                                    <rect key="frame" x="0.0" y="0.0" width="95" height="24"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="93" height="24"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -584,7 +589,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p0D-vS-h2N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3488.8000000000002" y="2318.5907046476764"/>
+            <point key="canvasLocation" x="3489" y="2393"/>
         </scene>
         <!--Registration View Controller-->
         <scene sceneID="oJW-kz-U7w">
@@ -914,7 +919,7 @@
                     <tabBarItem key="tabBarItem" title="Contacts" image="user" id="V47-2K-Kzo"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="NdN-sr-JuQ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -963,13 +968,13 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="11" translatesAutoresizingMaskIntoConstraints="NO" id="AO0-Bp-g9m" userLabel="Avatar Image">
-                                            <rect key="frame" x="14" y="10" width="60" height="60"/>
+                                            <rect key="frame" x="22" y="13" width="60" height="54"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="60" id="bIg-fV-RGs"/>
                                             </constraints>
                                         </imageView>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="hxd-Dq-u4p">
-                                            <rect key="frame" x="82" y="8" width="96.5" height="56"/>
+                                            <rect key="frame" x="90" y="11" width="96.5" height="56"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="UserName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SaB-dJ-yY0">
                                                     <rect key="frame" x="0.0" y="0.0" width="89.5" height="24.5"/>
@@ -1124,7 +1129,7 @@
                 <navigationController id="R0A-xE-jO8" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Dialogues" image="chat" id="IdE-8w-Wez"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="DXm-XQ-56v">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -1142,7 +1147,7 @@
                     <tabBarItem key="tabBarItem" title="Settings" image="settings" id="1ZS-29-zhG"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="TIZ-Oo-C59">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1191,8 +1196,9 @@
         <image name="valid-error" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ljM-Jn-q8V"/>
+        <segue reference="jas-Ed-Zuo"/>
         <segue reference="qaF-6O-Rok"/>
+        <segue reference="kf0-dw-qHQ"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>

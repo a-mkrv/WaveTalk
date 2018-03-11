@@ -50,6 +50,7 @@ class MainUserTabViewController: UITabBarController {
                     print("DEBUG ", String(bytes: response, encoding: .utf8) ?? "Error")
                 }
         }
+      
         readingQueue.async(execute: readingWorkItem!)
     }
     

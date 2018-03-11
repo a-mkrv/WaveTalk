@@ -59,18 +59,18 @@ extension UITextField {
 extension String {
     func getHeadOfResponse(with body: inout String) -> String
     {
-        let startIndex = self.characters.index(self.startIndex, offsetBy: 0)
-        let endIndex = self.characters.index(self.startIndex, offsetBy: 4)
+        let startIndex = self.index(self.startIndex, offsetBy: 0)
+        let endIndex = self.index(self.startIndex, offsetBy: 4)
         let range = startIndex..<endIndex
         
-        body = self.substring(from: self.characters.index(self.startIndex, offsetBy: 4))
+        body = self.substring(from: self.index(self.startIndex, offsetBy: 4))
         
         return self.substring(with: range)
     }
     
     func cutString(length: Int) -> String {
-        let startIndex = self.characters.index(self.startIndex, offsetBy: 0)
-        let endIndex = self.characters.index(self.startIndex, offsetBy: length)
+        let startIndex = self.index(self.startIndex, offsetBy: 0)
+        let endIndex = self.index(self.startIndex, offsetBy: length)
         let range = startIndex..<endIndex
         
         return self.substring(with: range)
@@ -116,7 +116,7 @@ extension UIImageView {
         
         // check cache for image
         
-        if urlString.characters.first == "#" {
+        if urlString.first == "#" {
             //urlStr.characters.removeFirst()
             let imageName = urlString.components(separatedBy: " ")
             

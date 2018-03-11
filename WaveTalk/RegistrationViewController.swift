@@ -93,7 +93,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
             self.loginValidIcon.alpha = CGFloat(duration)
         })
      
-        if usernameField.text!.characters.count > 4 {
+        if usernameField.text!.count > 4 {
             if !validLoginFlag {
                 setFlipAnimation(icon: self.loginValidIcon, imageName: "valid-ok")
                 self.validLoginFlag = true
@@ -137,7 +137,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
             self.passValidIcon.alpha = CGFloat(duration)
         })
         
-        if passwordField.text!.characters.count > 5 {
+        if passwordField.text!.count > 5 {
             if !validPassFlag {
                 setFlipAnimation(icon: self.passValidIcon, imageName: "valid-ok")
                 self.validPassFlag = true
@@ -189,14 +189,14 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
                     break
                     
                 case "WELC":
-                    FIRAuth.auth()?.createUser(withEmail: email, password: paswd, completion: { (user: FIRUser?, error) in
+                  Auth.auth().createUser(withEmail: email, password: paswd, completion: { (user: User?, error) in
                         
                         let imageName = NSUUID().uuidString
-                        let storageRef = FIRStorage.storage().reference().child("profile_images").child("\(imageName).png")
+                    let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).png")
                         
                         if let profileImage = self.userProfilePhoto.image, let uploadData = UIImageJPEGRepresentation(profileImage, 0.1) {
                             
-                            storageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
+                            storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
                                 
                                 if error != nil {
                                     Logger.error(msg: error! as AnyObject)
@@ -228,7 +228,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
     
     
     func registerUserInFirebase(username: String, values: [String: NSString]) {
-        let ref = FIRDatabase.database().reference(fromURL: "https://wavetalk-d3236.firebaseio.com/")
+      let ref = Database.database().reference(fromURL: "https://wavetalk-d3236.firebaseio.com/")
         let userReference = ref.child("users").child(username)
         
         userReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
@@ -294,7 +294,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
     func validData(inputField: FloatLabelTextField, subTitle: String, minLength: Int) -> String {
         var field: String = inputField.text!
         
-        if (field.characters.count) < minLength {
+        if (field.count) < minLength {
             if inputField == emailField && !isValidEmail(emailStr: field){
                 SCLAlertView().showTitle(
                     "Invalid", subTitle: subTitle,
@@ -320,7 +320,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
     }
     
     
-    func loadProfilePhotos(_ recognizer: UIPanGestureRecognizer) {
+    @objc func loadProfilePhotos(_ recognizer: UIPanGestureRecognizer) {
         let alertController = UIAlertController(title: "Update Profile Photo", message: "Choose from", preferredStyle: .actionSheet)
         
         let cameraAction = UIAlertAction(title: "Camera", style: .default) {

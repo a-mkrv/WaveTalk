@@ -76,7 +76,7 @@ class OptionalInfoViewController: UIViewController {
         }
     }
     
-    func saveInformation (sender:UIButton) {
+    @objc func saveInformation (sender:UIButton) {
         if genderCheckBox.selectedSegmentIndex == 0 {
             gender = "Man"
         } else {
