@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="XGC-rK-Uwu">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="XGC-rK-Uwu">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="Optima.ttc">
-            <string>Optima-Regular</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -27,9 +21,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Waves" translatesAutoresizingMaskIntoConstraints="NO" id="uVE-XJ-E74">
-                                <rect key="frame" x="0.0" y="430" width="375" height="264"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Waves" translatesAutoresizingMaskIntoConstraints="NO" id="uVE-XJ-E74">
+                                <rect key="frame" x="0.0" y="427" width="375" height="265"/>
                             </imageView>
                             <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="4" translatesAutoresizingMaskIntoConstraints="NO" id="xAn-Wd-uht">
                                 <rect key="frame" x="151" y="622" width="73" height="37"/>
@@ -48,6 +41,12 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="uVE-XJ-E74" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="265 : 667" id="0Tj-LP-nC2"/>
+                            <constraint firstAttribute="trailing" secondItem="uVE-XJ-E74" secondAttribute="trailing" id="W7D-Xx-Wmw"/>
+                            <constraint firstItem="uVE-XJ-E74" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="YdC-CZ-P4u"/>
+                            <constraint firstAttribute="bottom" secondItem="uVE-XJ-E74" secondAttribute="bottom" constant="-25" id="jz1-c2-YQ3"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="pageDotsControl" destination="xAn-Wd-uht" id="52C-uT-ny4"/>
@@ -1194,7 +1193,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="qaF-6O-Rok"/>
-        <segue reference="kf0-dw-qHQ"/>
+        <segue reference="H8Q-J9-Ddu"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>
