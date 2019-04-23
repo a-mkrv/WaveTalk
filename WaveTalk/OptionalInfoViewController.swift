@@ -23,7 +23,7 @@ class OptionalInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let rightAddBarButtonItem: UIBarButtonItem = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.saveInformation))
+        let rightAddBarButtonItem: UIBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(self.saveInformation))
         self.navigationItem.setRightBarButton(rightAddBarButtonItem, animated: true)
         
         let tabBarVC = self.tabBarController  as! MainUserTabViewController

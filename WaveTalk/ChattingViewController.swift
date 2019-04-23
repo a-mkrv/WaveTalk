@@ -74,7 +74,7 @@ class ChattingViewController: JSQMessagesViewController {
         let image = UIImage(named: "background.png")
         let imgBackground:UIImageView = UIImageView(frame: self.view.bounds)
         imgBackground.image = image
-        imgBackground.contentMode = UIViewContentMode.scaleAspectFill
+        imgBackground.contentMode = .scaleAspectFill
         imgBackground.clipsToBounds = true
         self.collectionView?.backgroundView = imgBackground
         flag = true
@@ -194,9 +194,14 @@ class ChattingViewController: JSQMessagesViewController {
 
 
 extension ChattingViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        let picture = info[UIImagePickerControllerOriginalImage] as? UIImage
+        guard let picture = info[.originalImage] as? UIImage else {
+            print("No image found")
+            return
+        }
+        
+        //let picture = info[UIImagePickerControllerOriginalImage] as? UIImage
         let photo = JSQPhotoMediaItem(image: picture)
         messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, media: photo))
         

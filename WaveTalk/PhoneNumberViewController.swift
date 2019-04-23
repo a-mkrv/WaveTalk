@@ -21,7 +21,7 @@ class PhoneNumberViewController: UIViewController {
         super.viewDidLoad()
         
         numberTextField.text = phoneNumber
-        let rightAddBarButtonItem: UIBarButtonItem = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.savePhoneNumber))
+        let rightAddBarButtonItem: UIBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(self.savePhoneNumber))
         self.navigationItem.setRightBarButton(rightAddBarButtonItem, animated: true)        
     }
     

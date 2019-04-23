@@ -16,7 +16,7 @@ import BigInt
 extension UITextField {
     func setBorderBottom(_ colorBorder: CGColor = UIColor.getColorBorder(), widthBorder : CGFloat = 1.0, backColor : UIColor = UIColor.clear) {
         
-        self.borderStyle = UITextBorderStyle.none
+        self.borderStyle = .none
         self.backgroundColor = backColor
         
         let borderBottom = CALayer()
@@ -48,7 +48,7 @@ extension UITextField {
         textField.selectedLineHeight = 1.0
         
         //textField.delegate = CreateAccountViewController()
-        self.borderStyle = UITextBorderStyle.none
+        self.borderStyle = .none
         self.addSubview(textField)
     }
 }

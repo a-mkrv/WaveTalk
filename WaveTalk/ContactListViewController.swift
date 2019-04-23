@@ -26,7 +26,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
         super.viewDidLoad()
         
         let tabBarVC = self.tabBarController  as! MainUserTabViewController
-        UIApplication.shared.statusBarStyle = .lightContent
+        setNeedsStatusBarAppearanceUpdate()
 
         clientSocket = tabBarVC.clientSocket
         myProfile = tabBarVC.myProfile
@@ -43,18 +43,21 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
         
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
-      if !checkUserIsLoggedIn() {
-        return
-      }
+        if !checkUserIsLoggedIn() {
+            return
+        }
       
         (self.tabBarController as! MainUserTabViewController).contacts = self.contacts
-        
         
         DispatchQueue.global(qos: .default).async {
             self.getMyKeys()
         }
         
         tabBarVC.startReadingQueue(for: clientSocket.client)
+    }
+    
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
     }
     
     
@@ -236,7 +239,7 @@ class ContactListViewController: UITableViewController, UISearchResultsUpdating,
         super.viewDidLayoutSubviews()
         
         if let tableHeaderView = tableView.tableHeaderView {
-            tableView.bringSubview(toFront: tableHeaderView)
+            tableView.bringSubviewToFront(tableHeaderView)
         }
     }
     

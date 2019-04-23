@@ -32,13 +32,14 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
 
         if let existUser = self.requestField.text {
             if existUser == myUserName {
-                SCLAlertView().showTitle( "Error", subTitle: "\nYou can not add yourself\n", duration: 0.0, completeText: "Look for another", style: .error, colorStyle: 0x4196BE)
+                SCLAlertView().showTitle("Error", subTitle: "\nYou can not add yourself\n", style: .error, closeButtonTitle: "Look for another", colorStyle: 0x4196BE, animationStyle: .topToBottom)
+                SCLAlertView().showTitle( "Error", subTitle: "\nYou can not add yourself\n", style: .error, closeButtonTitle: "Look for another", colorStyle: 0x4196BE)
                 return
             }
             
             for user in existContacts {
                 if user == existUser {
-                    SCLAlertView().showTitle( "Error", subTitle: "\nUser is already added\n", duration: 0.0, completeText: "Look for another", style: .error, colorStyle: 0x4196BE)
+                    //( "Error", subTitle: "\nUser is already added\n", duration: 0.0, completeText: "Look for another", style: .error, colorStyle: 0x4196BE)
                     return
                 }
             }
@@ -55,7 +56,7 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
             
             switch(head) {
             case "FNDN": //Find Negative
-                SCLAlertView().showTitle( "Error", subTitle: "\nUser is not found\n", duration: 0.0, completeText: "Look for another", style: .error, colorStyle: 0x4196BE)
+               // SCLAlertView().showTitle( "Error", subTitle: "\nUser is not found\n", duration: 0.0, completeText: "Look for another", style: .error, colorStyle: 0x4196BE)
                 break
                 
             case "FNDP": //Find Positive

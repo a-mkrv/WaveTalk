@@ -42,10 +42,10 @@ class DialogViewCell: UITableViewCell {
                 cellText = youText + (decryptMsg)!
             }
             
-            myMutableString = NSMutableAttributedString(string: cellText, attributes: [NSAttributedStringKey.font:UIFont(name: self.lastmessageLabel.font.fontName, size: 17.0)!])
+            myMutableString = NSMutableAttributedString(string: cellText, attributes: [NSAttributedString.Key.font:UIFont(name: self.lastmessageLabel.font.fontName, size: 17.0)!])
             
             if youText != "" {
-                myMutableString.addAttribute(NSAttributedStringKey.foregroundColor, value: youColor, range: NSRange(location:0,length:4))
+                myMutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: youColor, range: NSRange(location:0,length:4))
             }
             
             self.lastmessageLabel.attributedText = myMutableString

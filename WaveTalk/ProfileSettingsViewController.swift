@@ -117,27 +117,29 @@ class ProfileSettingsViewController: UITableViewController, UIImagePickerControl
     
     
     func pickImageFromCamera() {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
-            pickImageController.sourceType = UIImagePickerControllerSourceType.camera
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            pickImageController.sourceType = .camera
             self.present(pickImageController, animated: true, completion: nil)
         }
     }
     
     
     func pickImageFromLibrary() {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
-            pickImageController.sourceType = UIImagePickerControllerSourceType.photoLibrary
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            pickImageController.sourceType = .photoLibrary
             self.present(pickImageController, animated: true, completion: nil)
         }
     }
     
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
-        
-        if info[UIImagePickerControllerOriginalImage] != nil {
-            let image = info[UIImagePickerControllerOriginalImage] as! UIImage
-            profilePhotoImage.image = image
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    
+        guard let image = info[.originalImage] as? UIImage else {
+            print("No image found")
+            return
         }
+    
+        profilePhotoImage.image = image
         picker.dismiss(animated: true, completion: nil)
     }
     

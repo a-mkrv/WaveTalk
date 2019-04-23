@@ -23,7 +23,7 @@ class StatusViewController: UIViewController, UITextFieldDelegate, UITableViewDe
         
         ownStatusInput.delegate = self
         
-        let rightAddBarButtonItem: UIBarButtonItem = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.saveStatus))
+        let rightAddBarButtonItem: UIBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(self.saveStatus))
         self.navigationItem.setRightBarButton(rightAddBarButtonItem, animated: true)
         
         for (index, el) in statusList.enumerated() {
@@ -73,9 +73,9 @@ class StatusViewController: UIViewController, UITextFieldDelegate, UITableViewDe
         cell.statusLabel.text = statusList[indexPath.row]
         
         if (selectedIndex == (indexPath as NSIndexPath)) {
-            cell.imageState.setImage(UIImage(named: "check.png"),for:UIControlState.normal)
+            cell.imageState.setImage(UIImage(named: "check.png"),for: .normal)
         } else {
-            cell.imageState.setImage(UIImage(named: "uncheck.png"),for:UIControlState.normal)
+            cell.imageState.setImage(UIImage(named: "uncheck.png"),for: .normal)
         }
         
         

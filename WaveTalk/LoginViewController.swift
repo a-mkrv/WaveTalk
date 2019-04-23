@@ -33,9 +33,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         initUI()
     }
     
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .default
+    }
     
     func initUI() {
-        UIApplication.shared.statusBarStyle = .default
+        setNeedsStatusBarAppearanceUpdate()
         
         loginInput.setBorderBottom(UIColor.getColorBorder())
         passwordInput.setBorderBottom(UIColor.getColorBorder())
@@ -96,25 +99,31 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBAction func loginPress(_ sender: Any) {
         
         if !NetworkConnect.isConnectedToNetwork() {
-            SCLAlertView().showTitle( "Connection error", subTitle: "\nCheck the 3G, LTE, Wi-Fi\n", duration: 3.0, completeText: "Try again", style: .error, colorStyle: 0xFF9999)
-            
+            SCLAlertView().showTitle("Connection error", subTitle: "\nCheck the 3G, LTE, Wi-Fi\n", style: .error, closeButtonTitle: "Try again", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 3.0, timeoutAction: {}), colorStyle: 0xFF9999, animationStyle: .topToBottom)
             return
         }
         
-        let pass = (self.passwordInput.text!.md5() + self.loginInput.text!).md5()
+        if (self.passwordInput.text?.count == 0) || (self.loginInput.text?.count == 0) {
+            SCLAlertView().showTitle("Impty field", subTitle: "\nPlease enter all data\n", style: .error, closeButtonTitle: "Ok", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 3.0, timeoutAction: {}), colorStyle: 0xFF9999, animationStyle: .topToBottom)
+            return
+        }
         
-        Auth.auth().signIn(withEmail: self.loginInput.text!, password: pass) { (user, error) in
-            
-            if error == nil {
-                // Go to the HomeViewController (TabBar) if the login is sucessful
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "tabBarBoard")
-                self.present(vc!, animated: true, completion: nil)
+        let alertViewResponder: SCLAlertViewResponder = SCLAlertView().showTitle("Logging...", subTitle: "\nVerification of data\n", style: .wait, colorStyle: 0x4196BE, animationStyle: .noAnimation)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            let pass = (self.passwordInput.text!.md5() + self.loginInput.text!).md5()
+            Auth.auth().signIn(withEmail: self.loginInput.text!, password: pass) { (user, error) in
                 
-            } else {
-                // Error
-                SCLAlertView().showTitle( "Error", subTitle: "\nInvalid Login or Password\n",
-                                          duration: 0.0, completeText: "Try again", style: .error, colorStyle: 0x4196BE
-                )
+                if error == nil {
+                    // Go to the HomeViewController (TabBar) if the login is sucessful
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "tabBarBoard")
+                    self.present(vc!, animated: true, completion: nil)
+                } else {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                        alertViewResponder.close()
+                        SCLAlertView().showTitle("Logging error", subTitle: "\nInvalid Login or Password\n", style: .error, closeButtonTitle: "Try againOk", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 3.0, timeoutAction: {}), colorStyle: 0xFF9999, animationStyle: .topToBottom)
+                    }
+                }
             }
         }
     }

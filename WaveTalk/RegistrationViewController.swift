@@ -150,7 +150,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
     
     func setFlipAnimation(icon: UIButton, imageName: String) {
         UIView.beginAnimations(nil, context: nil)
-        UIView.setAnimationTransition(UIViewAnimationTransition.flipFromLeft, for: icon, cache: true)
+        UIView.setAnimationTransition(.flipFromLeft, for: icon, cache: true)
         icon.setImage(UIImage(named: imageName), for: .normal)
         UIView.commitAnimations()
     }
@@ -158,8 +158,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
     
     @IBAction func createAccount(_ sender: Any) {
         if !NetworkConnect.isConnectedToNetwork() {
-            SCLAlertView().showTitle( "Connection error", subTitle: "\nCheck the 3G, LTE, Wi-Fi\n", duration: 3.0, completeText: "Try again", style: .error, colorStyle: 0xFF9999)
-            
+            SCLAlertView().showTitle("Connection error", subTitle: "\nCheck the 3G, LTE, Wi-Fi\n", style: .error, closeButtonTitle: "Try again", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 3.0, timeoutAction: {}), colorStyle: 0xFF9999, animationStyle: .topToBottom)
             return
         }
         
@@ -183,7 +182,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
                 let imageName = NSUUID().uuidString
                 let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).png")
                 
-                if let profileImage = self.userProfilePhoto.image, let uploadData = UIImageJPEGRepresentation(profileImage, 0.1) {
+                if let profileImage = self.userProfilePhoto.image, let uploadData =  profileImage.jpegData(compressionQuality: 0.1)  {
                     
                     storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
                         
@@ -256,19 +255,9 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
     func validData(inputField: FloatLabelTextField, subTitle: String, minLength: Int) -> String? {
         let field: String = (inputField.text)!
         
-        if (field.count) < minLength {
-            if inputField == emailField && !isValidEmail(emailStr: field) {
-                SCLAlertView().showTitle(
-                    "Invalid", subTitle: subTitle,
-                    duration: 3.0, completeText: "OK", style: .error, colorStyle: 0x4196BE
-                )
-            } else {
-                SCLAlertView().showTitle(
-                    "Invalid", subTitle: subTitle,
-                    duration: 3.0, completeText: "OK", style: .error, colorStyle: 0x4196BE
-                )
-            }
-            
+        if (field.count) < minLength || inputField == emailField && !isValidEmail(emailStr: field) {
+            SCLAlertView().showTitle("\nError", subTitle: subTitle, style: .error, closeButtonTitle: "Ok", timeout: SCLAlertView.SCLTimeoutConfiguration(timeoutValue: 3.0, timeoutAction: {}), colorStyle: 0xFF9999, animationStyle: .topToBottom)
+              
             return nil
         }
         
@@ -323,28 +312,28 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIImage
     
     
     func pickImageFromCamera() {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
-            pickImageController.sourceType = UIImagePickerControllerSourceType.camera
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            pickImageController.sourceType = .camera
             self.present(pickImageController, animated: true, completion: nil)
         }
     }
     
     
     func pickImageFromLibrary() {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
-            pickImageController.sourceType = UIImagePickerControllerSourceType.photoLibrary
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            pickImageController.sourceType = .photoLibrary
             self.present(pickImageController, animated: true, completion: nil)
         }
     }
     
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         var selectedImageFromPicker: UIImage?
-        
-        if let editedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
+
+        if let editedImage = info[.editedImage]  as? UIImage {
             selectedImageFromPicker = editedImage
-        } else if let originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        } else if let originalImage = info[.originalImage]  as? UIImage {
             selectedImageFromPicker = originalImage
         }
         

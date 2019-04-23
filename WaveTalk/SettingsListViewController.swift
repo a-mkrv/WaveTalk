@@ -182,7 +182,7 @@ class SettingsListViewController: UIViewController, UITableViewDelegate, UITable
         cell.imageSetting?.image = UIImage(named: parameters[indexPath.row])
         
         if cell.nameOfSetting!.text == "" {
-            cell.selectionStyle = UITableViewCellSelectionStyle.none;
+            cell.selectionStyle = .none
             cell.isUserInteractionEnabled = false
         } else if cell.nameOfSetting!.text == "Log Out" {
             cell.nameOfSetting!.textColor = UIColor(red:  150/255.0, green: 75/255.0, blue: 75/255.0, alpha: 100.0/100.0)

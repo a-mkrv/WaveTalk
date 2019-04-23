@@ -106,7 +106,5 @@ class ProfileSettings {
         self.profileImageURL = profileImageURL
     }
     
-    
-    init () {
-    }
+    init () { }
 }

@@ -10,7 +10,6 @@ import UIKit
 
 class ViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
 
-    
     let pageHeaders = ["Fastest!", "Reliable!", "Secure!", "Congratulation!"]
     let pageImages = ["Fastest","Reliable","Secure","Congratulation"]
     let pageDescriptions = [
@@ -33,15 +32,12 @@ class ViewController: UIViewController, UIPageViewControllerDataSource, UIPageVi
         pageViewController = self.storyboard?.instantiateViewController(withIdentifier: "PageViewController") as? UIPageViewController
         self.pageViewController!.dataSource = self
         
-        
         let pageContentViewController = self.viewControllerAtIndex(0)
-        self.pageViewController!.setViewControllers([pageContentViewController], direction: UIPageViewControllerNavigationDirection.forward, animated: true, completion: nil)
+        self.pageViewController!.setViewControllers([pageContentViewController], direction: .forward, animated: true, completion: nil)
         
-        addChildViewController(pageViewController!)
+        addChild(pageViewController!)
         view.addSubview(pageViewController!.view)
-        pageViewController!.didMove(toParentViewController: self)
-
-        
+        pageViewController!.didMove(toParent: self)
     }
     
     func viewControllerAtIndex(_ index: Int) -> PageContentViewController {

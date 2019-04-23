@@ -18,7 +18,7 @@ class UserNameViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let rightAddBarButtonItem: UIBarButtonItem = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.saveUserName))
+        let rightAddBarButtonItem: UIBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(self.saveUserName))
         self.navigationItem.setRightBarButton(rightAddBarButtonItem, animated: true)
         
         usernameTextField.delegate = self
